@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BlackJack.DTO.CardViewModel>
+@{
+    ViewBag.Title = "GetDeck";
+}
+
+<h2>GetDeck</h2>
+
+<table class="table">
+
+    @foreach (var card in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => card.Id): @Html.DisplayFor(modelItem => card.Value):   @Html.DisplayFor(modelItem => card.Suit) : @Html.DisplayFor(modelItem => card.Rank)
+            </td>
+        </tr>
+    }
+
+</table>
