@@ -35,5 +35,20 @@ namespace BlackJack.Controllers
 
             return View(cardModelList);
         }
+
+
+        public async Task<ActionResult> SetBotCount()
+        {
+            try
+            {
+                await _gameSetService.InitializePlayers();
+                await _gameSetService.SetBotCount(3);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new string[] { ex.Message });
+            }
+            return View();
+        }
     }
 }
