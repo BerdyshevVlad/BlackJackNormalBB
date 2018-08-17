@@ -35,15 +35,14 @@ namespace BlackJack.DAL.Repositories
 
         public async Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id)
         {
-            //var playerList = _db.PlayersCards.Where(x => x.PlayerId == id);
+            var playerList = await _db.PlayersCards.Where(x => x.PlayerId == id).ToListAsync();
 
-            //List<Card> cardsList = new List<Card>();
-            //foreach (var playerCard in playerList)
-            //{
-            //    Card card = await _db.Cards.FindAsync(playerCard.CardId);
-            //    cardsList.Add(card);
-            //}
-
+            List<Card> cardsList = new List<Card>();
+            foreach (var playerCard in playerList)
+            {
+                Card card = await _db.Cards.FindAsync(playerCard.CardId);
+                cardsList.Add(card);
+            }
 
 
             //var playerList = _db.PlayersCards.Where(x => x.Player.Id == id);
@@ -56,7 +55,7 @@ namespace BlackJack.DAL.Repositories
             //}
 
             //return cardsList;
-            return null;
+            return cardsList;
         }
 
 

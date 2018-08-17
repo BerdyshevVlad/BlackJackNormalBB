@@ -29,5 +29,12 @@ namespace BlackJack.DAL.Repositories
             _db.PlayersCards.Add(tmpPlayersCards);
             await _db.SaveChangesAsync();
         }
+
+
+        public IEnumerable<PlayerCard> GetAll()
+        {
+            var playerCardsList=_db.PlayersCards.ToList();
+            return playerCardsList;
+        }
     }
 }

@@ -116,9 +116,9 @@ namespace BlackJack.BLL.Services
             var enumValuesList = Enum.GetValues(typeof(Rank));
 
             int cardMinValue = 2;
-            int cardMiaxValue = 2;
+            int cardMaxValue = 14;
             int rankMinValue = 0;
-            int rankMaxValue = 0;
+            int rankMaxValue = 14;
             int enumJackValue = 11;
             int enumKingValue = 13;
             int JackQueenKingValues = 10;
@@ -129,9 +129,9 @@ namespace BlackJack.BLL.Services
             {
                 foreach (var suit in Enum.GetNames(typeof(Suit)))
                 {
-                    for (int value = cardMinValue, rankValue = rankMinValue; value <= cardMiaxValue && rankValue <= rankMaxValue; value++, rankValue++)
+                    for (int value = cardMinValue, rankValue = rankMinValue; value <= cardMaxValue && rankValue <= rankMaxValue; value++, rankValue++)
                     {
-                        if (value>= enumJackValue || value<= enumKingValue)
+                        if (value>= enumJackValue && value<= enumKingValue)
                         {
                             card = new Card { Value = JackQueenKingValues, Suit = suit, Rank = enumValuesList.GetValue(rankValue).ToString() };
                         }
