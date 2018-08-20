@@ -1,0 +1,48 @@
+﻿@model IEnumerable<BlackJack.DTO.PlayerCardsViewModel>
+@{
+    ViewBag.Title = "PlayAgain";
+}
+
+<h2>PlayAgain</h2>
+
+<table class="table" id="result">
+    <h1>Cards:</h1>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Player.Name
+            <td>
+                @foreach (var t in item.Cards)
+                {
+                    @t.Value
+                }
+            </td>
+            </td>
+        </tr>
+    }
+</table>
+@using (Ajax.BeginForm("PlayAgain", new AjaxOptions { UpdateTargetId = "result" }))
+{
+    <input type="text" name="takeCard" />
+    <input type="submit" value="Поиск" />
+}
+
+
+<table class="table">
+    <h1>Total scors:</h1>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Player.Name:
+            <td>
+                @foreach (var t in item.Cards)
+                {
+                    @t.Value
+                }
+            </td>
+            </td>
+        </tr>
+    }
+</table>

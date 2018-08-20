@@ -1,9 +1,6 @@
 ﻿using BlackJack.BLL.Services;
-using BlackJack.DAL.Entities;
-using BlackJack.DAL.Enum;
 using BlackJack.DAL.Repositories;
 using BlackJack.DTO;
-using BlackJack.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +8,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-
 namespace BlackJack.Controllers
 {
-    public class GameSetController : Controller
+    public class GameLogicController : Controller
     {
+
         PlayerRepository _playerRepository;
         CardRepository _cardRepository;
         PlayerCardRepository _playerCardRepository;
@@ -23,7 +20,7 @@ namespace BlackJack.Controllers
 
         GameLogicService _gameLogicService;//
 
-        public GameSetController()
+        public GameLogicController()
         {
             _playerRepository = new PlayerRepository(new DAL.BlackJackContext());
             _cardRepository = new CardRepository(new DAL.BlackJackContext());
@@ -35,29 +32,30 @@ namespace BlackJack.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult> GetDeck()
+
+        public async Task<ActionResult> HandOverCards()
         {
-
-            bool isWork = await _gameSetService.SetDeck();
-            List<CardViewModel> cardModelList = await _gameSetService.GetDeck();
-
-            return View(cardModelList);
+            var playerModelList = await _gameLogicService.HandOverCards();
+            List<PlayerCardsViewModel> model = new List<PlayerCardsViewModel>();
+            foreach (var item in playerModelList)
+            {
+                var tmp = new PlayerCardsViewModel();
+                tmp.Player = item.Key;
+                tmp.Cards = item.Value;
+                model.Add(tmp);
+            }
+            return View(model);
         }
 
 
-        public async Task<ActionResult> SetBotCount()
+
+        public async Task<ActionResult> PlayAgain(bool takeCard)
         {
-            try
-            {
-                await _gameSetService.InitializePlayers();
-                await _gameSetService.SetBotCount(3);
-            }
-            catch (Exception ex)
-            {
-                return View("Error", new string[] { ex.Message });
-            }
-            return View();
+            var test = await _gameLogicService.PlayAgain(takeCard);      //?????????????????
+
+
+
+            return View("HandOverCards", test);      //??????????????
         }
     }
 }

@@ -188,6 +188,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\GameLogicController.cs" />
     <Compile Include="Controllers\GameSetController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,6 +249,9 @@
     <Content Include="Views\GameSet\GetDeck.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\GameLogic\HandOverCards.cshtml" />
+    <Content Include="Views\GameSet\SetBotCount.cshtml" />
+    <Content Include="Views\GameLogic\PlayAgain.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

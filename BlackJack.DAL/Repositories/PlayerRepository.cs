@@ -44,21 +44,25 @@ namespace BlackJack.DAL.Repositories
                 cardsList.Add(card);
             }
 
-
-            //var playerList = _db.PlayersCards.Where(x => x.Player.Id == id);
-
-            //List<Card> cardsList = new List<Card>();
-            //foreach (var playerCard in playerList)
-            //{
-            //    Card card = await _db.Cards.FindAsync(playerCard.Card.Id);
-            //    cardsList.Add(card);
-            //}
-
-            //return cardsList;
             return cardsList;
         }
 
 
+        public async Task<Dictionary<Player, List<Card>>> GetAllCardsFromAllPlayers()
+        {
+            var playerList = await _db.Players.ToListAsync();
+
+            Dictionary<Player, List<Card>> playerCardsDictionary = new Dictionary<Player, List<Card>>();
+
+            foreach (var player in playerList)
+            {
+                var cardsList= await GetAllCardsFromPlayer(player.Id);
+                playerCardsDictionary.Add(player,cardsList.ToList());
+            }
+            
+
+            return playerCardsDictionary;
+        }
 
 
         public async Task Insert(Player player)

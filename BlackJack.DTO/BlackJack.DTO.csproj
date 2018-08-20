@@ -41,8 +41,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardViewModel.cs" />
+    <Compile Include="PlayerCardsViewModel.cs" />
     <Compile Include="PlayerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlackJack.DAL\BlackJack.DAL.csproj">
+      <Project>{69DF4439-AB0B-4FDB-B73A-27DA3E4503F9}</Project>
+      <Name>BlackJack.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

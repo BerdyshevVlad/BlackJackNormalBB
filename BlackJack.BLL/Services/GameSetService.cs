@@ -139,7 +139,7 @@ namespace BlackJack.BLL.Services
                         {
                             card = new Card { Value = AceValue, Suit = suit, Rank = enumValuesList.GetValue(rankValue).ToString() };
                         }
-                        else
+                        if(value < enumJackValue)
                         {
                             card = new Card { Value = value, Suit = suit, Rank = enumValuesList.GetValue(rankValue).ToString() };
                         }
