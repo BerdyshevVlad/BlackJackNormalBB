@@ -53,9 +53,16 @@ namespace BlackJack.Controllers
         {
             var test = await _gameLogicService.PlayAgain(takeCard);      //?????????????????
 
+            List<PlayerCardsViewModel> model = new List<PlayerCardsViewModel>();
+            foreach (var item in test)
+            {
+                var tmp = new PlayerCardsViewModel();
+                tmp.Player = Mappers.Mapp.MappPlayerModel(item.Key);
+                tmp.Cards = item.Value;
+                model.Add(tmp);
+            }
 
-
-            return View("HandOverCards", test);      //??????????????
+            return View("HandOverCards", model);      //??????????????
         }
     }
 }

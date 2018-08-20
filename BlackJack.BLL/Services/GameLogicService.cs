@@ -182,20 +182,35 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<bool> PlayAgain(bool takeCard)
+        //public async Task<bool> PlayAgain(bool takeCard)
+        public async Task<Dictionary<PlayerViewModel, List<Card>>> PlayAgain(bool takeCard)
         {
             bool isGameEnded = false;
 
             isGameEnded = await IsGameEnded();
-            for (; isGameEnded == false;)
+            for (; isGameEnded == false;)       //???????
             {
-                await TakeCardIfNotEnough(takeCard);           //??????????????
-                isGameEnded = await IsGameEnded();
+                if (takeCard == true)
+                {
+                    await TakeCardIfNotEnough(takeCard);           //??????????????
+                    isGameEnded = await IsGameEnded();
+                    break;
+                }
+                else
+                {
+                    await TakeCardIfNotEnough(takeCard);           //??????????????
+                    isGameEnded = await IsGameEnded();
+                }
             }
 
             //_round++;   //??????
 
-            return true;
+            //return true;
+
+            var playerCards = await _playerRepository.GetAllCardsFromAllPlayers();
+            Dictionary<PlayerViewModel, List<Card>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+
+            return playerCardsModel;
         }
 
 
