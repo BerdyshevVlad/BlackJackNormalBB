@@ -12,22 +12,10 @@ namespace BlackJack.Controllers
 {
     public class GameLogicController : Controller
     {
-
-        PlayerRepository _playerRepository;
-        CardRepository _cardRepository;
-        PlayerCardRepository _playerCardRepository;
-        GameSetService _gameSetService;
-
-        GameLogicService _gameLogicService;//
+        GameLogicService _gameLogicService;
 
         public GameLogicController()
         {
-            _playerRepository = new PlayerRepository(new DAL.BlackJackContext());
-            _cardRepository = new CardRepository(new DAL.BlackJackContext());
-            _playerCardRepository = new PlayerCardRepository(new DAL.BlackJackContext());
-            _gameSetService = new GameSetService();
-
-
             _gameLogicService = new GameLogicService();
         }
 

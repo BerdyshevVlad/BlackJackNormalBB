@@ -1,4 +1,5 @@
 ﻿using BlackJack.DAL.Entities;
+using BlackJack.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack.DAL.Repositories
 {
-    public class PlayerCardRepository
+    public class PlayerCardRepository: IPlayerCardRepository
     {
         private BlackJackContext _db;
 

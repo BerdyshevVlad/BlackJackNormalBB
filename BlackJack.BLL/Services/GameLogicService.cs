@@ -16,7 +16,11 @@ namespace BlackJack.BLL.Services
         PlayerRepository _playerRepository;
         PlayerCardRepository _playerCardRepository;
         List<int> _drawnedCardId = new List<int>();
+
         int _round;
+        string personPlayerType = "Person";
+
+
         public GameLogicService()
         {
             _cardRepository = new CardRepository(new DAL.BlackJackContext());
@@ -69,7 +73,7 @@ namespace BlackJack.BLL.Services
             Card cardTmp = await _cardRepository.GetById(Card.Id);
 
 
-            await _playerCardRepository.AddCard(playerTmp, cardTmp, _round);   //?????????????????????
+            await _playerCardRepository.AddCard(playerTmp, cardTmp, _round);
 
             PlayerViewModel playerModel = Mapp.MappPlayer(playerTmp);
 
@@ -86,7 +90,6 @@ namespace BlackJack.BLL.Services
                 var maxRound = gamePlayersList.Max(x => x.CurrentRound);
                 if (maxRound > 0)
                 {
-                    //_currentRound = maxRound + 1;
                     _currentRound = maxRound;
                 }
             }
@@ -118,7 +121,6 @@ namespace BlackJack.BLL.Services
         }
 
 
-        //public async Task<List<PlayerViewModel>> HandOverCards()
         public async Task<Dictionary<Player, List<Card>>> HandOverCards()
         {
             int handOverCount = 2;
@@ -133,8 +135,6 @@ namespace BlackJack.BLL.Services
             var playerModelDictionary = await _playerRepository.GetAllCardsFromAllPlayers(_round);
 
             return playerModelDictionary;
-
-            //return playerModelList;
         }
 
 
@@ -155,19 +155,19 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<Dictionary<PlayerViewModel, List<Card>>> TakeCardIfNotEnough(bool takeCard)      //?????????
+        public async Task<Dictionary<PlayerViewModel, List<Card>>> TakeCardIfNotEnough(bool takeCard)
         {
             var playerScore = await GetScoreCount();
             foreach (var ps in playerScore)
             {
-                if (ps.Value < 17 && ps.Key.PlayerType != "Person")
+                if (ps.Value < 17 && ps.Key.PlayerType != personPlayerType)
                 {
                     Player player = await _playerRepository.GetById(ps.Key.Id);
                     CardViewModel cardModel = await DrawCard();
                     Card card = Mapp.MappCardModel(cardModel);
                     await GiveCardToPlayer(player, card);
                 }
-                if (ps.Key.PlayerType == "Person" && takeCard == true)
+                if (ps.Key.PlayerType == personPlayerType && takeCard == true)
                 {
                     Player player = await _playerRepository.GetById(ps.Key.Id);
                     CardViewModel cardModel = await DrawCard();
@@ -187,19 +187,19 @@ namespace BlackJack.BLL.Services
         {
             bool isGameEnded = false;
 
-            isGameEnded = await IsGameEnded();
+            isGameEnded = await IsGameEnded(takeCard);
             for (; isGameEnded == false;)
             {
                 if (takeCard == true)
                 {
                     await TakeCardIfNotEnough(takeCard);
-                    isGameEnded = await IsGameEnded();
+                    isGameEnded = await IsGameEnded(takeCard);
                     break;
                 }
-                else
+                if(takeCard==false)
                 {
                     await TakeCardIfNotEnough(takeCard);
-                    isGameEnded = await IsGameEnded();
+                    isGameEnded = await IsGameEnded(takeCard);
                 }
             }
 
@@ -210,22 +210,22 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<bool> IsGameEnded()
+        public async Task<bool> IsGameEnded(bool takeCard)
         {
             var scors = await GetScoreCount();
             bool isGameEnded = false;
             List<int> cardCount = new List<int>();
 
 
-            foreach (var playerScore in scors.Where(x => x.Key.PlayerType != "Person"))
+            foreach (var playerScore in scors.Where(x => x.Key.PlayerType != personPlayerType))
             {
                 int scoreValue = playerScore.Value;
                 cardCount.Add(scoreValue);
             }
 
             isGameEnded = cardCount.TrueForAll(c => c >= 17);
-            var personPlayerScorsSum = scors.Where(x => x.Key.PlayerType == "Person").Sum(x => x.Value);
-            if (personPlayerScorsSum < 21)
+            var personPlayerScorsSum = scors.Where(x => x.Key.PlayerType == personPlayerType).Sum(x => x.Value);
+            if (personPlayerScorsSum < 21 && takeCard!=false)
             {
                 isGameEnded = false;
             }

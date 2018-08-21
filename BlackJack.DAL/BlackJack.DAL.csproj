@@ -53,6 +53,7 @@
     <Compile Include="Entities\PlayerCard.cs" />
     <Compile Include="Enum\Enum.cs" />
     <Compile Include="Interfaces\ICardRepository.cs" />
+    <Compile Include="Interfaces\IPlayerCardRepository.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Migrations\201808171046408_init.cs" />
