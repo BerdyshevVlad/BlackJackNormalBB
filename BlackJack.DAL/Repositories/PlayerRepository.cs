@@ -33,9 +33,18 @@ namespace BlackJack.DAL.Repositories
         }
 
 
-        public async Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id)
+        public async Task<IEnumerable<PlayerCard>> GetPlayerByIdAndByRound(int id, int round)
         {
-            var playerList = await _db.PlayersCards.Where(x => x.PlayerId == id).ToListAsync();
+            var playerList = await _db.PlayersCards.Where(x => x.PlayerId == id && x.CurrentRound == round).ToListAsync();
+
+            return playerList;
+        }
+
+
+        public async Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id,int round)
+        {
+            //var playerList = await _db.PlayersCards.Where(x => x.PlayerId == id && x.CurrentRound==round).ToListAsync();
+            var playerList = await GetPlayerByIdAndByRound(id, round);
 
             List<Card> cardsList = new List<Card>();
             foreach (var playerCard in playerList)
@@ -48,15 +57,16 @@ namespace BlackJack.DAL.Repositories
         }
 
 
-        public async Task<Dictionary<Player, List<Card>>> GetAllCardsFromAllPlayers()
+        public async Task<Dictionary<Player, List<Card>>> GetAllCardsFromAllPlayers(int round)
         {
-            var playerList = await _db.Players.ToListAsync();
+            //var playerList = await _db.Players.ToListAsync();
+            var playerList = await GetAll();
 
             Dictionary<Player, List<Card>> playerCardsDictionary = new Dictionary<Player, List<Card>>();
 
-            foreach (var player in playerList)
+            foreach (var player in playerList.ToList())
             {
-                var cardsList= await GetAllCardsFromPlayer(player.Id);
+                var cardsList= await GetAllCardsFromPlayer(player.Id,round);
                 playerCardsDictionary.Add(player,cardsList.ToList());
             }
             

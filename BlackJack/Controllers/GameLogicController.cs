@@ -64,5 +64,22 @@ namespace BlackJack.Controllers
 
             return View("HandOverCards", model);      //??????????????
         }
+
+
+        public async Task<ActionResult> StartNewRound()
+        {
+            var tmp = await _gameLogicService.StartNewRound();
+
+            List<PlayerCardsViewModel> model = new List<PlayerCardsViewModel>();
+            foreach (var item in tmp)
+            {
+                var test = new PlayerCardsViewModel();
+                test.Player = Mappers.Mapp.MappPlayerModel(item.Key);
+                test.Cards = item.Value;
+                model.Add(test);
+            }
+
+            return View("HandOverCards", model);      //??????????????
+        }
     }
 }
