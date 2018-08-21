@@ -1,9 +1,8 @@
 ﻿using BlackJack.BLL.Services;
-using BlackJack.DAL.Entities;
-using BlackJack.DAL.Enum;
+using BlackJack.DAL.Enums;
 using BlackJack.DAL.Repositories;
-using BlackJack.DTO;
 using BlackJack.Mappers;
+using BlackJack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

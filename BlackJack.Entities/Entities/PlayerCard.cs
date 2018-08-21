@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack.DAL.Entities
+namespace BlackJack.EntitiesLayer.Entities
 {
     public class PlayerCard
     {

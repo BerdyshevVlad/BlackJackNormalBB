@@ -1,5 +1,5 @@
-﻿using BlackJack.DAL.Entities;
-using BlackJack.DAL.Interfaces;
+﻿using BlackJack.DAL.Interfaces;
+using BlackJack.EntitiesLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,7 +11,7 @@ namespace BlackJack.DAL.Repositories
 {
     public class CardRepository:ICardRepository<Card>
     {
-        private BlackJackContext _db;
+        private readonly BlackJackContext _db;
 
         public CardRepository(BlackJackContext context)
         {

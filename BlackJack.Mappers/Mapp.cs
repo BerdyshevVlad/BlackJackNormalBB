@@ -1,5 +1,5 @@
-﻿using BlackJack.DAL.Entities;
-using BlackJack.DTO;
+﻿using BlackJack.EntitiesLayer.Entities;
+using BlackJack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,6 +124,22 @@ namespace BlackJack.Mappers
             }
 
             return playerCardsModel;
+        }
+
+
+        public static List<PlayerCardsViewModel> MappPlayerCards(Dictionary<Player, List<Card>> playerModelList)
+        {
+            List<PlayerCardsViewModel> model = new List<PlayerCardsViewModel>();
+
+            foreach (var item in playerModelList)
+            {
+                var playerCardsModel = new PlayerCardsViewModel();
+                playerCardsModel.Player = item.Key;
+                playerCardsModel.Cards = item.Value;
+                model.Add(playerCardsModel);
+            }
+
+            return model;
         }
     }
 }

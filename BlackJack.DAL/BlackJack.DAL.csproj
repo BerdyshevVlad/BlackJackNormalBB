@@ -48,10 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackJackContext.cs" />
-    <Compile Include="Entities\Card.cs" />
-    <Compile Include="Entities\Player.cs" />
-    <Compile Include="Entities\PlayerCard.cs" />
-    <Compile Include="Enum\Enum.cs" />
+    <Compile Include="Enums\Enum.cs" />
     <Compile Include="Interfaces\ICardRepository.cs" />
     <Compile Include="Interfaces\IPlayerCardRepository.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
@@ -74,6 +71,12 @@
     <EmbeddedResource Include="Migrations\201808171046408_init.resx">
       <DependentUpon>201808171046408_init.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlackJack.Entities\BlackJack.EntitiesLayer.csproj">
+      <Project>{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}</Project>
+      <Name>BlackJack.EntitiesLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

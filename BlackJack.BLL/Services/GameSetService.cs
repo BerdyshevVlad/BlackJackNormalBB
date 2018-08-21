@@ -1,8 +1,8 @@
-﻿using BlackJack.DAL.Entities;
-using BlackJack.DAL.Enum;
+﻿using BlackJack.DAL.Enums;
 using BlackJack.DAL.Repositories;
-using BlackJack.DTO;
+using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
+using BlackJack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,18 +43,12 @@ namespace BlackJack.BLL.Services
 
         public async Task<List<PlayerViewModel>> GetPlayers()
         {
-            List<PlayerViewModel> gamePlayerViewModelList;
-            List<Player> gamePlayer = new List<Player>();
+            var gamePlayerViewModelList = new List<PlayerViewModel>();
 
             try
             {
-                var playersList = await _playerRepository.GetAll();
-                foreach (var player in playersList)
-                {
-                    gamePlayer.Add(player);
-                }
-
-                gamePlayerViewModelList =Mapp.MappPlayer(gamePlayer);
+                IEnumerable<Player> playersList = await _playerRepository.GetAll();
+                gamePlayerViewModelList = Mapp.MappPlayer(playersList.ToList());
             }
             catch (Exception ex)
             {
@@ -65,7 +59,7 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<List<CardViewModel>> GetDeck()
+        public async Task<List<CardViewModel>> GetDeck()   
         {
             List<Card> cardsList = new List<Card>();
             List<CardViewModel> cardsViewModel;
@@ -75,7 +69,7 @@ namespace BlackJack.BLL.Services
                 foreach (var card in cardsListCollection)
                 {
 
-                    cardsList.Add(card);
+                    cardsList.Add(card);    //rewrite
                 }
                 cardsViewModel = Mapp.MappCard((cardsList.ToList()));
             }

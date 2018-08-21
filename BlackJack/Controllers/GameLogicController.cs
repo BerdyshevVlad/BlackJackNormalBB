@@ -1,6 +1,6 @@
 ﻿using BlackJack.BLL.Services;
 using BlackJack.DAL.Repositories;
-using BlackJack.DTO;
+using BlackJack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +23,12 @@ namespace BlackJack.Controllers
 
         public async Task<ActionResult> HandOverCards()
         {
-            var playerModelList = await _gameLogicService.HandOverCards();
-            List<PlayerCardsViewModel> model = new List<PlayerCardsViewModel>();
-            foreach (var item in playerModelList)
+            var playerModelDictionary = await _gameLogicService.HandOverCards();
+            //List<PlayerCardsViewModel> model = new List<PlayerCardsViewModel>();
+            List<PlayerCardsViewModel> model = Mappers.Mapp.MappPlayerCards(playerModelDictionary);
+
+
+            foreach (var item in playerModelDictionary)
             {
                 var tmp = new PlayerCardsViewModel();
                 tmp.Player = item.Key;
@@ -39,7 +42,7 @@ namespace BlackJack.Controllers
 
         public async Task<ActionResult> PlayAgain(bool takeCard)
         {
-            var test = await _gameLogicService.PlayAgain(takeCard);      //?????????????????
+            var test = await _gameLogicService.PlayAgain(takeCard);
 
             List<PlayerCardsViewModel> model = new List<PlayerCardsViewModel>();
             foreach (var item in test)
@@ -50,7 +53,7 @@ namespace BlackJack.Controllers
                 model.Add(tmp);
             }
 
-            return View("HandOverCards", model);      //??????????????
+            return View("HandOverCards", model);
         }
 
 
@@ -67,7 +70,7 @@ namespace BlackJack.Controllers
                 model.Add(test);
             }
 
-            return View("HandOverCards", model);      //??????????????
+            return View("HandOverCards", model);
         }
     }
 }

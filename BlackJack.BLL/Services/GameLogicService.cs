@@ -1,7 +1,8 @@
-﻿using BlackJack.DAL.Entities;
+﻿using BlackJack.DAL.Interfaces;
 using BlackJack.DAL.Repositories;
-using BlackJack.DTO;
+using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
+using BlackJack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace BlackJack.BLL.Services
 {
     public class GameLogicService
     {
-        CardRepository _cardRepository;
-        PlayerRepository _playerRepository;
-        PlayerCardRepository _playerCardRepository;
-        List<int> _drawnedCardId = new List<int>();
+        private readonly ICardRepository<Card> _cardRepository;
+        private PlayerRepository _playerRepository;
+        private PlayerCardRepository _playerCardRepository;
+
 
         int _round;
         string personPlayerType = "Person";
@@ -27,6 +28,7 @@ namespace BlackJack.BLL.Services
             _playerRepository = new PlayerRepository(new DAL.BlackJackContext());
             _playerCardRepository = new PlayerCardRepository(new DAL.BlackJackContext());
             _round = DefineCurrentRound();
+            var drawnedCardId = new List<int>();
         }
 
 
@@ -42,7 +44,7 @@ namespace BlackJack.BLL.Services
                 isCurrentCardDrawned = isCurrentCardDrawned = IsCardAlreadyDrawned(randomValue);
             }
 
-            _drawnedCardId.Add(randomValue);
+            drawnedCardId.Add(randomValue);
             Card card = await _cardRepository.GetById(randomValue);
             CardViewModel cardModel = Mapp.MappCard(card);
 

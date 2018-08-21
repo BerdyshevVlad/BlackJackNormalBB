@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack.DTO
+namespace BlackJack.ViewModels
 {
     public class CardViewModel
     {

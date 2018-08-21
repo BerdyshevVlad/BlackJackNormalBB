@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlackJack.DAL.Entities
+namespace BlackJack.EntitiesLayer.Entities
 {
     public class Card
     {

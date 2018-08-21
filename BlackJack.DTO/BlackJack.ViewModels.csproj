@@ -50,6 +50,10 @@
       <Project>{69DF4439-AB0B-4FDB-B73A-27DA3E4503F9}</Project>
       <Name>BlackJack.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BlackJack.Entities\BlackJack.EntitiesLayer.csproj">
+      <Project>{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}</Project>
+      <Name>BlackJack.EntitiesLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

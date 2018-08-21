@@ -1,5 +1,5 @@
-﻿using BlackJack.DAL.Entities;
-using BlackJack.DAL.Interfaces;
+﻿using BlackJack.DAL.Interfaces;
+using BlackJack.EntitiesLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -43,7 +43,6 @@ namespace BlackJack.DAL.Repositories
 
         public async Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id,int round)
         {
-            //var playerList = await _db.PlayersCards.Where(x => x.PlayerId == id && x.CurrentRound==round).ToListAsync();
             var playerList = await GetPlayerByIdAndByRound(id, round);
 
             List<Card> cardsList = new List<Card>();
@@ -59,7 +58,6 @@ namespace BlackJack.DAL.Repositories
 
         public async Task<Dictionary<Player, List<Card>>> GetAllCardsFromAllPlayers(int round)
         {
-            //var playerList = await _db.Players.ToListAsync();
             var playerList = await GetAll();
 
             Dictionary<Player, List<Card>> playerCardsDictionary = new Dictionary<Player, List<Card>>();

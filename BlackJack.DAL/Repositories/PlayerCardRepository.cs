@@ -1,5 +1,5 @@
-﻿using BlackJack.DAL.Entities;
-using BlackJack.DAL.Interfaces;
+﻿using BlackJack.DAL.Interfaces;
+using BlackJack.EntitiesLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
