@@ -9,7 +9,7 @@ namespace BlackJack.ViewModels
 {
     public class PlayerCardsViewModel
     {
-        public Player Player { get; set; }
-        public List<Card> Cards { get; set; }
+        public PlayerViewModel Player { get; set; }
+        public List<CardViewModel> Cards { get; set; }
     }
 }

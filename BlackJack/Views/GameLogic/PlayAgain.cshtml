@@ -1,50 +1,36 @@
-﻿@model IEnumerable<BlackJack.ViewModels.PlayerCardsViewModel>
-@{
-    ViewBag.Title = "PlayAgain";
-}
-
-<h2>PlayAgain</h2>
-
-<table class="table" id="result">
-    <h1>Cards:</h1>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @item.Player.Name
-            <td>
-                @foreach (var t in item.Cards)
-                {
-                    @t.Value
-                    <span>, </span>
-                }
-            </td>
-            </td>
-        </tr>
-    }
-</table>
-@using (Ajax.BeginForm("PlayAgain", new AjaxOptions { UpdateTargetId = "result" }))
-{
-    <input type="text" name="takeCard" />
-    <input type="submit" value="Поиск" />
-}
+﻿<div id="result">
+    <table class="table">
+        <h1>Cards:</h1>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Player.Name
+                <td>
+                    @foreach (var t in item.Cards)
+                    {
+                        @t.Value
+                        <span>, </span>
+                    }
+                </td>
+                </td>
+            </tr>
+        }
+    </table>
 
 
-<table class="table">
-    <h1>Total scors:</h1>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @item.Player.Name:
-            <td>
-                @foreach (var t in item.Cards)
-                {
-                    @t.Value
-                    <span>, </span>
-                }
-            </td>
-            </td>
-        </tr>
-    }
-</table>
+
+    <table class="table">
+        <h1>Total scores:</h1>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Player.Name:
+                <td>
+                    @item.Player.Score
+                </td>
+                </td>
+            </tr>
+        }
+    </table>

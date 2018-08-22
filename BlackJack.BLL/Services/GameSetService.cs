@@ -1,4 +1,5 @@
 ﻿using BlackJack.DAL.Enums;
+using BlackJack.DAL.Interfaces;
 using BlackJack.DAL.Repositories;
 using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
@@ -13,14 +14,19 @@ namespace BlackJack.BLL.Services
 {
     public class GameSetService
     {
-        private CardRepository _cardRepository;
-        private PlayerRepository _playerRepository;
+        private readonly ICardRepository<Card> _cardRepository;
+        private readonly IPlayerRepository<Player> _playerRepository;
+
+        private readonly string _dealerPlayerType;
+        private readonly string _personPlayerType;
 
 
         public GameSetService()
         {
             _cardRepository = new CardRepository(new DAL.BlackJackContext());
             _playerRepository = new PlayerRepository(new DAL.BlackJackContext());
+            _dealerPlayerType = "Dealer";
+            _personPlayerType = "Person";
         }
 
 
@@ -47,7 +53,7 @@ namespace BlackJack.BLL.Services
 
             try
             {
-                IEnumerable<Player> playersList = await _playerRepository.GetAll();
+                List<Player> playersList = await _playerRepository.GetAll();
                 gamePlayerViewModelList = Mapp.MappPlayer(playersList.ToList());
             }
             catch (Exception ex)
@@ -61,17 +67,11 @@ namespace BlackJack.BLL.Services
 
         public async Task<List<CardViewModel>> GetDeck()   
         {
-            List<Card> cardsList = new List<Card>();
-            List<CardViewModel> cardsViewModel;
+            var cardsViewModel=new List<CardViewModel>();
             try
             {
-                var cardsListCollection = await _cardRepository.GetAll();
-                foreach (var card in cardsListCollection)
-                {
-
-                    cardsList.Add(card);    //rewrite
-                }
-                cardsViewModel = Mapp.MappCard((cardsList.ToList()));
+                List<Card> cardsListCollection = await _cardRepository.GetAll();
+                cardsViewModel = Mapp.MappCard((cardsListCollection.ToList()));
             }
             catch (Exception ex)
             {
@@ -86,10 +86,10 @@ namespace BlackJack.BLL.Services
         {
             var dealer = new Player();
             dealer.Name = "Dealer";
-            dealer.PlayerType = "Dealer";
+            dealer.PlayerType = _dealerPlayerType;
             var playerPerson = new Player();
             playerPerson.Name = "You";
-            playerPerson.PlayerType = "Person";
+            playerPerson.PlayerType = _personPlayerType;
 
             try
             {
@@ -105,9 +105,9 @@ namespace BlackJack.BLL.Services
 
         public async Task<bool> SetDeck()
         {
-            List<Card> cardsList = new List<Card>();
+            var cardsList = new List<Card>();
             Card card = null;
-            var enumValuesList = Enum.GetValues(typeof(Rank));
+            Array enumValuesList = Enum.GetValues(typeof(Rank));
 
             int cardMinValue = 2;
             int cardMaxValue = 14;

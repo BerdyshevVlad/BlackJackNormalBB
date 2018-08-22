@@ -26,7 +26,7 @@ namespace BlackJack.DAL.Repositories
 
         public async Task Delete(int id)
         {
-            var card = await _db.Cards.FindAsync(id);
+            Card card = await _db.Cards.FindAsync(id);
 
             if (card != null)
             {
@@ -37,22 +37,22 @@ namespace BlackJack.DAL.Repositories
 
         public IEnumerable<Card> Find(Func<Card, bool> predicate)
         {
-            var cardsList = _db.Cards.Where(predicate);
+            IEnumerable<Card> cardsList = _db.Cards.Where(predicate);
             return cardsList;
         }
 
         public async Task<Card> GetById(int id)
         {
-            var card = await _db.Cards.FindAsync(id);
+            Card card = await _db.Cards.FindAsync(id);
 
             return card;
         }
 
 
-        public async Task<IEnumerable<Card>> GetAll()
+        public async Task<List<Card>> GetAll()
         {
 
-            var cardsList =await _db.Cards.ToListAsync();
+            List<Card> cardsList =await _db.Cards.ToListAsync();
             return cardsList;
         }
 

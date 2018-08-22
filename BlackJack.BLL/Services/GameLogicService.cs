@@ -14,12 +14,13 @@ namespace BlackJack.BLL.Services
     public class GameLogicService
     {
         private readonly ICardRepository<Card> _cardRepository;
-        private PlayerRepository _playerRepository;
-        private PlayerCardRepository _playerCardRepository;
+        private readonly IPlayerRepository<Player> _playerRepository;
+        private readonly IPlayerCardRepository _playerCardRepository;
 
 
-        int _round;
-        string personPlayerType = "Person";
+        private int _round;
+        private string _personPlayerType = "Person";
+        private List<int> __drawnedCardId;
 
 
         public GameLogicService()
@@ -28,23 +29,23 @@ namespace BlackJack.BLL.Services
             _playerRepository = new PlayerRepository(new DAL.BlackJackContext());
             _playerCardRepository = new PlayerCardRepository(new DAL.BlackJackContext());
             _round = DefineCurrentRound();
-            var drawnedCardId = new List<int>();
+            __drawnedCardId = new List<int>();
         }
 
 
         public async Task<CardViewModel> DrawCard()
         {
 
-            var randomValue = GenerateRandomValue();
+            int randomValue = GenerateRandomValue();
             bool isCurrentCardDrawned = IsCardAlreadyDrawned(randomValue);
 
             for (; isCurrentCardDrawned == true;)
             {
                 randomValue = GenerateRandomValue();
-                isCurrentCardDrawned = isCurrentCardDrawned = IsCardAlreadyDrawned(randomValue);
+                isCurrentCardDrawned = IsCardAlreadyDrawned(randomValue);
             }
 
-            drawnedCardId.Add(randomValue);
+            __drawnedCardId.Add(randomValue);
             Card card = await _cardRepository.GetById(randomValue);
             CardViewModel cardModel = Mapp.MappCard(card);
 
@@ -54,7 +55,7 @@ namespace BlackJack.BLL.Services
 
         public bool IsCardAlreadyDrawned(int randomValue)
         {
-            bool isCurrentCardDrawned = _drawnedCardId.Any(x => x == randomValue);
+            bool isCurrentCardDrawned = __drawnedCardId.Any(x => x == randomValue);
             return isCurrentCardDrawned;
         }
 
@@ -63,9 +64,9 @@ namespace BlackJack.BLL.Services
         {
             int minDeckValue = 1;
             int maxDeckValue = 52;
-            Random random = new Random();
+            var random = new Random();
 
-            var randomValue = random.Next(minDeckValue, maxDeckValue);
+            int randomValue = random.Next(minDeckValue, maxDeckValue);
             return randomValue;
         }
 
@@ -88,8 +89,8 @@ namespace BlackJack.BLL.Services
             int _currentRound = 0;
             try
             {
-                var gamePlayersList = _playerCardRepository.GetAll();
-                var maxRound = gamePlayersList.Max(x => x.CurrentRound);
+                List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
+                int maxRound = gamePlayersList.Max(x => x.CurrentRound);
                 if (maxRound > 0)
                 {
                     _currentRound = maxRound;
@@ -107,9 +108,9 @@ namespace BlackJack.BLL.Services
 
         public async Task<List<PlayerViewModel>> GiveCardToEachPlayer()
         {
-            var playersList = await _playerRepository.GetAll();
+            List<Player> playersList = await _playerRepository.GetAll();
 
-            List<PlayerViewModel> playerModelList = new List<PlayerViewModel>();
+            var playerModelList = new List<PlayerViewModel>();
 
             foreach (var player in playersList.ToList())
             {
@@ -123,7 +124,7 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<Dictionary<Player, List<Card>>> HandOverCards()
+        public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> HandOverCards()
         {
             int handOverCount = 2;
 
@@ -134,20 +135,23 @@ namespace BlackJack.BLL.Services
                 playerModelList = await GiveCardToEachPlayer();
             }
 
-            var playerModelDictionary = await _playerRepository.GetAllCardsFromAllPlayers(_round);
+            Dictionary < Player, List<Card>> playerCardsDictionary = await _playerRepository.GetAllCardsFromAllPlayers(_round);
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModel(playerCardsDictionary);
 
-            return playerModelDictionary;
+            CountSum(ref playerCardsModelDictionary);
+
+            return playerCardsModelDictionary;
         }
 
 
         public async Task<Dictionary<PlayerViewModel, int>> GetScoreCount()
         {
 
-            var playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, int> playerScore = new Dictionary<PlayerViewModel, int>();
+            Dictionary < Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
+            var playerScore = new Dictionary<PlayerViewModel, int>();
             foreach (var player in playerCards.Keys)
             {
-                var cardsList = await _playerRepository.GetAllCardsFromPlayer(player.Id, _round);
+                IEnumerable<Card> cardsList = await _playerRepository.GetAllCardsFromPlayer(player.Id, _round);
                 int score = cardsList.ToList().Sum(card => card.Value);
                 PlayerViewModel playerModel = Mapp.MappPlayer(player);
                 playerScore.Add(playerModel, score);
@@ -157,19 +161,19 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<Dictionary<PlayerViewModel, List<Card>>> TakeCardIfNotEnough(bool takeCard)
+        public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> TakeCardIfNotEnough(bool takeCard)
         {
-            var playerScore = await GetScoreCount();
+             Dictionary<PlayerViewModel, int> playerScore = await GetScoreCount();
             foreach (var ps in playerScore)
             {
-                if (ps.Value < 17 && ps.Key.PlayerType != personPlayerType)
+                if (ps.Value < 17 && ps.Key.PlayerType != _personPlayerType)
                 {
                     Player player = await _playerRepository.GetById(ps.Key.Id);
                     CardViewModel cardModel = await DrawCard();
                     Card card = Mapp.MappCardModel(cardModel);
                     await GiveCardToPlayer(player, card);
                 }
-                if (ps.Key.PlayerType == personPlayerType && takeCard == true)
+                if (ps.Key.PlayerType == _personPlayerType && takeCard == true)
                 {
                     Player player = await _playerRepository.GetById(ps.Key.Id);
                     CardViewModel cardModel = await DrawCard();
@@ -178,35 +182,44 @@ namespace BlackJack.BLL.Services
                 }
             }
 
-            var playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, List<Card>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+            Dictionary<Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModel(playerCards);
 
-            return playerCardsModel;
+            return playerCardsModelDictionary;
         }
 
 
-        public async Task<Dictionary<PlayerViewModel, List<Card>>> PlayAgain(bool takeCard)
+        public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> PlayAgain(bool takeCard=false)
         {
             bool isGameEnded = false;
 
             isGameEnded = await IsGameEnded(takeCard);
             for (; isGameEnded == false;)
             {
-                if (takeCard == true)
+                if (takeCard == true && await IsUserBusted()==false)
                 {
                     await TakeCardIfNotEnough(takeCard);
                     isGameEnded = await IsGameEnded(takeCard);
-                    break;
+                    if (await IsUserBusted() == false)
+                    {
+                        break;
+                    }
+                    if(await IsUserBusted() == true)
+                    {
+                        takeCard = false;
+                    }
                 }
-                if(takeCard==false)
+                if (takeCard == false)
                 {
                     await TakeCardIfNotEnough(takeCard);
                     isGameEnded = await IsGameEnded(takeCard);
                 }
             }
 
-            var playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, List<Card>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+            Dictionary<Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+
+            CountSum(ref playerCardsModel);
 
             return playerCardsModel;
         }
@@ -214,19 +227,18 @@ namespace BlackJack.BLL.Services
 
         public async Task<bool> IsGameEnded(bool takeCard)
         {
-            var scors = await GetScoreCount();
+            Dictionary<PlayerViewModel,int> scors = await GetScoreCount();
             bool isGameEnded = false;
-            List<int> cardCount = new List<int>();
+            var cardCount = new List<int>();
 
-
-            foreach (var playerScore in scors.Where(x => x.Key.PlayerType != personPlayerType))
+            foreach (var playerScore in scors.Where(x => x.Key.PlayerType != _personPlayerType))
             {
                 int scoreValue = playerScore.Value;
                 cardCount.Add(scoreValue);
             }
 
             isGameEnded = cardCount.TrueForAll(c => c >= 17);
-            var personPlayerScorsSum = scors.Where(x => x.Key.PlayerType == personPlayerType).Sum(x => x.Value);
+            int personPlayerScorsSum = scors.Where(x => x.Key.PlayerType == _personPlayerType).Sum(x => x.Value);
             if (personPlayerScorsSum < 21 && takeCard!=false)
             {
                 isGameEnded = false;
@@ -236,15 +248,41 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<Dictionary<PlayerViewModel, List<Card>>> StartNewRound()
+        public async Task<bool> IsUserBusted()
+        {
+            int scorMaxMalue = 21;
+
+            Dictionary<PlayerViewModel, int> scors = await GetScoreCount();
+            int personPlayerScorsSum = scors.Where(x => x.Key.PlayerType == _personPlayerType).Sum(x => x.Value);
+            if (personPlayerScorsSum >= scorMaxMalue)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> StartNewRound()
         {
             _round++;
             await HandOverCards();
 
-            var playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, List<Card>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+            Dictionary<Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+
+            CountSum(ref playerCardsModel);
 
             return playerCardsModel;
+        }
+
+
+        public void CountSum(ref Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary)
+        {
+            foreach (var playerCards in playerCardsModelDictionary)
+            {
+                playerCards.Key.Score = playerCards.Value.Sum(cardModel => cardModel.Value);
+            }
         }
     }
 }

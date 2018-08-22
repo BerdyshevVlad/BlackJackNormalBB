@@ -11,6 +11,8 @@ namespace BlackJack.DAL.Interfaces
     {
         Task AddCard(Player player, Card card, int currentRound);
         Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id,int round);
+        Task<Dictionary<Player, List<Card>>> GetAllCardsFromAllPlayers(int round);
+        Task<List<PlayerCard>> GetPlayerByIdAndByRound(int id, int round);
     }
     
 }

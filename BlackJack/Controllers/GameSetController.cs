@@ -15,7 +15,7 @@ namespace BlackJack.Controllers
 {
     public class GameSetController : Controller
     {
-        GameSetService _gameSetService;
+        private GameSetService _gameSetService;
 
         public GameSetController()
         {

@@ -10,7 +10,7 @@ namespace BlackJack.DAL.Repositories
 {
     public class PlayerCardRepository: IPlayerCardRepository
     {
-        private BlackJackContext _db;
+        private readonly BlackJackContext _db;
 
         public PlayerCardRepository(BlackJackContext context)
         {
@@ -19,8 +19,8 @@ namespace BlackJack.DAL.Repositories
 
         public async Task AddCard(Player player, Card card, int currentRound)
         {
-            var tmpPlayer = await _db.Players.FindAsync(player.Id);
-            var tmpCard = await _db.Cards.FindAsync(card.Id);
+            Player tmpPlayer = await _db.Players.FindAsync(player.Id);
+            Card tmpCard = await _db.Cards.FindAsync(card.Id);
 
             var tmpPlayersCards = new PlayerCard();
             tmpPlayersCards.Card = tmpCard;
@@ -32,9 +32,9 @@ namespace BlackJack.DAL.Repositories
         }
 
 
-        public IEnumerable<PlayerCard> GetAll()
+        public List<PlayerCard> GetAll()
         {
-            var playerCardsList=_db.PlayersCards.ToList();
+            List<PlayerCard> playerCardsList=_db.PlayersCards.ToList();
             return playerCardsList;
         }
     }
