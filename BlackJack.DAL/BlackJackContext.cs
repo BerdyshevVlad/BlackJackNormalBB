@@ -22,7 +22,7 @@ namespace BlackJack.DAL
 
     }
 
-    public class ContextInitializer : DropCreateDatabaseAlways<BlackJackContext>
+    public class ContextInitializer : CreateDatabaseIfNotExists<BlackJackContext>
     {
         protected override void Seed(BlackJackContext context)
         {

@@ -13,7 +13,7 @@ namespace BlackJack.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201808171046408_init"; }
+            get { return "201808220958498_init"; }
         }
         
         string IMigrationMetadata.Source

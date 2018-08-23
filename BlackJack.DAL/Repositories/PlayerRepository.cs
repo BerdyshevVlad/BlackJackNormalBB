@@ -41,6 +41,14 @@ namespace BlackJack.DAL.Repositories
         }
 
 
+        public async Task<List<PlayerCard>> GetPlayersByRound(int round)
+        {
+            List<PlayerCard> playerList = await _db.PlayersCards.Where(x => x.CurrentRound == round).ToListAsync();
+            var playerList1 = playerList.GroupBy(x => x.PlayerId).Select(gr=>gr.FirstOrDefault()).ToList();
+            return playerList1;
+        }
+
+
         public async Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id,int round)
         {
             List<PlayerCard> playerList = await GetPlayerByIdAndByRound(id, round);

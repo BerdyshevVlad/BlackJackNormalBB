@@ -4,59 +4,69 @@
 }
 
 <h2>HandOverCards</h2>
+<div id="newRoundHeader"></div>
 
-<div id="result">
-    <table class="table">
-        <h1>Cards:</h1>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.Player.Name
-                <td>
-                    @foreach (var t in item.Cards)
-                    {
-                        @t.Value
-                        <span>, </span>
-                    }
-                </td>
-                </td>
-            </tr>
+    <div id="result">
+        <table class="table">
+            <h1>Cards:</h1>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Player.Name
+                    <td>
+                        @foreach (var t in item.Cards)
+                        {
+                            @t.Value
+                            <span>, </span>
+                        }
+                    </td>
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+
+        <table class="table">
+            <h1>Total scores:</h1>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Player.Name:
+                    <td>
+                        @item.Player.Score
+                    </td>
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+
+
+    @using (Ajax.BeginForm("PlayAgain", new AjaxOptions { UpdateTargetId = "result" }))
+    {
+        <button name="takeCard" type="submit" value="true">Draw</button>
+        <button name="takeCard" type="submit" value="false">Stand</button>
+    }
+
+
+    @using (Ajax.BeginForm("StartNewRound", new AjaxOptions { UpdateTargetId = "result" }))
+    {
+        <button id="startNewRound" type="submit">Start new round</button>
+    }
+
+    @Scripts.Render("~/scripts/jquery-3.3.1.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+
+    <script>
+        var count = 0;
+        alert("REFRESH");
+        $("#startNewRound").click(function () {
+            $("#newRoundHeader").text("New round is started" +" "count);
+            count++;
         }
-    </table>
-
-
-
-    <table class="table">
-        <h1>Total scores:</h1>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.Player.Name:
-                <td>
-                    @item.Player.Score
-                </td>
-                </td>
-            </tr>
-        }
-    </table>
-
-</div>
-
-@using (Ajax.BeginForm("PlayAgain", new AjaxOptions { UpdateTargetId = "result" }))
-{
-    <button name="takeCard" type="submit" value="true">Draw</button>
-    <button name="takeCard" type="submit" value="false">Stand</button>
-}
-
-    <li>@Html.ActionLink("StartNewRound", "StartNewRound", "GameLogic", new { area = "" }, null)</li>
-
-
-
-@Scripts.Render("~/scripts/jquery-3.3.1.js")
-@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
-
-<script>
-    alert("REFRESH")
-</script>
+        );
+    </script>

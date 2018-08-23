@@ -17,9 +17,9 @@ namespace BlackJack.Controllers
     {
         private GameSetService _gameSetService;
 
-        public GameSetController()
+        public GameSetController(GameSetService gameSetService)
         {
-            _gameSetService = new GameSetService();
+            _gameSetService = gameSetService;
         }
 
 
@@ -36,15 +36,14 @@ namespace BlackJack.Controllers
 
         public async Task<ActionResult> SetBotCount()
         {
-            try
-            {
-                await _gameSetService.InitializePlayers();
+            //try
+            //{
                 await _gameSetService.SetBotCount(3);
-            }
-            catch (Exception ex)
-            {
-                return View("Error", new string[] { ex.Message });
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return View("Error", new string[] { ex.Message });
+            //}
             return View();
         }
     }

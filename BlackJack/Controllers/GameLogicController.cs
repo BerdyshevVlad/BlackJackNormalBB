@@ -15,19 +15,22 @@ namespace BlackJack.Controllers
     {
         private GameLogicService _gameLogicService;
 
-        public GameLogicController()
+        public GameLogicController(GameLogicService gameLogicService)
         {
-            _gameLogicService = new GameLogicService();
+            _gameLogicService = gameLogicService;
         }
 
 
 
         public async Task<ActionResult> HandOverCards()
         {
-            Dictionary<PlayerViewModel,List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
-            List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
+            //Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
+            //List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
 
-            return View(model);
+            await _gameLogicService.GetHistory();
+
+            //return View(model);
+            return null;
         }
 
 
@@ -46,7 +49,7 @@ namespace BlackJack.Controllers
             Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.StartNewRound();
             List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
 
-            return View("HandOverCards", model);
+            return PartialView("StartNewRound", model);
         }
     }
 }

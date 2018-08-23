@@ -1,4 +1,5 @@
-﻿using BlackJack.DAL.Enums;
+﻿using BlackJack.BLL.Interfaces;
+using BlackJack.DAL.Enums;
 using BlackJack.DAL.Interfaces;
 using BlackJack.DAL.Repositories;
 using BlackJack.EntitiesLayer.Entities;
@@ -12,31 +13,55 @@ using System.Threading.Tasks;
 
 namespace BlackJack.BLL.Services
 {
-    public class GameSetService
+    public class GameSetService:IGameSet
     {
         private readonly ICardRepository<Card> _cardRepository;
         private readonly IPlayerRepository<Player> _playerRepository;
 
         private readonly string _dealerPlayerType;
         private readonly string _personPlayerType;
+        private int _gameNumber;
 
-
-        public GameSetService()
+        public GameSetService(ICardRepository<Card> cardRepository,IPlayerRepository<Player> playerRepository)
         {
-            _cardRepository = new CardRepository(new DAL.BlackJackContext());
-            _playerRepository = new PlayerRepository(new DAL.BlackJackContext());
+            _cardRepository = cardRepository;
+            _playerRepository = playerRepository;
             _dealerPlayerType = "Dealer";
             _personPlayerType = "Person";
         }
 
 
+        public async Task<int> DefineCurrentGame()
+        {
+            int _currentRound = 0;
+            try
+            {
+                var gamePlayersList =await _playerRepository.GetAll();
+                int maxGame = gamePlayersList.Max(x => x.GameNumber);
+                if (maxGame > 0)
+                {
+                    _currentRound = maxGame+1;
+                }
+            }
+            catch
+            {
+
+                _currentRound = 1;
+            }
+
+            return _currentRound;
+        }
+
+
         public async Task SetBotCount(int botsCount)
         {
+            _gameNumber = await DefineCurrentGame();
+            await InitializePlayers(_gameNumber);
             try
             {
                 for (int i = 0; i < botsCount; i++)
                 {
-                    await _playerRepository.Insert(new Player { Name = $"Bot{i}", PlayerType = "Bot" });
+                    await _playerRepository.Insert(new Player { Name = $"Bot{i}", PlayerType = "Bot" ,GameNumber= _gameNumber });
                 }
             }
             catch (Exception ex)
@@ -82,14 +107,16 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task InitializePlayers()
+        public async Task InitializePlayers(int game)
         {
             var dealer = new Player();
             dealer.Name = "Dealer";
             dealer.PlayerType = _dealerPlayerType;
+            dealer.GameNumber = game;
             var playerPerson = new Player();
             playerPerson.Name = "You";
             playerPerson.PlayerType = _personPlayerType;
+            playerPerson.GameNumber = game;
 
             try
             {

@@ -25,6 +25,7 @@ namespace BlackJack.DAL.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         PlayerType = c.String(),
+                        GameNumber = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

@@ -11,5 +11,10 @@ namespace BlackJack.ViewModels
     {
         public PlayerViewModel Player { get; set; }
         public List<CardViewModel> Cards { get; set; }
+
+        public PlayerCardsViewModel()
+        {
+            Cards = new List<CardViewModel>();
+        }
     }
 }

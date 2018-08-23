@@ -1,4 +1,5 @@
-﻿using BlackJack.DAL.Interfaces;
+﻿using BlackJack.BLL.Interfaces;
+using BlackJack.DAL.Interfaces;
 using BlackJack.DAL.Repositories;
 using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack.BLL.Services
 {
-    public class GameLogicService
+    public class GameLogicService: IGameLogic
     {
         private readonly ICardRepository<Card> _cardRepository;
         private readonly IPlayerRepository<Player> _playerRepository;
@@ -23,15 +24,14 @@ namespace BlackJack.BLL.Services
         private List<int> __drawnedCardId;
 
 
-        public GameLogicService()
+        public GameLogicService(ICardRepository<Card> cardRepository,IPlayerRepository<Player> playerRepository,IPlayerCardRepository playerCardRepository)
         {
-            _cardRepository = new CardRepository(new DAL.BlackJackContext());
-            _playerRepository = new PlayerRepository(new DAL.BlackJackContext());
-            _playerCardRepository = new PlayerCardRepository(new DAL.BlackJackContext());
+            _cardRepository = cardRepository;
+            _playerRepository = playerRepository;
+            _playerCardRepository = playerCardRepository;
             _round = DefineCurrentRound();
             __drawnedCardId = new List<int>();
         }
-
 
         public async Task<CardViewModel> DrawCard()
         {
@@ -93,7 +93,7 @@ namespace BlackJack.BLL.Services
                 int maxRound = gamePlayersList.Max(x => x.CurrentRound);
                 if (maxRound > 0)
                 {
-                    _currentRound = maxRound;
+                    _currentRound = maxRound;           
                 }
             }
             catch
@@ -106,13 +106,24 @@ namespace BlackJack.BLL.Services
         }
 
 
+        public async Task<IEnumerable<KeyValuePair<Player,List<Card>>>> DefinePlayersFromLastGame()
+        {
+            Dictionary<Player, List<Card>> playerCardsDictionary = await _playerRepository.GetAllCardsFromAllPlayers(_round);
+
+            int max = playerCardsDictionary.Max(x => x.Key.GameNumber);
+            var playersLastGame = playerCardsDictionary.Where(x => x.Key.GameNumber == max);
+            return playersLastGame;
+        }
+
+
         public async Task<List<PlayerViewModel>> GiveCardToEachPlayer()
         {
             List<Player> playersList = await _playerRepository.GetAll();
-
             var playerModelList = new List<PlayerViewModel>();
 
-            foreach (var player in playersList.ToList())
+            int max = playersList.Max(x => x.GameNumber);
+
+            foreach (var player in playersList.ToList().Where(x=>x.GameNumber==max))        
             {
                 CardViewModel drawnedCard = await DrawCard();
                 Card card = Mapp.MappCardModel(drawnedCard);
@@ -127,6 +138,7 @@ namespace BlackJack.BLL.Services
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> HandOverCards()
         {
             int handOverCount = 2;
+            _round++;   
 
             List<PlayerViewModel> playerModelList = null;
 
@@ -135,9 +147,8 @@ namespace BlackJack.BLL.Services
                 playerModelList = await GiveCardToEachPlayer();
             }
 
-            Dictionary < Player, List<Card>> playerCardsDictionary = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModel(playerCardsDictionary);
-
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame=await DefinePlayersFromLastGame();             //??????
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCardsLastGame);
             CountSum(ref playerCardsModelDictionary);
 
             return playerCardsModelDictionary;
@@ -146,14 +157,14 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, int>> GetScoreCount()
         {
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();               //???????
 
-            Dictionary < Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
             var playerScore = new Dictionary<PlayerViewModel, int>();
-            foreach (var player in playerCards.Keys)
+            foreach (var player in playerCardsLastGame)
             {
-                IEnumerable<Card> cardsList = await _playerRepository.GetAllCardsFromPlayer(player.Id, _round);
+                IEnumerable<Card> cardsList = await _playerRepository.GetAllCardsFromPlayer(player.Key.Id, _round);
                 int score = cardsList.ToList().Sum(card => card.Value);
-                PlayerViewModel playerModel = Mapp.MappPlayer(player);
+                PlayerViewModel playerModel = Mapp.MappPlayer(player.Key);
                 playerScore.Add(playerModel, score);
             }
 
@@ -183,7 +194,7 @@ namespace BlackJack.BLL.Services
             }
 
             Dictionary<Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModel(playerCards);
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCards);
 
             return playerCardsModelDictionary;
         }
@@ -216,12 +227,11 @@ namespace BlackJack.BLL.Services
                 }
             }
 
-            Dictionary<Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();                //????????????????
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCardsLastGame);
+            CountSum(ref playerCardsModelDictionary);
 
-            CountSum(ref playerCardsModel);
-
-            return playerCardsModel;
+            return playerCardsModelDictionary;
         }
 
 
@@ -265,15 +275,13 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> StartNewRound()
         {
-            _round++;
             await HandOverCards();
 
-            Dictionary<Player, List<Card>> playerCards = await _playerRepository.GetAllCardsFromAllPlayers(_round);
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModel = Mapp.MappPlayerModel(playerCards);
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();                //????????????
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCardsLastGame);
+            CountSum(ref playerCardsModelDictionary);
 
-            CountSum(ref playerCardsModel);
-
-            return playerCardsModel;
+            return playerCardsModelDictionary;
         }
 
 
@@ -283,6 +291,32 @@ namespace BlackJack.BLL.Services
             {
                 playerCards.Key.Score = playerCards.Value.Sum(cardModel => cardModel.Value);
             }
+        }
+
+
+        public async Task<GameHistory> GetHistory()
+        {
+            List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
+            int maxRound = gamePlayersList.Max(r => r.CurrentRound);
+
+            var gameInfo = new GameHistory();
+            for (int i = 1; i <= maxRound; i++)
+            {
+                var roundModel = new RoundViewModel();
+                List<PlayerCard> playersList =await _playerRepository.GetPlayersByRound(i);
+                foreach (var item in playersList)
+                {
+                    IEnumerable<Card> cardList = await _playerRepository.GetAllCardsFromPlayer(item.PlayerId,i);
+                    Player player = await _playerRepository.GetById(item.PlayerId);
+
+                    PlayerViewModel playerModel = Mapp.MappPlayer(player);
+                    List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
+                    roundModel.roundModelList.Add(new PlayerCardsViewModel { Player=playerModel,Cards= cardModelList});
+                }
+                gameInfo.Game.Add(roundModel);
+            }
+
+            return gameInfo;
         }
     }
 }

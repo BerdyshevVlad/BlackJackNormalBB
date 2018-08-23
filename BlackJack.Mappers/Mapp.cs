@@ -142,5 +142,33 @@ namespace BlackJack.Mappers
 
             return model;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public static Dictionary<PlayerViewModel, List<CardViewModel>> MappPlayerModelDictionary(IEnumerable<KeyValuePair<Player, List<Card>>> playerDictionary)
+        {
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModel = new Dictionary<PlayerViewModel, List<CardViewModel>>();
+            foreach (var pc in playerDictionary)
+            {
+                
+                    PlayerViewModel playerModel = Mapp.MappPlayer(pc.Key);
+                    List<CardViewModel> cardModel = Mapp.MappCard(pc.Value);
+                    playerCardsModel.Add(playerModel, cardModel);
+                
+            }
+
+            return playerCardsModel;
+        }
     }
 }

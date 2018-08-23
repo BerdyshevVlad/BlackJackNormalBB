@@ -13,6 +13,7 @@ namespace BlackJack.EntitiesLayer.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string PlayerType { get; set; }
+        public int GameNumber { get; set; }
 
     }
 }

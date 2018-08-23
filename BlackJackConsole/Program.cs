@@ -1,5 +1,4 @@
 ﻿
-using BlackJack.DAL.Entities;
 using BlackJack.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,76 +22,76 @@ namespace BlackJackConsole
             
 
 
-            List<string> suitsList = new List<string> ( new string[] { "Spades", "Hearts", "Clubs", "Diamonds"} );
-            foreach (var suit in suitsList)
-            {
-                for (var value = 1; value <= 14; value++)
-                {
-                    Card card = new Card { Value = value };
-                    context.Cards.Add(card);
-                    context.SaveChanges();
-                }
-            }
+            //List<string> suitsList = new List<string> ( new string[] { "Spades", "Hearts", "Clubs", "Diamonds"} );
+            //foreach (var suit in suitsList)
+            //{
+            //    for (var value = 1; value <= 14; value++)
+            //    {
+            //        Card card = new Card { Value = value };
+            //        context.Cards.Add(card);
+            //        context.SaveChanges();
+            //    }
+            //}
 
             
 
-            Player player1 = new Player {Name="Player1",PlayerType="Player" };
-            Player player2 = new Player {Name="Player2",PlayerType= "Player" };
+            //Player player1 = new Player {Name="Player1",PlayerType="Player" };
+            //Player player2 = new Player {Name="Player2",PlayerType= "Player" };
 
-            context.Players.Add(player1);
-            context.Players.Add(player2);
-
-
-            Random random = new Random();
-            var playersList = context.Players.ToList();
+            //context.Players.Add(player1);
+            //context.Players.Add(player2);
 
 
+            //Random random = new Random();
+            //var playersList = context.Players.ToList();
 
 
-            int currentRound=0;
-            try
-            {
-                if (context.PlayersCards.Max(x => x.CurrentRound)>0)
-                {
-                    currentRound = context.PlayersCards.Max(x => x.CurrentRound)+1;
-                }
-            }
-            catch
-            {
-                currentRound = 1;
-            }
 
 
-            for (int j = 0; j < 5; j++)
-            {
+            //int currentRound=0;
+            //try
+            //{
+            //    if (context.PlayersCards.Max(x => x.CurrentRound)>0)
+            //    {
+            //        currentRound = context.PlayersCards.Max(x => x.CurrentRound)+1;
+            //    }
+            //}
+            //catch
+            //{
+            //    currentRound = 1;
+            //}
 
 
-            for (int i = 0; i < playersList.Count(); i++)
-            {
+            //for (int j = 0; j < 5; j++)
+            //{
 
-                var randomCardId=random.Next(1, 53);
-                Card card = context.Cards.Find(randomCardId);
+
+            //for (int i = 0; i < playersList.Count(); i++)
+            //{
+
+            //    var randomCardId=random.Next(1, 53);
+            //    Card card = context.Cards.Find(randomCardId);
                 
 
-                    context.Entry(card).State = EntityState.Modified;
-                    context.SaveChanges();
+            //        context.Entry(card).State = EntityState.Modified;
+            //        context.SaveChanges();
 
-                    var tmpPlayer = context.Players.Find(player1.Id);
-                    var tmpCard =  context.Cards.Find(card.Id);
+            //        var tmpPlayer = context.Players.Find(player1.Id);
+            //        var tmpCard =  context.Cards.Find(card.Id);
 
-                    var tmpPlayersCards = new PlayerCard()
-                    {
-                        //PlayerId = tmpPlayer.Id,
-                        //CardId = tmpCard.Id,
-                        CurrentRound = currentRound
-                    };
+            //        var tmpPlayersCards = new PlayerCard()
+            //        {
+            //            //PlayerId = tmpPlayer.Id,
+            //            //CardId = tmpCard.Id,
+            //            CurrentRound = currentRound
+            //        };
 
-                    context.PlayersCards.Add(tmpPlayersCards);
+            //        context.PlayersCards.Add(tmpPlayersCards);
 
-                    context.SaveChanges();
-            }
+            //        context.SaveChanges();
+            //}
 
-            }
+            //}
 
 
             //var cardList1 = playerRepository.GetAllCardsFromPlayer(player1.Id);
