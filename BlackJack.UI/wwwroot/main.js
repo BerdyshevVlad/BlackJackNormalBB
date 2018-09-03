@@ -117,6 +117,7 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
+        debugger;
         this._http.get("/api/values").subscribe(function (result) {
             _this.apiValues = result.json();
             for (var _i = 0, _a = _this.apiValues; _i < _a.length; _i++) {

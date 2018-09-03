@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     this._http.get("/api/values").subscribe(result=>
     {
       this.apiValues = result.json();

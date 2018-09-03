@@ -26,7 +26,7 @@ namespace BlackJack.BLL.Services
 
         public GameLogicService(ICardRepository<Card> cardRepository,IPlayerRepository<Player> playerRepository,IPlayerCardRepository playerCardRepository)
         {
-            _cardRepository = cardRepository;
+            _cardRepository =  cardRepository;
             _playerRepository = playerRepository;
             _playerCardRepository = playerCardRepository;
             _round = DefineCurrentRound();

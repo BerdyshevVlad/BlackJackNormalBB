@@ -14,7 +14,7 @@ namespace BlackJackConsole
         static void Main(string[] args)
 
         {
-            var context = new BlackJack.DAL.BlackJackContext();
+            //var context = new BlackJack.DAL.BlackJackContext();
             //PlayerRepository playerRepository = new PlayerRepository(context);
             //CardRepository cardRepository = new CardRepository(context);
 

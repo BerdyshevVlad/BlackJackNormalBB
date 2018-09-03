@@ -52,13 +52,13 @@ namespace BlackJack.DAL.Repositories
         public async Task<List<Card>> GetAll()
         {
 
-            List<Card> cardsList =await _db.Cards.ToListAsync();
+            List<Card> cardsList = _db.Cards.ToList();
             return cardsList;
         }
 
         public async Task Update(Card card)
         {
-            _db.Entry(card).State = EntityState.Modified;
+            //_db.Entry(card).State = EntityState.Modified;
             await _db.SaveChangesAsync();
 
         }

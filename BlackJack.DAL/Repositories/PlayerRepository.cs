@@ -121,7 +121,7 @@ namespace BlackJack.DAL.Repositories
 
         public async Task Update(Player player)
         {
-            _db.Entry(player).State = EntityState.Modified;
+            //_db.Entry(player).State = EntityState.Modified;
             await _db.SaveChangesAsync();
 
         }
