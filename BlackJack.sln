@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.ViewModels", "Bla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.EntitiesLayer", "BlackJack.Entities\BlackJack.EntitiesLayer.csproj", "{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.UI", "BlackJack.UI\BlackJack.UI.csproj", "{8391DBC8-CBF6-4FD8-BF8D-BC5392B70F58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8391DBC8-CBF6-4FD8-BF8D-BC5392B70F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8391DBC8-CBF6-4FD8-BF8D-BC5392B70F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8391DBC8-CBF6-4FD8-BF8D-BC5392B70F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8391DBC8-CBF6-4FD8-BF8D-BC5392B70F58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,9 @@
+<h1>My text</h1>
+
+<ul>
+  <li *ngFor="let result of apiValues">{{result.id}}</li>
+</ul>
+
+<app-test [testString]="testString"></app-test>
+
+<button (click)="getTestString()">TEST</button>
