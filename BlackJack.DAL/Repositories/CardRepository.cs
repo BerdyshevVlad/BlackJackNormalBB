@@ -56,6 +56,12 @@ namespace BlackJack.DAL.Repositories
             return cardsList;
         }
 
+        public bool IsExist()
+        {
+            var isExist = _db.Cards.Any();
+            return isExist;
+        }
+
         public async Task Update(Card card)
         {
             //_db.Entry(card).State = EntityState.Modified;

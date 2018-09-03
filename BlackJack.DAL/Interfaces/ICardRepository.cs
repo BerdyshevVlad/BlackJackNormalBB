@@ -8,5 +8,6 @@ namespace BlackJack.DAL.Interfaces
 {
     public interface ICardRepository<T> : IRepository<T> where T : class
     {
+        bool IsExist();
     }
 }

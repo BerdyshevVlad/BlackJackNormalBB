@@ -30,7 +30,6 @@ namespace BlackJack.BLL.Services
             _personPlayerType = "Person";
         }
 
-
         public async Task<int> DefineCurrentGame()
         {
             int _currentRound = 0;
@@ -152,7 +151,7 @@ namespace BlackJack.BLL.Services
                 {
                     for (int value = cardMinValue, rankValue = rankMinValue; value <= cardMaxValue && rankValue <= rankMaxValue; value++, rankValue++)
                     {
-                        if (value>= enumJackValue && value<= enumKingValue)
+                        if (value >= enumJackValue && value <= enumKingValue)
                         {
                             card = new Card { Value = JackQueenKingValues, Suit = suit, Rank = enumValuesList.GetValue(rankValue).ToString() };
                         }
@@ -160,7 +159,7 @@ namespace BlackJack.BLL.Services
                         {
                             card = new Card { Value = AceValue, Suit = suit, Rank = enumValuesList.GetValue(rankValue).ToString() };
                         }
-                        if(value < enumJackValue)
+                        if (value < enumJackValue)
                         {
                             card = new Card { Value = value, Suit = suit, Rank = enumValuesList.GetValue(rankValue).ToString() };
                         }
@@ -169,11 +168,15 @@ namespace BlackJack.BLL.Services
                     }
                 }
 
-                foreach (var cardItem in cardsList)
-                {
-                    await _cardRepository.Insert(cardItem);
-                }
+                var t = _cardRepository.IsExist();
+                if (t == false)
+                    foreach (var cardItem in cardsList)
+                    {
+
+                        await _cardRepository.Insert(cardItem);
+                    }
             }
+
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);

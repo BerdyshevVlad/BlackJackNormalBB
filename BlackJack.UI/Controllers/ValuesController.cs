@@ -26,7 +26,6 @@ namespace BlackJack.UI.Controllers
     {
 
       bool isWork = await _gameSetService.SetDeck();
-
       List<CardViewModel> cardModelList = await _gameSetService.GetDeck();
 
 
