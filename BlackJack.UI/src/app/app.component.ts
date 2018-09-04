@@ -23,14 +23,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this._http.get("/api/values").subscribe(result=>
     {
-      debugger;
       this.cards = result.json();
-      debugger;
-      for (let item of this.cards) {
-        console.log(item.id);
-      }
-      }
-    );
+    });
   }
 
 
@@ -39,23 +33,30 @@ export class AppComponent implements OnInit {
     //var ele = document.getElementById("input-player");
     const url = `/api/values/${this.botCount}`;
     this._http.get(url).subscribe(result => {
-      debugger;
       this.players = result.json();
-      debugger;
       }
     );
   }
 
   handOverCards() {
     this._http.get("/api/gameLogic").subscribe(result => {
-      debugger;
       this.playersCards = result.json();
-      debugger;
-      console.log(this.playersCards.length);
     });
   }
 
+  playAgain() {
+    debugger;
+    this._http.get("/api/gamelogic/PlayAgain/true").subscribe(result => {
+      this.playersCards = result.json();
+    });
+  }
 
+  playStay() {
+    debugger;
+    this._http.get("/api/gamelogic/PlayAgain/false").subscribe(result => {
+      this.playersCards = result.json();
+    });
+  }
 
 }
 
@@ -75,5 +76,5 @@ export interface PlayerData {
 
 export interface PlayersCards {
   player: PlayerData;
-  cardsList: CardData[];
+  cards: CardData[];
 }

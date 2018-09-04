@@ -30,5 +30,17 @@ namespace BlackJack.UI.Controllers
 
       return model;
     }
+
+
+    [HttpGet("PlayAgain/{takeCard}")]
+    [ActionName("PlayAgain")]
+    public async Task<List<PlayerCardsViewModel>> PlayAgain(bool takeCard)
+    {
+      Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.PlayAgain(takeCard);
+      List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
+
+      return model;
+    }
+
   }
 }

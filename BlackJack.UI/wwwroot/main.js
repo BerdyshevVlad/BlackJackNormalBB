@@ -83,7 +83,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>My text</h1>\n\n<ul>\n  <li *ngFor=\"let result of cards\">{{result.id}}</li>\n</ul>\n\n<app-test [players]=\"players\"></app-test>\n\n\n<button (click)=\"handOverCards()\">HAND OVER CARDS</button>\n\n\n\n<input [(ngModel)]=\"botCount\">\n<button (click)=\"getPlayers()\">Start new game (CREATE NEW PLAYERS)</button>\n<!--<button (click)=\"getPlayers()\">Start new game (CREATE NEW PLAYERS)</button>-->\n"
+module.exports = "<h1>My text</h1>\r\n<!--<ul>\r\n  <li *ngFor=\"let result of cards\">{{result.id}}</li>\r\n</ul>-->\r\n<app-test [players]=\"players\"></app-test>\r\n\r\n<button (click)=\"handOverCards()\">HAND OVER CARDS</button>\r\n\r\n<input [(ngModel)]=\"botCount\">\r\n<button (click)=\"getPlayers()\">Start new game (CREATE NEW PLAYERS)</button>\r\n\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of playersCards\">\r\n    {{result.player.name}}\r\n    <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>\r\n<button (click)=\"playAgain()\">MORE</button>\r\n<button (click)=\"playStay()\">STAY</button>\r\n<!--<button (click)=\"getPlayers()\">Start new game (CREATE NEW PLAYERS)</button>-->\r\n"
 
 /***/ }),
 
@@ -120,13 +120,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this._http.get("/api/values").subscribe(function (result) {
-            debugger;
             _this.cards = result.json();
-            debugger;
-            for (var _i = 0, _a = _this.cards; _i < _a.length; _i++) {
-                var item = _a[_i];
-                console.log(item.id);
-            }
         });
     };
     AppComponent.prototype.getPlayers = function () {
@@ -135,18 +129,27 @@ var AppComponent = /** @class */ (function () {
         //var ele = document.getElementById("input-player");
         var url = "/api/values/" + this.botCount;
         this._http.get(url).subscribe(function (result) {
-            debugger;
             _this.players = result.json();
-            debugger;
         });
     };
     AppComponent.prototype.handOverCards = function () {
         var _this = this;
         this._http.get("/api/gameLogic").subscribe(function (result) {
-            debugger;
             _this.playersCards = result.json();
-            debugger;
-            console.log(_this.playersCards.length);
+        });
+    };
+    AppComponent.prototype.playAgain = function () {
+        var _this = this;
+        debugger;
+        this._http.get("/api/gamelogic/PlayAgain/true").subscribe(function (result) {
+            _this.playersCards = result.json();
+        });
+    };
+    AppComponent.prototype.playStay = function () {
+        var _this = this;
+        debugger;
+        this._http.get("/api/gamelogic/PlayAgain/false").subscribe(function (result) {
+            _this.playersCards = result.json();
         });
     };
     AppComponent = __decorate([
@@ -238,7 +241,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>Test</p>\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of players\">{{result.id}}</li>\r\n</ul>\n"
+module.exports = "<p>Test</p>\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of players\">{{result.name}}</li>\r\n</ul>\n"
 
 /***/ }),
 

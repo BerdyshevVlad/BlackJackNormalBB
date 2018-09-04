@@ -1,5 +1,6 @@
 ﻿using BlackJack.EntitiesLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -27,7 +28,14 @@ namespace BlackJack.DAL
         public BlackJackContext(DbContextOptions<BlackJackContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            try
+            {
+                Database.EnsureCreated();
+            }
+            catch (Exception ex)
+            {
+                //ignore
+            }
         }
     }
 
@@ -37,7 +45,7 @@ namespace BlackJack.DAL
     //{
     //    protected override void Seed(BlackJackContext context)
     //    {
-           
+
     //    }
     //}
 }
