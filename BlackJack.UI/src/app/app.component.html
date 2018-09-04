@@ -1,9 +1,16 @@
 <h1>My text</h1>
 
 <ul>
-  <li *ngFor="let result of apiValues">{{result.id}}</li>
+  <li *ngFor="let result of cards">{{result.id}}</li>
 </ul>
 
-<app-test [testString]="testString"></app-test>
+<app-test [players]="players"></app-test>
 
-<button (click)="getTestString()">TEST</button>
+
+<button (click)="handOverCards()">HAND OVER CARDS</button>
+
+
+
+<input [(ngModel)]="botCount">
+<button (click)="getPlayers()">Start new game (CREATE NEW PLAYERS)</button>
+<!--<button (click)="getPlayers()">Start new game (CREATE NEW PLAYERS)</button>-->

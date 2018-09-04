@@ -35,7 +35,7 @@ namespace BlackJack.DAL.Repositories
 
         public async Task<List<PlayerCard>> GetPlayerByIdAndByRound(int id, int round)
         {
-            List<PlayerCard> playerList = await _db.PlayersCards.Where(x => x.PlayerId == id && x.CurrentRound == round).ToListAsync();
+            List<PlayerCard> playerList =  _db.PlayersCards.Where(x => x.PlayerId == id && x.CurrentRound == round).ToList();    //////async
 
             return playerList;
         }
@@ -51,12 +51,12 @@ namespace BlackJack.DAL.Repositories
 
         public async Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id,int round)
         {
-            List<PlayerCard> playerList = await GetPlayerByIdAndByRound(id, round);
+            List<PlayerCard> playerList = await GetPlayerByIdAndByRound(id, round);        ///async
 
             List<Card> cardsList = new List<Card>();
             foreach (var playerCard in playerList)
             {
-                Card card = await _db.Cards.FindAsync(playerCard.CardId);
+                Card card =  _db.Cards.Find(playerCard.CardId);           //async
                 cardsList.Add(card);
             }
 
@@ -66,7 +66,7 @@ namespace BlackJack.DAL.Repositories
 
         public async Task<Dictionary<Player, List<Card>>> GetAllCardsFromAllPlayers(int round)
         {
-            List<Player> playerList = await GetAll();
+            IEnumerable<Player> playerList = await GetAll();
 
             Dictionary<Player, List<Card>> playerCardsDictionary = new Dictionary<Player, List<Card>>();
 
@@ -112,10 +112,10 @@ namespace BlackJack.DAL.Repositories
         }
     
 
-        public async Task<List<Player>> GetAll()
+        public async Task<IEnumerable<Player>> GetAll()
         {
 
-            List<Player> playersList = await _db.Players.ToListAsync();
+            List<Player> playersList =_db.Players.ToList();
             return playersList;
         }
 
@@ -125,5 +125,6 @@ namespace BlackJack.DAL.Repositories
             await _db.SaveChangesAsync();
 
         }
+
     }
 }

@@ -83,7 +83,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>My text</h1>\n\n<ul>\n  <li *ngFor=\"let result of apiValues\">{{result.id}}</li>\n</ul>\n\n<app-test [testString]=\"testString\"></app-test>\n\n<button (click)=\"getTestString()\">TEST</button>\n"
+module.exports = "<h1>My text</h1>\n\n<ul>\n  <li *ngFor=\"let result of cards\">{{result.id}}</li>\n</ul>\n\n<app-test [players]=\"players\"></app-test>\n\n\n<button (click)=\"handOverCards()\">HAND OVER CARDS</button>\n\n\n\n<input [(ngModel)]=\"botCount\">\n<button (click)=\"getPlayers()\">Start new game (CREATE NEW PLAYERS)</button>\n<!--<button (click)=\"getPlayers()\">Start new game (CREATE NEW PLAYERS)</button>-->\n"
 
 /***/ }),
 
@@ -113,25 +113,40 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var AppComponent = /** @class */ (function () {
     function AppComponent(_http) {
         this._http = _http;
-        this.apiValues = [];
+        this.cards = [];
+        this.players = [];
+        this.playersCards = [];
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        debugger;
         this._http.get("/api/values").subscribe(function (result) {
-            _this.apiValues = result.json();
-            for (var _i = 0, _a = _this.apiValues; _i < _a.length; _i++) {
+            debugger;
+            _this.cards = result.json();
+            debugger;
+            for (var _i = 0, _a = _this.cards; _i < _a.length; _i++) {
                 var item = _a[_i];
                 console.log(item.id);
             }
         });
     };
-    AppComponent.prototype.getTestString = function () {
+    AppComponent.prototype.getPlayers = function () {
         var _this = this;
-        this._http.get("/api/values/3").subscribe(function (result) {
+        debugger;
+        //var ele = document.getElementById("input-player");
+        var url = "/api/values/" + this.botCount;
+        this._http.get(url).subscribe(function (result) {
             debugger;
-            _this.testString = result.json();
+            _this.players = result.json();
             debugger;
+        });
+    };
+    AppComponent.prototype.handOverCards = function () {
+        var _this = this;
+        this._http.get("/api/gameLogic").subscribe(function (result) {
+            debugger;
+            _this.playersCards = result.json();
+            debugger;
+            console.log(_this.playersCards.length);
         });
     };
     AppComponent = __decorate([
@@ -223,7 +238,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>Test</p>\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of testString\">{{result}}</li>\r\n</ul>\n"
+module.exports = "<p>Test</p>\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of players\">{{result.id}}</li>\r\n</ul>\n"
 
 /***/ }),
 
@@ -252,12 +267,12 @@ var TestComponent = /** @class */ (function () {
     function TestComponent() {
     }
     TestComponent.prototype.ngOnInit = function () {
-        console.log(this.testString);
+        console.log(this.players);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], TestComponent.prototype, "testString", void 0);
+        __metadata("design:type", Object)
+    ], TestComponent.prototype, "players", void 0);
     TestComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-test',

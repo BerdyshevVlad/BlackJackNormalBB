@@ -37,6 +37,7 @@ namespace BlackJack.UI
       services.AddDbContext<BlackJackContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:BlackJackContext"]));
       services.AddTransient<ICardRepository<Card>, CardRepository>();
       services.AddTransient<IPlayerRepository<Player>, PlayerRepository>();
+      services.AddTransient<IPlayerCardRepository, PlayerCardRepository>();
       services.AddTransient<IGameSet, GameSetService>();
       services.AddTransient<IGameLogic, GameLogicService>();
     }

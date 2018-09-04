@@ -77,7 +77,7 @@ namespace BlackJack.BLL.Services
 
             try
             {
-                List<Player> playersList = await _playerRepository.GetAll();
+                IEnumerable<Player> playersList =await _playerRepository.GetAll();
                 gamePlayerViewModelList = Mapp.MappPlayer(playersList.ToList());
             }
             catch (Exception ex)
@@ -94,7 +94,7 @@ namespace BlackJack.BLL.Services
             var cardsViewModel=new List<CardViewModel>();
             try
             {
-                List<Card> cardsListCollection = await _cardRepository.GetAll();
+                IEnumerable<Card> cardsListCollection = await _cardRepository.GetAll();
                 cardsViewModel = Mapp.MappCard((cardsListCollection.ToList()));
             }
             catch (Exception ex)

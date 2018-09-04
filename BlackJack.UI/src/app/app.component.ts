@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { debug } from 'util';
+
 
 @Component({
   selector: 'app-root',
@@ -9,33 +10,52 @@ import { debug } from 'util';
 })
 export class AppComponent implements OnInit {
 
-  apiValues: CardData[] = [];
-  testString: string;
+  cards: CardData[] = [];
+  players: PlayerData[] = [];
+  playersCards: PlayersCards[] = [];
+  botCount: number;
+  
 
   constructor(private _http: Http) {
 
   }
 
   ngOnInit() {
-    debugger;
     this._http.get("/api/values").subscribe(result=>
     {
-      this.apiValues = result.json();
-      for (let item of this.apiValues) {
+      debugger;
+      this.cards = result.json();
+      debugger;
+      for (let item of this.cards) {
         console.log(item.id);
       }
       }
     );
   }
 
-  getTestString() {
-    this._http.get("/api/values/3").subscribe(result => {
+
+  getPlayers() {
+    debugger;
+    //var ele = document.getElementById("input-player");
+    const url = `/api/values/${this.botCount}`;
+    this._http.get(url).subscribe(result => {
       debugger;
-      this.testString = result.json() as string;
+      this.players = result.json();
       debugger;
       }
     );
   }
+
+  handOverCards() {
+    this._http.get("/api/gameLogic").subscribe(result => {
+      debugger;
+      this.playersCards = result.json();
+      debugger;
+      console.log(this.playersCards.length);
+    });
+  }
+
+
 
 }
 
@@ -44,4 +64,16 @@ export interface CardData {
   value: number;
   suit: string;
   rank: string;
+}
+
+export interface PlayerData {
+  id: number;
+  name: string;
+  playerType: string;
+  score: number;
+}
+
+export interface PlayersCards {
+  player: PlayerData;
+  cardsList: CardData[];
 }

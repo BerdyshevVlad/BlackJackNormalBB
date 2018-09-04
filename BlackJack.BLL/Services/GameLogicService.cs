@@ -118,7 +118,7 @@ namespace BlackJack.BLL.Services
 
         public async Task<List<PlayerViewModel>> GiveCardToEachPlayer()
         {
-            List<Player> playersList = await _playerRepository.GetAll();
+            IEnumerable<Player> playersList = await _playerRepository.GetAll();
             var playerModelList = new List<PlayerViewModel>();
 
             int max = playersList.Max(x => x.GameNumber);

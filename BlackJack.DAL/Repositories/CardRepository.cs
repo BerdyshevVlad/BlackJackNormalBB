@@ -49,7 +49,7 @@ namespace BlackJack.DAL.Repositories
         }
 
 
-        public async Task<List<Card>> GetAll()
+        public async Task<IEnumerable<Card>> GetAll()
         {
 
             List<Card> cardsList = _db.Cards.ToList();

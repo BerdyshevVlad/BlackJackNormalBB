@@ -7,9 +7,16 @@ import { Http } from '@angular/http';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-  @Input() testString: string;
+  @Input() players: PlayerData;
 
   ngOnInit() {
-    console.log(this.testString);
+    console.log(this.players);
   }
+}
+
+export interface PlayerData {
+  id: number;
+  name: string;
+  playerType: string;
+  score: number;
 }

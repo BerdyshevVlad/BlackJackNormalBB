@@ -12,7 +12,7 @@ namespace BlackJack.DAL.Interfaces
         Task Delete(int id);
         IEnumerable<T> Find(Func<T, bool> predicate);
         Task<T> GetById(int id);
-        Task<List<T>> GetAll();
+        Task<IEnumerable<T>> GetAll();
         Task Update(T item);
     }
 }

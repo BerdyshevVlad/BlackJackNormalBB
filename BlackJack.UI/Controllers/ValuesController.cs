@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
 using BlackJack.BLL.Services;
+using BlackJack.Mappers;
 using BlackJack.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace BlackJack.UI.Controllers
   public class ValuesController : ControllerBase
   {
     private readonly IGameSet _gameSetService;
+
     public ValuesController(IGameSet gameSetService)
     {
       _gameSetService = gameSetService;
@@ -21,8 +23,8 @@ namespace BlackJack.UI.Controllers
 
     // GET api/values
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CardViewModel>>> GetAsync()
-    //public ActionResult<IEnumerable<string>> Get()
+    [ActionName("api/[controller]")]
+    public async Task<ActionResult<IEnumerable<CardViewModel>>> GetDeckAsync()
     {
 
       bool isWork = await _gameSetService.SetDeck();
@@ -32,18 +34,17 @@ namespace BlackJack.UI.Controllers
       return cardModelList;
     }
 
-    // GET api/values/5
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<string>> Get(int id)
+    //// GET api/values/5
+    [HttpGet("{count}")]
+    public async Task<ActionResult<List<PlayerViewModel>>> SetBotCountAsync(int count)
     {
-      return new string[] { "a", "b", "c" };
+      await _gameSetService.SetBotCount(count);
+      List<PlayerViewModel> playersModelList = await _gameSetService.GetPlayers();
+
+      return playersModelList;
     }
 
-    // POST api/values
-    [HttpPost]
-    public void Post([FromBody] string value)
-    {
-    }
+   
 
     // PUT api/values/5
     [HttpPut("{id}")]
