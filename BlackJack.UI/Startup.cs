@@ -34,9 +34,10 @@ namespace BlackJack.UI
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+      string connectionString = "Server=(localdb)\\mssqllocaldb;Database=BlackJackContext;Trusted_Connection=True;";
       services.AddDbContext<BlackJackContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:BlackJackContext"]));
-      services.AddTransient<ICardRepository<Card>, CardRepository>();
-      services.AddTransient<IPlayerRepository<Player>, PlayerRepository>();
+      services.AddTransient<ICardRepository<Card>, CardRepository>(provider => new CardRepository(connectionString));
+      services.AddTransient<IPlayerRepository<Player>, PlayerRepository>(provider => new PlayerRepository(connectionString));
       services.AddTransient<IPlayerCardRepository, PlayerCardRepository>();
       services.AddTransient<IGameSet, GameSetService>();
       services.AddTransient<IGameLogic, GameLogicService>();

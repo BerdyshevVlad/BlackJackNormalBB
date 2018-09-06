@@ -65,7 +65,7 @@ namespace BlackJack.Mappers
         }
 
 
-        public static Card MappCardModel(CardViewModel cardModel)
+        public  static Card MappCardModel(CardViewModel cardModel)
         {
             Card card = new Card();
             card.Id = cardModel.Id;

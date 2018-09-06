@@ -25,6 +25,7 @@ namespace BlackJack.BLL.Interfaces
         Task<bool> IsUserBusted();
         Task<Dictionary<PlayerViewModel, List<CardViewModel>>> StartNewRound();
         void CountSum(ref Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary);
-        Task<GameHistory> GetHistory();
+        Task<List<RoundViewModel>> GetHistory();
+        //Task<Dictionary<int, RoundViewModel>> GetHistory();
     }
 }

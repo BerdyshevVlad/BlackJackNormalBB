@@ -27,7 +27,7 @@ namespace BlackJack.DAL.Repositories
             tmpPlayersCards.Player = tmpPlayer;
             tmpPlayersCards.CurrentRound = currentRound;
 
-            _db.PlayersCards.Add(tmpPlayersCards);
+            await _db.PlayersCards.AddAsync(tmpPlayersCards);
             await _db.SaveChangesAsync();
         }
 

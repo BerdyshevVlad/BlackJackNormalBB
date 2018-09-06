@@ -42,5 +42,26 @@ namespace BlackJack.UI.Controllers
       return model;
     }
 
+
+    [HttpGet("StartNewRound")]
+    [ActionName("StartNewRound")]
+    public async Task<List<PlayerCardsViewModel>> StartNewRound()
+    {
+      Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.StartNewRound();
+      List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
+
+      return model;
+    }
+
+
+    [HttpGet("GetHistory")]
+    [ActionName("GetHistory")]
+    public async Task<List<RoundViewModel>> GetHistory()
+    {
+
+      List<RoundViewModel> history =await _gameLogicService.GetHistory();
+      return history;
+    }
+
   }
 }

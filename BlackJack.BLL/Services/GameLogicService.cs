@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlackJack.BLL.Services
@@ -45,7 +46,6 @@ namespace BlackJack.BLL.Services
                 isCurrentCardDrawned = IsCardAlreadyDrawned(randomValue);
             }
 
-            __drawnedCardId.Add(randomValue);
             Card card = await _cardRepository.GetById(randomValue);
             CardViewModel cardModel = Mapp.MappCard(card);
 
@@ -55,8 +55,16 @@ namespace BlackJack.BLL.Services
 
         public bool IsCardAlreadyDrawned(int randomValue)
         {
-            bool isCurrentCardDrawned = __drawnedCardId.Any(x => x == randomValue);
-            return isCurrentCardDrawned;
+            List<PlayerCard> playersCards = _playerCardRepository.GetAll();
+            List<PlayerCard> playersOfCurrentRound = playersCards.Where(x => x.CurrentRound == _round).ToList();
+            foreach (var pc in playersOfCurrentRound)
+            {
+                if(pc.CardId== randomValue){
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
 
@@ -122,11 +130,12 @@ namespace BlackJack.BLL.Services
             var playerModelList = new List<PlayerViewModel>();
 
             int max = playersList.Max(x => x.GameNumber);
+            var tmp= playersList.ToList().Where(x => x.GameNumber == max);
 
-            foreach (var player in playersList.ToList().Where(x=>x.GameNumber==max))        
+            foreach (var player in tmp)        
             {
                 CardViewModel drawnedCard = await DrawCard();
-                Card card = Mapp.MappCardModel(drawnedCard);
+                Card card = Mapp.MappCardModel(drawnedCard);   
                 PlayerViewModel playerModel = await GiveCardToPlayer(player, card);
                 playerModelList.Add(playerModel);
             }
@@ -137,6 +146,7 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> HandOverCards()
         {
+            __drawnedCardId.Clear();
             int handOverCount = 2;
             _round++;   
 
@@ -181,14 +191,14 @@ namespace BlackJack.BLL.Services
                 {
                     Player player = await _playerRepository.GetById(ps.Key.Id);
                     CardViewModel cardModel = await DrawCard();
-                    Card card = Mapp.MappCardModel(cardModel);
+                    Card card =Mapp.MappCardModel(cardModel);         
                     await GiveCardToPlayer(player, card);
                 }
                 if (ps.Key.PlayerType == _personPlayerType && takeCard == true)
                 {
                     Player player = await _playerRepository.GetById(ps.Key.Id);
                     CardViewModel cardModel = await DrawCard();
-                    Card card = Mapp.MappCardModel(cardModel);
+                    Card card = Mapp.MappCardModel(cardModel);    
                     await GiveCardToPlayer(player, card);
                 }
             }
@@ -275,6 +285,7 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> StartNewRound()
         {
+            __drawnedCardId.Clear();
             await HandOverCards();
 
             IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();                //????????????
@@ -294,7 +305,7 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<GameHistory> GetHistory()
+        public async Task<List<RoundViewModel>> GetHistory()
         {
             List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
             int maxRound = gamePlayersList.Max(r => r.CurrentRound);
@@ -313,10 +324,12 @@ namespace BlackJack.BLL.Services
                     List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
                     roundModel.roundModelList.Add(new PlayerCardsViewModel { Player=playerModel,Cards= cardModelList});
                 }
-                gameInfo.Game.Add(roundModel);
+                gameInfo.GamesList.Add(roundModel);
+                //gameInfo.MyPropertyTest.Add(i, roundModel);
             }
 
-            return gameInfo;
+
+            return gameInfo.GamesList;
         }
     }
 }
