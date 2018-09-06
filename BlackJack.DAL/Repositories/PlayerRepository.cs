@@ -55,7 +55,7 @@ namespace BlackJack.DAL.Repositories
                 tmpPlayersCards.CurrentRound = currentRound;
 
                 var sqlQuery = "INSERT INTO PlayersCards (CardId, Card,PlayerId,Player,CurrentRound) VALUES(@CardId, @Card,@PlayerId,@Player,@CurrentRound)";
-                db.Execute(sqlQuery, player);
+                db.Execute(sqlQuery, tmpPlayersCards);
             }
         }
 

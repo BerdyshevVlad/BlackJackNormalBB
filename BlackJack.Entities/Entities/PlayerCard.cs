@@ -14,10 +14,11 @@ namespace BlackJack.EntitiesLayer.Entities
         public int Id { get; set; }
         [ForeignKey("Player")]
         public  int PlayerId { get; set; }
-        public  Player Player { get; set; }
+
+        public virtual Player Player { get; set; }
         [ForeignKey("Card")]
         public  int CardId { get; set; }
-        public  Card Card { get; set; }
+        public virtual Card Card { get; set; }
         public int CurrentRound { get; set; }
 
     }
