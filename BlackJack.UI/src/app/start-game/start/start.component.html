@@ -1,0 +1,36 @@
+<p>
+  start works!
+</p>
+
+<div *ngIf="gameIsRunning==false">
+
+  <input [(ngModel)]="botCount">
+  <button (click)="setBotCount()">Choose number of players!</button>
+  <br />
+
+  <button (click)="handOverCards()">PLAY</button>
+
+</div>
+
+
+<div *ngIf="gameIsRunning==true">
+
+  <ul>
+    <li *ngFor="let result of playersCards">
+      {{result.player.name}}
+      <span *ngFor="let card of result.cards">{{card.value}},</span>
+    </li>
+  </ul>
+  <button [disabled]="buttonDisabled" (click)="playAgain()">MORE</button>
+  <button (click)="playStay()">STAY</button>
+  <br />
+
+
+
+
+  <button (click)="startNewRound()">NEW Round</button>
+  <button (click)="startNewGame()">NEW Game</button>
+
+</div>
+
+

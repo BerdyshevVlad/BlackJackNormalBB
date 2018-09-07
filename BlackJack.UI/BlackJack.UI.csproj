@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="src\app\cardData.ts" />
+    <None Remove="src\app\Interfaces\gameHistory.ts" />
+    <None Remove="src\app\Interfaces\playerData.ts" />
+    <None Remove="src\app\Interfaces\playersCards.ts" />
+    <None Remove="src\app\Interfaces\Round.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="AngularApp\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -19,6 +27,14 @@
   <ItemGroup>
     <ProjectReference Include="..\BlackJack.BLL\BlackJack.BLL.csproj" />
     <ProjectReference Include="..\BlackJack.DTO\BlackJack.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="src\app\Interfaces\cardData.ts" />
+    <TypeScriptCompile Include="src\app\Interfaces\gameHistory.ts" />
+    <TypeScriptCompile Include="src\app\Interfaces\playerData.ts" />
+    <TypeScriptCompile Include="src\app\Interfaces\playersCards.ts" />
+    <TypeScriptCompile Include="src\app\Interfaces\Round.ts" />
   </ItemGroup>
 
 </Project>

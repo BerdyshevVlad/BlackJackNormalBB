@@ -5,21 +5,37 @@
   !*** ./src/$$_lazy_route_resource lazy namespace object ***!
   \**********************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncaught exception popping up in devtools
-	return Promise.resolve().then(function() {
-		var e = new Error("Cannot find module '" + req + "'");
-		e.code = 'MODULE_NOT_FOUND';
-		throw e;
+var map = {
+	"./game-history/game-history.module": [
+		"./src/app/game-history/game-history.module.ts",
+		"game-history-game-history-module"
+	],
+	"./start-game/start-game.module": [
+		"./src/app/start-game/start-game.module.ts",
+		"start-game-start-game-module"
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids) {
+		return Promise.resolve().then(function() {
+			var e = new Error("Cannot find module '" + req + "'");
+			e.code = 'MODULE_NOT_FOUND';
+			throw e;
+		});
+	}
+	return __webpack_require__.e(ids[1]).then(function() {
+		var module = __webpack_require__(ids[0]);
+		return module;
 	});
 }
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
+module.exports = webpackAsyncContext;
 
 /***/ }),
 
@@ -36,6 +52,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _test_test_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -45,9 +62,24 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var routes = [
     { path: '', redirectTo: '', pathMatch: 'full' },
     { path: 'api/[controller]/[action]', component: _test_test_component__WEBPACK_IMPORTED_MODULE_2__["TestComponent"] },
+    { path: 'api/[controller]/[action]', component: _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"] },
+    {
+        path: 'history',
+        loadChildren: './game-history/game-history.module#GameHistoryModule'
+    },
+    {
+        path: 'startGame',
+        loadChildren: './start-game/start-game.module#StartGameModule'
+    },
+    {
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full'
+    },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -55,7 +87,8 @@ var AppRoutingModule = /** @class */ (function () {
     AppRoutingModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes)],
-            exports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]]
+            exports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]],
+            providers: []
         })
     ], AppRoutingModule);
     return AppRoutingModule;
@@ -83,7 +116,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>My text</h1>\r\n\r\n<button (click)=\"handOverCards()\">HAND OVER CARDS</button>\r\n\r\n<input [(ngModel)]=\"botCount\">\r\n<button (click)=\"startNewGame()\">Start new game (CREATE NEW PLAYERS)</button>\r\n<br />\r\n\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of playersCards\">\r\n    {{result.player.name}}\r\n    <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>\r\n<button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n<button (click)=\"playStay()\">STAY</button>\r\n<br />\r\n\r\n<button (click)=\"startNewRound()\">START NEW ROUND</button>\r\n<br />\r\n<button (click)=\"getHistory()\">VIEW HISTORY</button>\r\n\r\n\r\n<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>\r\n"
+module.exports = "<h1>My text</h1>\r\n\r\n<!--<button (click)=\"handOverCards()\">HAND OVER CARDS</button>\r\n\r\n<input [(ngModel)]=\"botCount\">\r\n<button (click)=\"startNewGame()\">Start new game (CREATE NEW PLAYERS)</button>\r\n<br />\r\n\r\n\r\n<app-test [players]=\"players\"></app-test>\r\n\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of playersCards\">\r\n    {{result.player.name}}\r\n    <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>\r\n<button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n<button (click)=\"playStay()\">STAY</button>\r\n<br />\r\n\r\n<button (click)=\"startNewRound()\">START NEW ROUND</button>\r\n<br />-->\r\n\r\n\r\n<button routerLink=\"/startGame\">START GAME</button>\r\n<button routerLink=\"/history\">VIEW HISTORY</button>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -124,54 +157,6 @@ var AppComponent = /** @class */ (function () {
         this.buttonDisabled = false;
     }
     AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._http.get("/api/values").subscribe(function (result) {
-            _this.cards = result.json();
-        });
-    };
-    AppComponent.prototype.startNewGame = function () {
-        var _this = this;
-        this.playersCards = null;
-        this.buttonDisabled = false;
-        //var ele = document.getElementById("input-player");
-        var url = "/api/values/" + this.botCount;
-        this._http.get(url).subscribe(function (result) {
-            _this.players = result.json();
-        });
-    };
-    AppComponent.prototype.handOverCards = function () {
-        var _this = this;
-        this._http.get("/api/gameLogic").subscribe(function (result) {
-            _this.playersCards = result.json();
-        });
-        return this.playersCards;
-    };
-    AppComponent.prototype.playAgain = function () {
-        var _this = this;
-        this._http.get("/api/gamelogic/PlayAgain/true").subscribe(function (result) {
-            _this.playersCards = result.json();
-        });
-    };
-    AppComponent.prototype.playStay = function () {
-        var _this = this;
-        this.buttonDisabled = true;
-        this._http.get("/api/gamelogic/PlayAgain/false").subscribe(function (result) {
-            _this.playersCards = result.json();
-        });
-    };
-    AppComponent.prototype.startNewRound = function () {
-        var _this = this;
-        this.buttonDisabled = false;
-        this._http.get("/api/gameLogic/StartNewRound").subscribe(function (result) {
-            _this.playersCards = result.json();
-        });
-    };
-    AppComponent.prototype.getHistory = function () {
-        var _this = this;
-        this._http.get("/api/gameLogic/getHistory").subscribe(function (result) {
-            _this.gameList = result.json();
-        });
-        console.log(this.gameList.length);
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -204,13 +189,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _test_test_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .//app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _progress_kendo_angular_grid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @progress/kendo-angular-grid */ "./node_modules/@progress/kendo-angular-grid/dist/es/index.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -225,13 +214,15 @@ var AppModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
-                _test_test_component__WEBPACK_IMPORTED_MODULE_5__["TestComponent"]
+                _test_test_component__WEBPACK_IMPORTED_MODULE_5__["TestComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["HttpModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
+                _progress_kendo_angular_grid__WEBPACK_IMPORTED_MODULE_7__["GridModule"],
+                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__["BrowserAnimationsModule"],
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]

@@ -1,10 +1,13 @@
 <h1>My text</h1>
 
-<button (click)="handOverCards()">HAND OVER CARDS</button>
+<!--<button (click)="handOverCards()">HAND OVER CARDS</button>
 
 <input [(ngModel)]="botCount">
 <button (click)="startNewGame()">Start new game (CREATE NEW PLAYERS)</button>
 <br />
+
+
+<app-test [players]="players"></app-test>
 
 
 <ul>
@@ -18,13 +21,13 @@
 <br />
 
 <button (click)="startNewRound()">START NEW ROUND</button>
-<br />
-<button (click)="getHistory()">VIEW HISTORY</button>
+<br />-->
 
 
-<ul *ngFor="let game of gameList">
-  <li *ngFor="let round of game.roundModelList">
-    {{round.player.name}}
-    <span *ngFor="let card of round.cards">{{card.value}},</span>
-  </li>
-</ul>
+<button routerLink="/startGame">START GAME</button>
+<button routerLink="/history">VIEW HISTORY</button>
+
+<router-outlet></router-outlet>
+
+
+

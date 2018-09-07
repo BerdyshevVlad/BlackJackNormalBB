@@ -6,12 +6,28 @@ import { AppComponent } from './app.component';
 
 
 const routes: Routes = [
+ 
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'api/[controller]/[action]', component: TestComponent },
+  { path: 'api/[controller]/[action]', component: AppComponent },
+  {
+    path: 'history',
+    loadChildren: './game-history/game-history.module#GameHistoryModule'
+  },
+  {
+    path: 'startGame',
+    loadChildren: './start-game/start-game.module#StartGameModule'
+  },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[]
 })
 export class AppRoutingModule { }

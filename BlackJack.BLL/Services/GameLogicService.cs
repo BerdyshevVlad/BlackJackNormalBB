@@ -305,31 +305,36 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<List<RoundViewModel>> GetHistory()
-        {
-            List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
-            int maxRound = gamePlayersList.Max(r => r.CurrentRound);
+        //public async Task<List<RoundViewModel>> GetHistory()
+        //{
+        //    List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
+        //    int maxRound = gamePlayersList.Max(r => r.CurrentRound);
 
-            var gameInfo = new GameHistory();
-            for (int i = 1; i <= maxRound; i++)
-            {
-                var roundModel = new RoundViewModel();
-                List<PlayerCard> playersList =await _playerRepository.GetPlayersByRound(i);
-                foreach (var item in playersList)
-                {
-                    IEnumerable<Card> cardList = await _playerRepository.GetAllCardsFromPlayer(item.PlayerId,i);
-                    Player player = await _playerRepository.GetById(item.PlayerId);
+        //    var gameHistory = new GameHistory();
+        //    for (int i = 1; i <= maxRound; i++)
+        //    {
+        //        var roundModel = new RoundViewModel();
+        //        List<PlayerCard> playersList =await _playerRepository.GetPlayersByRound(i);
+        //        foreach (var item in playersList)
+        //        {
+        //            IEnumerable<Card> cardList = await _playerRepository.GetAllCardsFromPlayer(item.PlayerId,i);
+        //            Player player = await _playerRepository.GetById(item.PlayerId);
 
-                    PlayerViewModel playerModel = Mapp.MappPlayer(player);
-                    List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
-                    roundModel.roundModelList.Add(new PlayerCardsViewModel { Player=playerModel,Cards= cardModelList});
-                }
-                gameInfo.GamesList.Add(roundModel);
-                //gameInfo.MyPropertyTest.Add(i, roundModel);
-            }
+        //            PlayerViewModel playerModel = Mapp.MappPlayer(player);
+        //            List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
+        //            roundModel.roundModelList.Add(new PlayerCardsViewModel { Player=playerModel,Cards= cardModelList});
+        //        }
+        //        gameHistory.Games.Add(roundModel);
+        //        //gameInfo.MyPropertyTest.Add(i, roundModel);
+        //    }
 
 
-            return gameInfo.GamesList;
+        //    return gameHistory.Games;
+        //}
+
+
+        public async Task<List<RoundViewModel>> GetHistory(){
+            
         }
     }
 }

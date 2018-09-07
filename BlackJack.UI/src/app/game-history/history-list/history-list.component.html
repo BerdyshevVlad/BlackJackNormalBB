@@ -1,0 +1,16 @@
+<p>
+  history-list works!
+</p>
+<!--<ul *ngFor="let game of gameList">
+  <li *ngFor="let round of game.roundModelList">
+    {{round.player.name}}
+    <span *ngFor="let card of round.cards">{{card.value}},</span>
+  </li>
+</ul>-->
+
+<kendo-grid [data]="sampleProducts" [height]="410">
+
+  <kendo-grid-column  field="ProductID" title="ID" width="40">
+  </kendo-grid-column>
+
+</kendo-grid>

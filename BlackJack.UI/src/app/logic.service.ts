@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
+import { CardData } from './Interfaces/cardData';
+import { PlayerData } from './Interfaces/playerData';
+import { PlayersCards } from './Interfaces/playersCards';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -8,6 +12,7 @@ export class LogicService {
 
 
   playersCards2: PlayersCards[] = [];
+
 
   constructor(private _http: Http) { }
 
@@ -17,25 +22,4 @@ export class LogicService {
     });
     return this.playersCards2;
   }
-}
-
-
-
-export interface CardData {
-  id: number;
-  value: number;
-  suit: string;
-  rank: string;
-}
-
-export interface PlayerData {
-  id: number;
-  name: string;
-  playerType: string;
-  score: number;
-}
-
-export interface PlayersCards {
-  player: PlayerData;
-  cards: CardData[];
 }
