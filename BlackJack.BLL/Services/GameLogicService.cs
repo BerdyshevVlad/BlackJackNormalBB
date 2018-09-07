@@ -1,6 +1,5 @@
 ﻿using BlackJack.BLL.Interfaces;
 using BlackJack.DAL.Interfaces;
-using BlackJack.DAL.Repositories;
 using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
 using BlackJack.ViewModels;
@@ -15,8 +14,8 @@ namespace BlackJack.BLL.Services
 {
     public class GameLogicService: IGameLogic
     {
-        private readonly ICardRepository<Card> _cardRepository;
-        private readonly IPlayerRepository<Player> _playerRepository;
+        private readonly ICardRepository _cardRepository;
+        private readonly IPlayerRepository _playerRepository;
         private readonly IPlayerCardRepository _playerCardRepository;
 
 
@@ -25,9 +24,9 @@ namespace BlackJack.BLL.Services
         private List<int> __drawnedCardId;
 
 
-        public GameLogicService(ICardRepository<Card> cardRepository,IPlayerRepository<Player> playerRepository,IPlayerCardRepository playerCardRepository)
+        public GameLogicService(ICardRepository cardRepository, IPlayerRepository playerRepository, IPlayerCardRepository playerCardRepository)
         {
-            _cardRepository =  cardRepository;
+            _cardRepository = cardRepository;
             _playerRepository = playerRepository;
             _playerCardRepository = playerCardRepository;
             _round = DefineCurrentRound();
@@ -305,36 +304,31 @@ namespace BlackJack.BLL.Services
         }
 
 
-        //public async Task<List<RoundViewModel>> GetHistory()
-        //{
-        //    List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
-        //    int maxRound = gamePlayersList.Max(r => r.CurrentRound);
+        public async Task<List<RoundViewModel>> GetHistory()
+        {
+            List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
+            int maxRound = gamePlayersList.Max(r => r.CurrentRound);
 
-        //    var gameHistory = new GameHistory();
-        //    for (int i = 1; i <= maxRound; i++)
-        //    {
-        //        var roundModel = new RoundViewModel();
-        //        List<PlayerCard> playersList =await _playerRepository.GetPlayersByRound(i);
-        //        foreach (var item in playersList)
-        //        {
-        //            IEnumerable<Card> cardList = await _playerRepository.GetAllCardsFromPlayer(item.PlayerId,i);
-        //            Player player = await _playerRepository.GetById(item.PlayerId);
+            var gameHistory = new GameHistory();
+            for (int i = 1; i <= maxRound; i++)
+            {
+                var roundModel = new RoundViewModel();
+                List<PlayerCard> playersList = await _playerRepository.GetPlayersByRound(i);
+                foreach (var item in playersList)
+                {
+                    IEnumerable<Card> cardList = await _playerRepository.GetAllCardsFromPlayer(item.PlayerId, i);
+                    Player player = await _playerRepository.GetById(item.PlayerId);
 
-        //            PlayerViewModel playerModel = Mapp.MappPlayer(player);
-        //            List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
-        //            roundModel.roundModelList.Add(new PlayerCardsViewModel { Player=playerModel,Cards= cardModelList});
-        //        }
-        //        gameHistory.Games.Add(roundModel);
-        //        //gameInfo.MyPropertyTest.Add(i, roundModel);
-        //    }
-
-
-        //    return gameHistory.Games;
-        //}
+                    PlayerViewModel playerModel = Mapp.MappPlayer(player);
+                    List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
+                    roundModel.roundModelList.Add(new PlayerCardsViewModel { Player = playerModel, Cards = cardModelList });
+                }
+                gameHistory.Games.Add(roundModel);
+                //gameInfo.MyPropertyTest.Add(i, roundModel);
+            }
 
 
-        public async Task<List<RoundViewModel>> GetHistory(){
-            
+            return gameHistory.Games;
         }
     }
 }

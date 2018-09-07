@@ -9,13 +9,13 @@ namespace BlackJack.ViewModels
 {
     public class GameHistory
     {
-        //public List<RoundViewModel> Games { get; set; }
-        //public Dictionary<int, RoundViewModel> MyPropertyTest { get; set; }
+        public List<RoundViewModel> Games { get; set; }
+        public Dictionary<int, RoundViewModel> MyPropertyTest { get; set; }
 
-        //public GameHistory()
-        //{
-        //    Games = new List<RoundViewModel>();
-        //    MyPropertyTest = new Dictionary<int, RoundViewModel>();
-        //}
+        public GameHistory()
+        {
+            Games = new List<RoundViewModel>();
+            MyPropertyTest = new Dictionary<int, RoundViewModel>();
+        }
     }
 }

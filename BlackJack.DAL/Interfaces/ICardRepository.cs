@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.EntitiesLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack.DAL.Interfaces
 {
-    public interface ICardRepository<T> : IRepository<T> where T : class
+    public interface ICardRepository:IBaseRepository<Card>
     {
         bool IsExist();
     }

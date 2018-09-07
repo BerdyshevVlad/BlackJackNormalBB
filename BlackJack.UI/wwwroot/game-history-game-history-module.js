@@ -114,7 +114,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  history-list works!\r\n</p>\r\n<!--<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>-->\r\n\r\n<kendo-grid [data]=\"sampleProducts\" [height]=\"410\">\r\n\r\n  <kendo-grid-column  field=\"ProductID\" title=\"ID\" width=\"40\">\r\n  </kendo-grid-column>\r\n\r\n</kendo-grid>\r\n"
+module.exports = "<p>\r\n  history-list works!\r\n</p>\r\n<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>\r\n\r\n<!--<kendo-grid [data]=\"sampleProducts\" [height]=\"410\">\r\n\r\n  <kendo-grid-column  field=\"ProductID\" title=\"ID\" width=\"40\">\r\n  </kendo-grid-column>\r\n\r\n</kendo-grid>-->\r\n"
 
 /***/ }),
 

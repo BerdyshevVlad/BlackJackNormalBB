@@ -35,47 +35,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
 
   }
-
-
-  //startNewGame() {
-  //  this.playersCards = null;
-  //  this.buttonDisabled = false;
-  //  //var ele = document.getElementById("input-player");
-  //  const url = `/api/values/${this.botCount}`;
-  //  this._http.get(url).subscribe(result => {
-  //    this.players = result.json();
-  //  }
-  //  );
-  //}
-
-
-
-  //handOverCards() {
-  //  this._http.get("/api/gameLogic").subscribe(result => {
-  //    this.playersCards = result.json();
-  //  });
-  //  return this.playersCards;
-  //}
-
-  //playAgain() {
-  //  this._http.get("/api/gamelogic/PlayAgain/true").subscribe(result => {
-  //    this.playersCards = result.json();
-  //  });
-  //}
-
-  //playStay() {
-  //  this.buttonDisabled = true;
-  //  this._http.get("/api/gamelogic/PlayAgain/false").subscribe(result => {
-  //    this.playersCards = result.json();
-  //  });
-  //}
-
-  //startNewRound() {
-  //  this.buttonDisabled = false;
-  //  this._http.get("/api/gameLogic/StartNewRound").subscribe(result => {
-  //    this.playersCards = result.json();
-  //  });
-  //}
 }
 
 

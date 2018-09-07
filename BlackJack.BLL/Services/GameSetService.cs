@@ -15,14 +15,15 @@ namespace BlackJack.BLL.Services
 {
     public class GameSetService:IGameSet
     {
-        private readonly ICardRepository<Card> _cardRepository;
-        private readonly IPlayerRepository<Player> _playerRepository;
+        private readonly ICardRepository _cardRepository;
+        private readonly IPlayerRepository _playerRepository;
 
         private readonly string _dealerPlayerType;
         private readonly string _personPlayerType;
         private int _gameNumber;
 
-        public GameSetService(ICardRepository<Card> cardRepository,IPlayerRepository<Player> playerRepository)
+
+        public GameSetService(ICardRepository cardRepository, IPlayerRepository playerRepository)
         {
             _cardRepository = cardRepository;
             _playerRepository = playerRepository;

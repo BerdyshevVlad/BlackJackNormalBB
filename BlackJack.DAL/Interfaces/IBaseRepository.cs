@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack.DAL.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IBaseRepository<T>
     {
         Task Insert(T item);
         Task Delete(int id);
