@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
+using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
 using BlackJack.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -56,10 +57,12 @@ namespace BlackJack.UI.Controllers
 
     [HttpGet("GetHistory")]
     [ActionName("GetHistory")]
-    public async Task<List<RoundViewModel>> GetHistory()
+    //public async Task<List<RoundViewModel>> GetHistory()
+    public async Task<List<PlayerCardsViewModel>> GetHistory()
     {
 
-      List<RoundViewModel> history =await _gameLogicService.GetHistory();
+      //List<RoundViewModel> history = await _gameLogicService.GetHistory();
+      var history = await _gameLogicService.GetHistory();
       return history;
     }
 

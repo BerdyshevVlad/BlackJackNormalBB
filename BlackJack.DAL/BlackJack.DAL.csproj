@@ -58,8 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackJackContext.cs" />
-    <Compile Include="Dapper.Repositories\BaseRepository.cs" />
+    <Compile Include="Dapper.Interfaces\ICardRepository.cs" />
+    <Compile Include="Dapper.Interfaces\IPlayerCardRepository.cs" />
+    <Compile Include="Dapper.Interfaces\IPlayerRepository.cs" />
+    <Compile Include="Dapper.Repositories\CardRepository.cs" />
     <Compile Include="Dapper.Repositories\PlayerCardRepository.cs" />
+    <Compile Include="Dapper.Repositories\PlayerRepository.cs" />
     <Compile Include="Enums\Enum.cs" />
     <Compile Include="Interfaces\IBaseRepository.cs" />
     <Compile Include="Interfaces\ICardRepository.cs" />

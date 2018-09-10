@@ -114,7 +114,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  history-list works!\r\n</p>\r\n<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>\r\n\r\n<!--<kendo-grid [data]=\"sampleProducts\" [height]=\"410\">\r\n\r\n  <kendo-grid-column  field=\"ProductID\" title=\"ID\" width=\"40\">\r\n  </kendo-grid-column>\r\n\r\n</kendo-grid>-->\r\n"
+module.exports = "<p>\r\n  history-list works! My text!\r\n</p>\r\n<!--<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>-->\r\n\r\n<!--<kendo-grid [data]=\"gameList\" [height]=\"410\">\r\n\r\n  <kendo-grid-column field=\"playerId\" title=\"ID\" width=\"40\">\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"player.name\" title=\"Name\" width=\"40\">\r\n  </kendo-grid-column>\r\n\r\n</kendo-grid>-->\r\n\r\n\r\n<kendo-grid [data]=\"round\" [height]=\"410\">\r\n \r\n  <kendo-grid-column field=\"player.name\" title=\"Name\" [width]=\"300\">\r\n</kendo-grid-column>\r\n\r\n    \r\n</kendo-grid>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -148,6 +148,7 @@ var HistoryListComponent = /** @class */ (function () {
         this._http = _http;
         this._logicService = _logicService;
         this.gameList = [];
+        this.round = [];
         this.sampleProducts = [
             {
                 "ProductID": 1,
@@ -207,9 +208,9 @@ var HistoryListComponent = /** @class */ (function () {
     }
     HistoryListComponent.prototype.ngOnInit = function () {
         var _this = this;
+        debugger;
         this._http.get("/api/gameLogic/getHistory").subscribe(function (result) {
-            debugger;
-            _this.gameList = result.json();
+            _this.round = result.json();
         });
         console.log(this.gameList.length);
     };

@@ -1,4 +1,4 @@
-﻿using BlackJack.DAL.Interfaces;
+﻿using BlackJack.DAL.Dapper.Interfaces;
 using BlackJack.EntitiesLayer.Entities;
 using Dapper;
 using System;
@@ -13,11 +13,11 @@ namespace BlackJack.DAL.Dapper.Repositories
 {
     public class PlayerCardRepository: IPlayerCardRepository
     {
-        string connectionString = null;
+        string _connectionString = null;
 
-        public PlayerCardRepository(string conn)
+        public PlayerCardRepository(string connectionString)
         {
-            connectionString = conn;
+            _connectionString = connectionString;
         }
 
         public async Task AddCard(Player player, Card card, int currentRound)
@@ -25,7 +25,7 @@ namespace BlackJack.DAL.Dapper.Repositories
             Player tmpPlayer;
             Card tmpCard;
 
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 tmpPlayer = db.Query<Player>("SELECT * FROM Players WHERE Id = @id", new { player.Id }).FirstOrDefault();
                 tmpCard = db.Query<Card>("SELECT * FROM Cards WHERE Id = @id", new { card.Id }).FirstOrDefault();
@@ -42,7 +42,7 @@ namespace BlackJack.DAL.Dapper.Repositories
 
         public List<PlayerCard> GetAll()
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 return db.Query<PlayerCard>("SELECT * FROM PlayersCards").ToList();
             }

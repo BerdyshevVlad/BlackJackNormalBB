@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LogicService } from '../../logic.service';
 import { Http } from '@angular/http';
 
-import { GameHistory } from '../../Interfaces/gameHistory';
+import { PlayersCards } from '../../Interfaces/playersCards';
+import { debug } from 'util';
+import { forEach } from '@angular/router/src/utils/collection';
+import { PlayerData } from '../../Interfaces/playerData';
+import { Round } from '../../Interfaces/Round';
 
 @Component({
   selector: 'app-history-list',
@@ -13,7 +17,9 @@ export class HistoryListComponent implements OnInit {
 
   constructor(private _http: Http, private _logicService: LogicService) { }
 
-  gameList: GameHistory[] = [];
+  gameList: PlayersCards[] = [];
+  round: Round[] = [];
+  
   sampleProducts = [
     {
       "ProductID": 1,
@@ -70,13 +76,10 @@ export class HistoryListComponent implements OnInit {
       "FirstOrderedOn": new Date(1996, 8, 26)
     }];
   ngOnInit() {
+    debugger;
       this._http.get("/api/gameLogic/getHistory").subscribe(result => {
-        debugger;
-        this.gameList = result.json();
+        this.round = result.json();
       });
-      console.log(this.gameList.length);
+    console.log(this.gameList.length);
   }
-
-  
-
 }

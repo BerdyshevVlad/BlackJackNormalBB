@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
 using BlackJack.BLL.Services;
 using BlackJack.DAL;
-using BlackJack.DAL.Interfaces;
-using BlackJack.DAL.Repositories;
+using BlackJack.DAL.Dapper.Interfaces;
+using BlackJack.DAL.Dapper.Repositories;
 using BlackJack.EntitiesLayer.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,14 +36,17 @@ namespace BlackJack.UI
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
       string connectionString = "Server=(localdb)\\mssqllocaldb;Database=BlackJackContext;Trusted_Connection=True;";
       services.AddDbContext<BlackJackContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:BlackJackContext"]));
-      //services.AddTransient<ICardRepository<Card>, CardRepository>(provider => new CardRepository(connectionString));
-      //services.AddTransient<IPlayerRepository<Player>, PlayerRepository>(provider => new PlayerRepository(connectionString));
 
 
-      services.AddTransient<BlackJack.DAL.Interfaces.ICardRepository, BlackJack.DAL.Repositories.CardRepository>();
-      services.AddTransient<BlackJack.DAL.Interfaces.IPlayerRepository, BlackJack.DAL.Repositories.PlayerRepository>();
-
+      services.AddTransient<ICardRepository, CardRepository>(provider => new CardRepository(connectionString));
+      services.AddTransient<IPlayerRepository, PlayerRepository>(provider => new PlayerRepository(connectionString));
       services.AddTransient<IPlayerCardRepository, PlayerCardRepository>(provider => new PlayerCardRepository(connectionString));
+
+      //services.AddTransient<ICardRepository, CardRepository>();
+      //services.AddTransient<IPlayerRepository, PlayerRepository>();
+      //services.AddTransient<IPlayerCardRepository, PlayerCardRepository>();
+
+
       services.AddTransient<IGameSet, GameSetService>();
       services.AddTransient<IGameLogic, GameLogicService>();
     }

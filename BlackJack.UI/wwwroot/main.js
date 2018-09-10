@@ -116,7 +116,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>My text</h1>\r\n\r\n<!--<button (click)=\"handOverCards()\">HAND OVER CARDS</button>\r\n\r\n<input [(ngModel)]=\"botCount\">\r\n<button (click)=\"startNewGame()\">Start new game (CREATE NEW PLAYERS)</button>\r\n<br />\r\n\r\n\r\n<app-test [players]=\"players\"></app-test>\r\n\r\n\r\n<ul>\r\n  <li *ngFor=\"let result of playersCards\">\r\n    {{result.player.name}}\r\n    <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>\r\n<button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n<button (click)=\"playStay()\">STAY</button>\r\n<br />\r\n\r\n<button (click)=\"startNewRound()\">START NEW ROUND</button>\r\n<br />-->\r\n\r\n\r\n<button routerLink=\"/startGame\">START GAME</button>\r\n<button routerLink=\"/history\">VIEW HISTORY</button>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n\r\n\r\n"
+module.exports = "<h1>My text</h1>\r\n\r\n\r\n<button routerLink=\"/startGame\">START GAME</button>\r\n<button routerLink=\"/history\">VIEW HISTORY</button>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 

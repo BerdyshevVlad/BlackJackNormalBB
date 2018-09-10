@@ -1,6 +1,6 @@
 ﻿using BlackJack.BLL.Interfaces;
+using BlackJack.DAL.Dapper.Interfaces;
 using BlackJack.DAL.Enums;
-using BlackJack.DAL.Interfaces;
 using BlackJack.DAL.Repositories;
 using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;

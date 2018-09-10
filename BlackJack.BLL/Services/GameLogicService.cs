@@ -1,5 +1,5 @@
 ﻿using BlackJack.BLL.Interfaces;
-using BlackJack.DAL.Interfaces;
+using BlackJack.DAL.Dapper.Interfaces;
 using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
 using BlackJack.ViewModels;
@@ -304,15 +304,44 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<List<RoundViewModel>> GetHistory()
-        {
+        //public async Task<List<RoundViewModel>> GetHistory()
+        //{
+        //    List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
+        //    int maxRound = gamePlayersList.Max(r => r.CurrentRound);
+
+        //    var gameHistory = new GameHistory();
+        //    for (int i = 1; i <= maxRound; i++)
+        //    {
+        //        var roundModel = new RoundViewModel();
+        //        List<PlayerCard> playersList = await _playerRepository.GetPlayersByRound(i);
+        //        foreach (var item in playersList)
+        //        {
+        //            IEnumerable<Card> cardList = await _playerRepository.GetAllCardsFromPlayer(item.PlayerId, i);
+        //            Player player = await _playerRepository.GetById(item.PlayerId);
+
+        //            PlayerViewModel playerModel = Mapp.MappPlayer(player);
+        //            List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
+        //            roundModel.roundModelList.Add(new PlayerCardsViewModel { Player = playerModel, Cards = cardModelList });
+        //        }
+        //        gameHistory.Games.Add(roundModel);
+        //        //gameInfo.MyPropertyTest.Add(i, roundModel);
+        //    }
+
+
+        //    return gameHistory.Games;
+        //}
+
+
+        public async Task<List<PlayerCardsViewModel>> GetHistory(){
             List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
             int maxRound = gamePlayersList.Max(r => r.CurrentRound);
 
+
+            var roundModel = new RoundViewModel();
             var gameHistory = new GameHistory();
             for (int i = 1; i <= maxRound; i++)
             {
-                var roundModel = new RoundViewModel();
+                
                 List<PlayerCard> playersList = await _playerRepository.GetPlayersByRound(i);
                 foreach (var item in playersList)
                 {
@@ -321,14 +350,14 @@ namespace BlackJack.BLL.Services
 
                     PlayerViewModel playerModel = Mapp.MappPlayer(player);
                     List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
-                    roundModel.roundModelList.Add(new PlayerCardsViewModel { Player = playerModel, Cards = cardModelList });
+                    roundModel.roundModelList.Add(new PlayerCardsViewModel { Player = playerModel, Cards = cardModelList,Round=i});
                 }
-                gameHistory.Games.Add(roundModel);
+                //gameHistory.Games.Add(roundModel);
                 //gameInfo.MyPropertyTest.Add(i, roundModel);
             }
 
 
-            return gameHistory.Games;
+            return roundModel.roundModelList;
         }
     }
 }
