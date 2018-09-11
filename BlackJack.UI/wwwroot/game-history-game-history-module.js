@@ -114,7 +114,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  history-list works! My text!\r\n</p>\r\n<!--<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>-->\r\n\r\n<!--<kendo-grid [data]=\"gameList\" [height]=\"410\">\r\n\r\n  <kendo-grid-column field=\"playerId\" title=\"ID\" width=\"40\">\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"player.name\" title=\"Name\" width=\"40\">\r\n  </kendo-grid-column>\r\n\r\n</kendo-grid>-->\r\n\r\n\r\n<kendo-grid [data]=\"round\" [height]=\"410\">\r\n \r\n  <kendo-grid-column field=\"player.name\" title=\"Name\" [width]=\"300\">\r\n</kendo-grid-column>\r\n\r\n    \r\n</kendo-grid>\r\n\r\n\r\n\r\n"
+module.exports = "<p>\r\n  history-list works! My text!\r\n</p>\r\n<!--<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>-->\r\n\r\n\r\n\r\n\r\n<kendo-grid [data]=\"gridView\" [height]=\"410\" [pageSize]=\"pageSize\"\r\n            [skip]=\"skip\"\r\n            [pageable]=\"true\"\r\n            (pageChange)=\"pageChange($event)\">\r\n\r\n  <kendo-grid-column field=\"player.name\" title=\"Name\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"round\" title=\"Round\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n\r\n  <kendo-grid-column field=\"cards\" title=\"Cards\" width=\"120\">\r\n    <ng-template kendoGridCellTemplate let-dataItem>\r\n      <ul>\r\n        <li *ngFor=\"let card of dataItem.cards\">{{card.value}}</li>\r\n      </ul>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n\r\n\r\n</kendo-grid>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -147,72 +147,26 @@ var HistoryListComponent = /** @class */ (function () {
     function HistoryListComponent(_http, _logicService) {
         this._http = _http;
         this._logicService = _logicService;
-        this.gameList = [];
+        this.pageSize = 10;
+        this.skip = 0;
         this.round = [];
-        this.sampleProducts = [
-            {
-                "ProductID": 1,
-                "ProductName": "Chai",
-                "SupplierID": 1,
-                "CategoryID": 1,
-                "QuantityPerUnit": "10 boxes x 20 bags",
-                "UnitPrice": 18,
-                "UnitsInStock": 39,
-                "UnitsOnOrder": 0,
-                "ReorderLevel": 10,
-                "Discontinued": false,
-                "Category": {
-                    "CategoryID": 1,
-                    "CategoryName": "Beverages",
-                    "Description": "Soft drinks, coffees, teas, beers, and ales"
-                },
-                "FirstOrderedOn": new Date(1996, 8, 20)
-            },
-            {
-                "ProductID": 2,
-                "ProductName": "Chang",
-                "SupplierID": 1,
-                "CategoryID": 1,
-                "QuantityPerUnit": "24 - 12 oz bottles",
-                "UnitPrice": 19,
-                "UnitsInStock": 17,
-                "UnitsOnOrder": 40,
-                "ReorderLevel": 25,
-                "Discontinued": false,
-                "Category": {
-                    "CategoryID": 1,
-                    "CategoryName": "Beverages",
-                    "Description": "Soft drinks, coffees, teas, beers, and ales"
-                },
-                "FirstOrderedOn": new Date(1996, 7, 12)
-            },
-            {
-                "ProductID": 3,
-                "ProductName": "Aniseed Syrup",
-                "SupplierID": 1,
-                "CategoryID": 2,
-                "QuantityPerUnit": "12 - 550 ml bottles",
-                "UnitPrice": 10,
-                "UnitsInStock": 13,
-                "UnitsOnOrder": 70,
-                "ReorderLevel": 25,
-                "Discontinued": false,
-                "Category": {
-                    "CategoryID": 2,
-                    "CategoryName": "Condiments",
-                    "Description": "Sweet and savory sauces, relishes, spreads, and seasonings"
-                },
-                "FirstOrderedOn": new Date(1996, 8, 26)
-            }
-        ];
     }
     HistoryListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        debugger;
         this._http.get("/api/gameLogic/getHistory").subscribe(function (result) {
             _this.round = result.json();
+            _this.loadItems();
         });
-        console.log(this.gameList.length);
+    };
+    HistoryListComponent.prototype.pageChange = function (event) {
+        this.skip = event.skip;
+        this.loadItems();
+    };
+    HistoryListComponent.prototype.loadItems = function () {
+        this.gridView = {
+            data: this.round.slice(this.skip, this.skip + this.pageSize),
+            total: this.round.length
+        };
     };
     HistoryListComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

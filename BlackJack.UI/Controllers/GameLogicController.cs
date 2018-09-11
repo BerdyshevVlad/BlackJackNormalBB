@@ -57,11 +57,8 @@ namespace BlackJack.UI.Controllers
 
     [HttpGet("GetHistory")]
     [ActionName("GetHistory")]
-    //public async Task<List<RoundViewModel>> GetHistory()
     public async Task<List<PlayerCardsViewModel>> GetHistory()
     {
-
-      //List<RoundViewModel> history = await _gameLogicService.GetHistory();
       var history = await _gameLogicService.GetHistory();
       return history;
     }

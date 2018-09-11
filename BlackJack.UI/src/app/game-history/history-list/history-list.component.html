@@ -8,22 +8,28 @@
   </li>
 </ul>-->
 
-<!--<kendo-grid [data]="gameList" [height]="410">
-
-  <kendo-grid-column field="playerId" title="ID" width="40">
-  </kendo-grid-column>
-  <kendo-grid-column field="player.name" title="Name" width="40">
-  </kendo-grid-column>
-
-</kendo-grid>-->
 
 
-<kendo-grid [data]="round" [height]="410">
- 
+
+<kendo-grid [data]="gridView" [height]="410" [pageSize]="pageSize"
+            [skip]="skip"
+            [pageable]="true"
+            (pageChange)="pageChange($event)">
+
   <kendo-grid-column field="player.name" title="Name" [width]="300">
-</kendo-grid-column>
+  </kendo-grid-column>
+  <kendo-grid-column field="round" title="Round" [width]="300">
+  </kendo-grid-column>
 
-    
+  <kendo-grid-column field="cards" title="Cards" width="120">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <ul>
+        <li *ngFor="let card of dataItem.cards">{{card.value}}</li>
+      </ul>
+    </ng-template>
+  </kendo-grid-column>
+
+
 </kendo-grid>
 
 

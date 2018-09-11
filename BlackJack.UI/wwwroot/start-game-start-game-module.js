@@ -108,7 +108,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  start works!\r\n</p>\r\n\r\n<div *ngIf=\"gameIsRunning==false\">\r\n\r\n  <input [(ngModel)]=\"botCount\">\r\n  <button (click)=\"setBotCount()\">Choose number of players!</button>\r\n  <br />\r\n\r\n  <button (click)=\"handOverCards()\">PLAY</button>\r\n\r\n</div>\r\n\r\n\r\n<div *ngIf=\"gameIsRunning==true\">\r\n\r\n  <ul>\r\n    <li *ngFor=\"let result of playersCards\">\r\n      {{result.player.name}}\r\n      <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n    </li>\r\n  </ul>\r\n  <button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n  <button (click)=\"playStay()\">STAY</button>\r\n  <br />\r\n\r\n\r\n\r\n\r\n  <button (click)=\"startNewRound()\">NEW Round</button>\r\n  <button (click)=\"startNewGame()\">NEW Game</button>\r\n\r\n</div>\r\n\r\n\r\n"
+module.exports = "<p>\r\n  start works!\r\n</p>\r\n\r\n<div *ngIf=\"gameIsRunning==false\">\r\n\r\n  <input id=\"inputFieldBotCount\" [(ngModel)]=\"botCount\" type=\"number\" max=\"5\" min=\"1\" />\r\n  <button (click)=\"setBotCount()\">Choose number of players!</button>\r\n  <br />\r\n\r\n</div>\r\n\r\n\r\n<div *ngIf=\"gameIsRunning==true\">\r\n\r\n  <ul>\r\n    <li *ngFor=\"let result of playersCards\">\r\n      {{result.player.name}}\r\n      <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n    </li>\r\n  </ul>\r\n  <button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n  <button (click)=\"playStay()\">STAY</button>\r\n  <br />\r\n\r\n\r\n\r\n\r\n  <button (click)=\"startNewRound()\">NEW Round</button>\r\n  <button (click)=\"startNewGame()\">NEW Game</button>\r\n\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -159,15 +159,25 @@ var StartComponent = /** @class */ (function () {
         var _this = this;
         this.playersCards = null;
         this.buttonDisabled = false;
+        if (this.botCount > 0 && this.botCount < 6) {
+            var inputField = document.getElementById("inputFieldBotCount");
+            inputField.style.background = "green";
+        }
+        else {
+            var inputField = document.getElementById("inputFieldBotCount");
+            inputField.style.borderColor = "red";
+            return;
+        }
         //var ele = document.getElementById("input-player");
         var url = "/api/values/" + this.botCount;
         this._http.get(url).subscribe(function (result) {
             _this.players = result.json();
+            _this.gameIsRunning = true;
+            _this.handOverCards();
         });
     };
     StartComponent.prototype.handOverCards = function () {
         var _this = this;
-        this.gameIsRunning = true;
         this._http.get("/api/gameLogic").subscribe(function (result) {
             _this.playersCards = result.json();
         });

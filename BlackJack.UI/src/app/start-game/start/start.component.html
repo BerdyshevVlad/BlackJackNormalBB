@@ -4,11 +4,9 @@
 
 <div *ngIf="gameIsRunning==false">
 
-  <input [(ngModel)]="botCount">
+  <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" />
   <button (click)="setBotCount()">Choose number of players!</button>
   <br />
-
-  <button (click)="handOverCards()">PLAY</button>
 
 </div>
 

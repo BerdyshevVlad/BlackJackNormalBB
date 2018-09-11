@@ -7,6 +7,7 @@ import { debug } from 'util';
 import { forEach } from '@angular/router/src/utils/collection';
 import { PlayerData } from '../../Interfaces/playerData';
 import { Round } from '../../Interfaces/Round';
+import { PageChangeEvent, GridDataResult } from '@progress/kendo-angular-grid';
 
 @Component({
   selector: 'app-history-list',
@@ -15,71 +16,34 @@ import { Round } from '../../Interfaces/Round';
 })
 export class HistoryListComponent implements OnInit {
 
-  constructor(private _http: Http, private _logicService: LogicService) { }
+  constructor(private _http: Http, private _logicService: LogicService) {
+  }
 
-  gameList: PlayersCards[] = [];
+  public gridView: GridDataResult;
+  public pageSize = 10;
+  public skip = 0;
+  private data: Object[];
+
   round: Round[] = [];
-  
-  sampleProducts = [
-    {
-      "ProductID": 1,
-      "ProductName": "Chai",
-      "SupplierID": 1,
-      "CategoryID": 1,
-      "QuantityPerUnit": "10 boxes x 20 bags",
-      "UnitPrice": 18,
-      "UnitsInStock": 39,
-      "UnitsOnOrder": 0,
-      "ReorderLevel": 10,
-      "Discontinued": false,
-      "Category": {
-        "CategoryID": 1,
-        "CategoryName": "Beverages",
-        "Description": "Soft drinks, coffees, teas, beers, and ales"
-      },
-      "FirstOrderedOn": new Date(1996, 8, 20)
-    },
-    {
-      "ProductID": 2,
-      "ProductName": "Chang",
-      "SupplierID": 1,
-      "CategoryID": 1,
-      "QuantityPerUnit": "24 - 12 oz bottles",
-      "UnitPrice": 19,
-      "UnitsInStock": 17,
-      "UnitsOnOrder": 40,
-      "ReorderLevel": 25,
-      "Discontinued": false,
-      "Category": {
-        "CategoryID": 1,
-        "CategoryName": "Beverages",
-        "Description": "Soft drinks, coffees, teas, beers, and ales"
-      },
-      "FirstOrderedOn": new Date(1996, 7, 12)
-    },
-    {
-      "ProductID": 3,
-      "ProductName": "Aniseed Syrup",
-      "SupplierID": 1,
-      "CategoryID": 2,
-      "QuantityPerUnit": "12 - 550 ml bottles",
-      "UnitPrice": 10,
-      "UnitsInStock": 13,
-      "UnitsOnOrder": 70,
-      "ReorderLevel": 25,
-      "Discontinued": false,
-      "Category": {
-        "CategoryID": 2,
-        "CategoryName": "Condiments",
-        "Description": "Sweet and savory sauces, relishes, spreads, and seasonings"
-      },
-      "FirstOrderedOn": new Date(1996, 8, 26)
-    }];
+
+
   ngOnInit() {
-    debugger;
       this._http.get("/api/gameLogic/getHistory").subscribe(result => {
         this.round = result.json();
+        this.loadItems();
       });
-    console.log(this.gameList.length);
+
+  }
+
+  public pageChange(event: PageChangeEvent): void {
+    this.skip = event.skip;
+    this.loadItems();
+  }
+
+  private loadItems(): void {
+    this.gridView = {
+      data: this.round.slice(this.skip, this.skip + this.pageSize),
+      total: this.round.length
+    };
   }
 }

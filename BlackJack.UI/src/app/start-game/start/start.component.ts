@@ -42,16 +42,28 @@ export class StartComponent implements OnInit {
   setBotCount() {
     this.playersCards = null;
     this.buttonDisabled = false;
+
+    if (this.botCount > 0 && this.botCount < 6) {
+      var inputField = document.getElementById("inputFieldBotCount");
+      inputField.style.background = "green";
+    }
+    else {
+      var inputField = document.getElementById("inputFieldBotCount");
+      inputField.style.borderColor = "red";
+      return;
+    }
+
     //var ele = document.getElementById("input-player");
     const url = `/api/values/${this.botCount}`;
     this._http.get(url).subscribe(result => {
       this.players = result.json();
+      this.gameIsRunning = true;
+      this.handOverCards();
     }
     );
   }
 
   handOverCards() {
-    this.gameIsRunning = true;
     this._http.get("/api/gameLogic").subscribe(result => {
       this.playersCards = result.json();
     });
