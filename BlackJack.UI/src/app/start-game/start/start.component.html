@@ -1,34 +1,44 @@
-<p>
-  start works!
-</p>
-
-<div *ngIf="gameIsRunning==false">
-
-  <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" />
-  <button (click)="setBotCount()">Choose number of players!</button>
-  <br />
-
-</div>
-
-
 <div *ngIf="gameIsRunning==true">
-
-  <ul>
-    <li *ngFor="let result of playersCards">
-      {{result.player.name}}
-      <span *ngFor="let card of result.cards">{{card.value}},</span>
-    </li>
-  </ul>
-  <button [disabled]="buttonDisabled" (click)="playAgain()">MORE</button>
-  <button (click)="playStay()">STAY</button>
-  <br />
-
-
-
-
-  <button (click)="startNewRound()">NEW Round</button>
-  <button (click)="startNewGame()">NEW Game</button>
-
+  <p>
+    New Round Is Started
+  </p>
 </div>
+
+  <div *ngIf="gameIsRunning==false">
+
+    <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" />
+    <button (click)="setBotCount()">Choose number of players!</button>
+    <br />
+
+  </div>
+
+
+  <div *ngIf="gameIsRunning==true">
+
+    <ul>
+      <li *ngFor="let result of playersCards">
+        {{result.player.name}}
+        <span *ngFor="let card of result.cards">{{card.value}},</span>
+      </li>
+    </ul>
+
+    <br />
+
+    <h2>TOTAL SCORE</h2>
+
+    <ul>
+      <li *ngFor="let result of playersCards">
+        {{result.player.name}}
+        <span>{{result.player.score}},</span>
+      </li>
+    </ul>
+    <button [disabled]="buttonDisabled" (click)="playAgain()">MORE</button>
+    <button (click)="playStay()">STAY</button>
+    <br />
+
+    <button (click)="startNewRound()">NEW Round</button>
+    <button (click)="startNewGame()">NEW Game</button>
+
+  </div>
 
 
