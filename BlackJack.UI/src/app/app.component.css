@@ -1,0 +1,24 @@
+h1{
+  text-align:center;
+}
+
+#startGame, #viewHistory {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid white;
+  padding: 0 1rem;
+  margin-left:29%;
+}
+
+#startGame, #viewHistory {
+  background-color: #008CBA;
+}
+
+  #startGame:hover {
+    background-color: #6da3ff;
+  }
+
+##viewHistory:hover {
+  background-color: #6da3ff
+}

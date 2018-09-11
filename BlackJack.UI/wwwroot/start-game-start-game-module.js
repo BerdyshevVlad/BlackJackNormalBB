@@ -97,7 +97,7 @@ var StartGameModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "input {\r\n  width: 20%;\r\n  padding: 12px 20px;\r\n  margin: 8px 0;\r\n  display: inline-block;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.setBotCountClass {\r\n  width: 20%;\r\n  background-color: #4CAF50;\r\n  color: white;\r\n  padding: 14px 20px;\r\n  margin: 8px 0;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n}\r\n\r\n.setBotCountClass:hover {\r\n  background-color: #45a049;\r\n}\r\n"
 
 /***/ }),
 
@@ -108,7 +108,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"gameIsRunning==true\">\r\n  <p>\r\n    New Round Is Started\r\n  </p>\r\n</div>\r\n\r\n  <div *ngIf=\"gameIsRunning==false\">\r\n\r\n    <input id=\"inputFieldBotCount\" [(ngModel)]=\"botCount\" type=\"number\" max=\"5\" min=\"1\" />\r\n    <button (click)=\"setBotCount()\">Choose number of players!</button>\r\n    <br />\r\n\r\n  </div>\r\n\r\n\r\n  <div *ngIf=\"gameIsRunning==true\">\r\n\r\n    <ul>\r\n      <li *ngFor=\"let result of playersCards\">\r\n        {{result.player.name}}\r\n        <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n      </li>\r\n    </ul>\r\n\r\n    <br />\r\n\r\n    <h2>TOTAL SCORE</h2>\r\n\r\n    <ul>\r\n      <li *ngFor=\"let result of playersCards\">\r\n        {{result.player.name}}\r\n        <span>{{result.player.score}},</span>\r\n      </li>\r\n    </ul>\r\n    <button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n    <button (click)=\"playStay()\">STAY</button>\r\n    <br />\r\n\r\n    <button (click)=\"startNewRound()\">NEW Round</button>\r\n    <button (click)=\"startNewGame()\">NEW Game</button>\r\n\r\n  </div>\r\n\r\n\r\n"
+module.exports = "<br />\r\n<div *ngIf=\"newRoundIsStarted==true\">\r\n  <p>\r\n    New Round Is Started\r\n  </p>\r\n</div>\r\n\r\n  <div *ngIf=\"gameIsRunning==false\">\r\n\r\n    <input id=\"inputFieldBotCount\" [(ngModel)]=\"botCount\" type=\"number\" max=\"5\" min=\"1\" />\r\n    <button class=\"setBotCountClass\" (click)=\"setBotCount()\">Choose number of players!</button>\r\n    <br />\r\n\r\n  </div>\r\n\r\n\r\n  <div *ngIf=\"gameIsRunning==true\">\r\n\r\n    <ul>\r\n      <li *ngFor=\"let result of playersCards\">\r\n        {{result.player.name}}\r\n        <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n      </li>\r\n    </ul>\r\n\r\n    <br />\r\n\r\n    <h2>TOTAL SCORE</h2>\r\n\r\n    <ul>\r\n      <li *ngFor=\"let result of playersCards\">\r\n        {{result.player.name}}\r\n        <span>{{result.player.score}},</span>\r\n      </li>\r\n    </ul>\r\n    <button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n    <button (click)=\"playStay()\">STAY</button>\r\n    <br />\r\n\r\n    <button (click)=\"startNewRound()\">NEW Round</button>\r\n    <button (click)=\"startNewGame()\">NEW Game</button>\r\n\r\n  </div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -166,9 +166,9 @@ var StartComponent = /** @class */ (function () {
         else {
             var inputField = document.getElementById("inputFieldBotCount");
             inputField.style.borderColor = "red";
+            inputField.style.background = "";
             return;
         }
-        //var ele = document.getElementById("input-player");
         var url = "/api/values/" + this.botCount;
         this._http.get(url).subscribe(function (result) {
             _this.players = result.json();
@@ -178,6 +178,7 @@ var StartComponent = /** @class */ (function () {
     };
     StartComponent.prototype.handOverCards = function () {
         var _this = this;
+        this.newRoundIsStarted = true;
         this._http.get("/api/gameLogic").subscribe(function (result) {
             _this.playersCards = result.json();
         });
@@ -185,12 +186,14 @@ var StartComponent = /** @class */ (function () {
     };
     StartComponent.prototype.playAgain = function () {
         var _this = this;
+        this.newRoundIsStarted = false;
         this._http.get("/api/gamelogic/PlayAgain/true").subscribe(function (result) {
             _this.playersCards = result.json();
         });
     };
     StartComponent.prototype.playStay = function () {
         var _this = this;
+        this.newRoundIsStarted = false;
         this.buttonDisabled = true;
         this._http.get("/api/gamelogic/PlayAgain/false").subscribe(function (result) {
             _this.playersCards = result.json();
@@ -198,6 +201,7 @@ var StartComponent = /** @class */ (function () {
     };
     StartComponent.prototype.startNewRound = function () {
         var _this = this;
+        this.newRoundIsStarted = true;
         this.buttonDisabled = false;
         this._http.get("/api/gameLogic/StartNewRound").subscribe(function (result) {
             _this.playersCards = result.json();
@@ -205,6 +209,7 @@ var StartComponent = /** @class */ (function () {
     };
     StartComponent.prototype.startNewGame = function () {
         this.gameIsRunning = false;
+        this.newRoundIsStarted = false;
     };
     StartComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

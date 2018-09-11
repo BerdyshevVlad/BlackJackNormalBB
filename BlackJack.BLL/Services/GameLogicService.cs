@@ -350,6 +350,7 @@ namespace BlackJack.BLL.Services
 
                     PlayerViewModel playerModel = Mapp.MappPlayer(player);
                     List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
+                    playerModel.Score = cardModelList.Sum(x=>x.Value);
                     roundModel.roundModelList.Add(new PlayerCardsViewModel { Player = playerModel, Cards = cardModelList,Round=i});
                 }
                 //gameHistory.Games.Add(roundModel);

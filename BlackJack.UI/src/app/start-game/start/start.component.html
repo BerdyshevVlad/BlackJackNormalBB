@@ -1,13 +1,16 @@
-<div *ngIf="gameIsRunning==true">
-  <p>
-    New Round Is Started
-  </p>
-</div>
+<div>
+
+  <br />
+  <div *ngIf="newRoundIsStarted==true">
+    <p>
+      New Round Is Started
+    </p>
+  </div>
 
   <div *ngIf="gameIsRunning==false">
 
     <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" />
-    <button (click)="setBotCount()">Choose number of players!</button>
+    <button class="setBotCountClass" (click)="setBotCount()">Choose number of players!</button>
     <br />
 
   </div>
@@ -41,4 +44,4 @@
 
   </div>
 
-
+</div>

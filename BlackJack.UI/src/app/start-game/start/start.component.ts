@@ -32,6 +32,7 @@ export class StartComponent implements OnInit {
   botCount: number;
   buttonDisabled: boolean;
   gameIsRunning: boolean;
+  newRoundIsStarted: boolean;
 
   ngOnInit() {
     this._http.get("/api/values").subscribe(result => {
@@ -51,10 +52,10 @@ export class StartComponent implements OnInit {
     else {
       var inputField = document.getElementById("inputFieldBotCount");
       inputField.style.borderColor = "red";
+      inputField.style.background = "";
       return;
     }
 
-    //var ele = document.getElementById("input-player");
     const url = `/api/values/${this.botCount}`;
     this._http.get(url).subscribe(result => {
       this.players = result.json();
@@ -64,36 +65,45 @@ export class StartComponent implements OnInit {
     );
   }
 
+
   handOverCards() {
+    this.newRoundIsStarted = true;
     this._http.get("/api/gameLogic").subscribe(result => {
       this.playersCards = result.json();
     });
     return this.playersCards;
   }
 
+
   playAgain() {
+    this.newRoundIsStarted = false;
     this._http.get("/api/gamelogic/PlayAgain/true").subscribe(result => {
       this.playersCards = result.json();
     });
   }
 
+
   playStay() {
+    this.newRoundIsStarted = false;
     this.buttonDisabled = true;
     this._http.get("/api/gamelogic/PlayAgain/false").subscribe(result => {
       this.playersCards = result.json();
     });
   }
 
+
   startNewRound() {
+    this.newRoundIsStarted = true;
     this.buttonDisabled = false;
     this._http.get("/api/gameLogic/StartNewRound").subscribe(result => {
       this.playersCards = result.json();
     });
   }
 
+
   startNewGame() {
     this.gameIsRunning = false;
+    this.newRoundIsStarted = false;
   }
-
 }
 
