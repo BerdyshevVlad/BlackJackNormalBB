@@ -303,6 +303,21 @@ namespace BlackJack.BLL.Services
             }
         }
 
+        public async Task<List<PlayerViewModel>> DefineTheWinner()
+        {
+            Dictionary<PlayerViewModel, int> scors = await GetScoreCount();
+            var max = scors.Where(x=>x.Value<=21).Max(x => x.Value);
+
+            foreach (var item in scors)
+            {
+                item.Key.Score = item.Value;
+            }
+
+            List<PlayerViewModel> winners=scors.Keys.Where(x => x.Score == max).ToList();
+
+            return winners;
+        }
+
 
         //public async Task<List<RoundViewModel>> GetHistory()
         //{

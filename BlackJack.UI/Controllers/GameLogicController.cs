@@ -59,9 +59,25 @@ namespace BlackJack.UI.Controllers
     [ActionName("GetHistory")]
     public async Task<List<PlayerCardsViewModel>> GetHistory()
     {
-      var history = await _gameLogicService.GetHistory();
+      List<PlayerCardsViewModel> history = await _gameLogicService.GetHistory();
+
+      var t = await _gameLogicService.DefineTheWinner();
+
       return history;
     }
+
+
+    [HttpGet("DefineTheWinner")]
+    [ActionName("DefineTheWinner")]
+    public async Task<List<PlayerViewModel>> DefineTheWinner()
+    {
+      List<PlayerViewModel> playerModelList =await _gameLogicService.DefineTheWinner();
+
+      return playerModelList;
+    }
+
+
+
 
   }
 }

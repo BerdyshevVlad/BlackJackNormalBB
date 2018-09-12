@@ -1,3 +1,7 @@
+li {
+  list-style-type: none;
+}
+
 input {
   width: 20%;
   padding: 12px 20px;
@@ -8,7 +12,11 @@ input {
   box-sizing: border-box;
 }
 
-.setBotCountClass {
+.gameIsRunning, .showCardsAndScors, .roundStartedMessage {
+  text-align: center;
+}
+
+.setBotCountClassBtn {
   width: 20%;
   background-color: #4CAF50;
   color: white;
@@ -19,6 +27,25 @@ input {
   cursor: pointer;
 }
 
-.setBotCountClass:hover {
+.setBotCountClassBtn:hover {
   background-color: #45a049;
+}
+
+
+.newGame, .newRound {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid white;
+  padding: 0 1rem;
+  margin-left: 29%;
+  background-color: #12e22d;
+}
+
+.newGame:hover, .newRound:hover {
+  background-color: #4CAF50;
+}
+
+.moreBtn, .stayBtn{
+  margin:15px;
 }

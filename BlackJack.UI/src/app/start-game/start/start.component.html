@@ -1,16 +1,16 @@
 <div>
 
   <br />
-  <div *ngIf="newRoundIsStarted==true">
-    <p>
+  <div class="roundStartedMessage" *ngIf="newRoundIsStarted==true">
+    <h3>
       New Round Is Started
-    </p>
+    </h3>
   </div>
 
-  <div *ngIf="gameIsRunning==false">
+  <div *ngIf="gameIsRunning==false" class="gameIsRunning">
 
-    <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" />
-    <button class="setBotCountClass" (click)="setBotCount()">Choose number of players!</button>
+    <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" required />
+    <button class="setBotCountClassBtn" (click)="setBotCount()">Choose number of players!</button>
     <br />
 
   </div>
@@ -18,30 +18,45 @@
 
   <div *ngIf="gameIsRunning==true">
 
-    <ul>
-      <li *ngFor="let result of playersCards">
-        {{result.player.name}}
-        <span *ngFor="let card of result.cards">{{card.value}},</span>
-      </li>
-    </ul>
+    <div class="showCardsAndScors">
 
+      <ul>
+        <li *ngFor="let result of playersCards">
+          {{result.player.name}}
+          <span *ngFor="let card of result.cards">{{card.value}},</span>
+        </li>
+      </ul>
+
+      <br />
+
+      <h2>TOTAL SCORE</h2>
+
+      <ul>
+        <li *ngFor="let result of playersCards">
+          {{result.player.name}}
+          <span>{{result.player.score}}</span>
+        </li>
+      </ul>
+
+
+      <div id="winner" class="winner">
+        <ul>
+          <li *ngFor="let result of winner">
+            {{result.name}} win the game!
+          </li>
+        </ul>
+      </div>
+
+      <button class="moreBtn" [disabled]="moreButtonDisabled" (click)="playAgain()">MORE</button>
+      <button class="stayBtn" [disabled]="stayButtonDisabled" (click)="playStay()">STAY</button>
+
+    </div>
     <br />
 
-    <h2>TOTAL SCORE</h2>
-
-    <ul>
-      <li *ngFor="let result of playersCards">
-        {{result.player.name}}
-        <span>{{result.player.score}},</span>
-      </li>
-    </ul>
-    <button [disabled]="buttonDisabled" (click)="playAgain()">MORE</button>
-    <button (click)="playStay()">STAY</button>
-    <br />
-
-    <button (click)="startNewRound()">NEW Round</button>
-    <button (click)="startNewGame()">NEW Game</button>
+    <button class="newRound" (click)="startNewRound()">NEW Round</button>
+    <button class="newGame" (click)="startNewGame()">NEW Game</button>
 
   </div>
 
 </div>
+

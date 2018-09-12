@@ -15,10 +15,10 @@ h1{
   background-color: #008CBA;
 }
 
-  #startGame:hover {
-    background-color: #6da3ff;
-  }
+#startGame:hover {
+  background-color: #6da3ff;
+}
 
-##viewHistory:hover {
-  background-color: #6da3ff
+#viewHistory:hover {
+  background-color: #6da3ff;
 }

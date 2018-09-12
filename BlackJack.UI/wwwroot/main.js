@@ -102,7 +102,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "h1{\r\n  text-align:center;\r\n}\r\n\r\n#startGame, #viewHistory {\r\n  display: inline-block;\r\n  height: 50px;\r\n  line-height: 50px;\r\n  border: 1px solid white;\r\n  padding: 0 1rem;\r\n  margin-left:29%;\r\n}\r\n\r\n#startGame, #viewHistory {\r\n  background-color: #008CBA;\r\n}\r\n\r\n#startGame:hover {\r\n    background-color: #6da3ff;\r\n  }\r\n\r\n##viewHistory:hover {\r\n  background-color: #6da3ff\r\n}\r\n"
+module.exports = "h1{\r\n  text-align:center;\r\n}\r\n\r\n#startGame, #viewHistory {\r\n  display: inline-block;\r\n  height: 50px;\r\n  line-height: 50px;\r\n  border: 1px solid white;\r\n  padding: 0 1rem;\r\n  margin-left:29%;\r\n}\r\n\r\n#startGame, #viewHistory {\r\n  background-color: #008CBA;\r\n}\r\n\r\n#startGame:hover {\r\n  background-color: #6da3ff;\r\n}\r\n\r\n#viewHistory:hover {\r\n  background-color: #6da3ff;\r\n}\r\n"
 
 /***/ }),
 

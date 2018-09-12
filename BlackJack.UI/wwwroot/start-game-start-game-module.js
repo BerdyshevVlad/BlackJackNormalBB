@@ -97,7 +97,7 @@ var StartGameModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "input {\r\n  width: 20%;\r\n  padding: 12px 20px;\r\n  margin: 8px 0;\r\n  display: inline-block;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.setBotCountClass {\r\n  width: 20%;\r\n  background-color: #4CAF50;\r\n  color: white;\r\n  padding: 14px 20px;\r\n  margin: 8px 0;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n}\r\n\r\n.setBotCountClass:hover {\r\n  background-color: #45a049;\r\n}\r\n"
+module.exports = "li {\r\n  list-style-type: none;\r\n}\r\n\r\ninput {\r\n  width: 20%;\r\n  padding: 12px 20px;\r\n  margin: 8px 0;\r\n  display: inline-block;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.gameIsRunning, .showCardsAndScors, .roundStartedMessage {\r\n  text-align: center;\r\n}\r\n\r\n.setBotCountClassBtn {\r\n  width: 20%;\r\n  background-color: #4CAF50;\r\n  color: white;\r\n  padding: 14px 20px;\r\n  margin: 8px 0;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n}\r\n\r\n.setBotCountClassBtn:hover {\r\n  background-color: #45a049;\r\n}\r\n\r\n.newGame, .newRound {\r\n  display: inline-block;\r\n  height: 50px;\r\n  line-height: 50px;\r\n  border: 1px solid white;\r\n  padding: 0 1rem;\r\n  margin-left: 29%;\r\n  background-color: #12e22d;\r\n}\r\n\r\n.newGame:hover, .newRound:hover {\r\n  background-color: #4CAF50;\r\n}\r\n\r\n.moreBtn, .stayBtn{\r\n  margin:15px;\r\n}\r\n"
 
 /***/ }),
 
@@ -108,7 +108,7 @@ module.exports = "input {\r\n  width: 20%;\r\n  padding: 12px 20px;\r\n  margin:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br />\r\n<div *ngIf=\"newRoundIsStarted==true\">\r\n  <p>\r\n    New Round Is Started\r\n  </p>\r\n</div>\r\n\r\n  <div *ngIf=\"gameIsRunning==false\">\r\n\r\n    <input id=\"inputFieldBotCount\" [(ngModel)]=\"botCount\" type=\"number\" max=\"5\" min=\"1\" />\r\n    <button class=\"setBotCountClass\" (click)=\"setBotCount()\">Choose number of players!</button>\r\n    <br />\r\n\r\n  </div>\r\n\r\n\r\n  <div *ngIf=\"gameIsRunning==true\">\r\n\r\n    <ul>\r\n      <li *ngFor=\"let result of playersCards\">\r\n        {{result.player.name}}\r\n        <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n      </li>\r\n    </ul>\r\n\r\n    <br />\r\n\r\n    <h2>TOTAL SCORE</h2>\r\n\r\n    <ul>\r\n      <li *ngFor=\"let result of playersCards\">\r\n        {{result.player.name}}\r\n        <span>{{result.player.score}},</span>\r\n      </li>\r\n    </ul>\r\n    <button [disabled]=\"buttonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n    <button (click)=\"playStay()\">STAY</button>\r\n    <br />\r\n\r\n    <button (click)=\"startNewRound()\">NEW Round</button>\r\n    <button (click)=\"startNewGame()\">NEW Game</button>\r\n\r\n  </div>\r\n\r\n\r\n"
+module.exports = "<div>\r\n\r\n  <br />\r\n  <div class=\"roundStartedMessage\" *ngIf=\"newRoundIsStarted==true\">\r\n    <h3>\r\n      New Round Is Started\r\n    </h3>\r\n  </div>\r\n\r\n  <div *ngIf=\"gameIsRunning==false\" class=\"gameIsRunning\">\r\n\r\n    <input id=\"inputFieldBotCount\" [(ngModel)]=\"botCount\" type=\"number\" max=\"5\" min=\"1\" required />\r\n    <button class=\"setBotCountClassBtn\" (click)=\"setBotCount()\">Choose number of players!</button>\r\n    <br />\r\n\r\n  </div>\r\n\r\n\r\n  <div *ngIf=\"gameIsRunning==true\">\r\n\r\n    <div class=\"showCardsAndScors\">\r\n\r\n      <ul>\r\n        <li *ngFor=\"let result of playersCards\">\r\n          {{result.player.name}}\r\n          <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n        </li>\r\n      </ul>\r\n\r\n      <br />\r\n\r\n      <h2>TOTAL SCORE</h2>\r\n\r\n      <ul>\r\n        <li *ngFor=\"let result of playersCards\">\r\n          {{result.player.name}}\r\n          <span>{{result.player.score}}</span>\r\n        </li>\r\n      </ul>\r\n\r\n\r\n      <div id=\"winner\" class=\"winner\">\r\n        <ul>\r\n          <li *ngFor=\"let result of winner\">\r\n            {{result.name}} win the game!\r\n          </li>\r\n        </ul>\r\n      </div>\r\n\r\n      <button class=\"moreBtn\" [disabled]=\"moreButtonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n      <button class=\"stayBtn\" [disabled]=\"stayButtonDisabled\" (click)=\"playStay()\">STAY</button>\r\n\r\n    </div>\r\n    <br />\r\n\r\n    <button class=\"newRound\" (click)=\"startNewRound()\">NEW Round</button>\r\n    <button class=\"newGame\" (click)=\"startNewGame()\">NEW Game</button>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -144,10 +144,14 @@ var StartComponent = /** @class */ (function () {
         this.cards = [];
         this.players = [];
         this.playersCards = [];
+        this.winner = [];
         this.roundList = [];
         this.gameList = [];
-        this.buttonDisabled = false;
+        this.maxWinScore = 21;
+        this.userName = "You";
+        this.moreButtonDisabled = false;
         this.gameIsRunning = false;
+        this.stayButtonDisabled = false;
     }
     StartComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -158,7 +162,7 @@ var StartComponent = /** @class */ (function () {
     StartComponent.prototype.setBotCount = function () {
         var _this = this;
         this.playersCards = null;
-        this.buttonDisabled = false;
+        this.moreButtonDisabled = false;
         if (this.botCount > 0 && this.botCount < 6) {
             var inputField = document.getElementById("inputFieldBotCount");
             inputField.style.background = "green";
@@ -189,20 +193,35 @@ var StartComponent = /** @class */ (function () {
         this.newRoundIsStarted = false;
         this._http.get("/api/gamelogic/PlayAgain/true").subscribe(function (result) {
             _this.playersCards = result.json();
+            for (var i = 0; i < _this.playersCards.length; i++) {
+                if (_this.playersCards[i].player.score >= _this.maxWinScore && _this.playersCards[i].player.name == _this.userName) {
+                    _this.defineTheWinner();
+                    _this.moreButtonDisabled = true;
+                    _this.stayButtonDisabled = true;
+                }
+            }
         });
     };
     StartComponent.prototype.playStay = function () {
         var _this = this;
         this.newRoundIsStarted = false;
-        this.buttonDisabled = true;
+        this.moreButtonDisabled = true;
         this._http.get("/api/gamelogic/PlayAgain/false").subscribe(function (result) {
             _this.playersCards = result.json();
+            _this.defineTheWinner();
+        });
+    };
+    StartComponent.prototype.defineTheWinner = function () {
+        var _this = this;
+        this._http.get("/api/gamelogic/DefineTheWinner").subscribe(function (result) {
+            _this.winner = result.json();
         });
     };
     StartComponent.prototype.startNewRound = function () {
         var _this = this;
         this.newRoundIsStarted = true;
-        this.buttonDisabled = false;
+        this.moreButtonDisabled = false;
+        this.stayButtonDisabled = false;
         this._http.get("/api/gameLogic/StartNewRound").subscribe(function (result) {
             _this.playersCards = result.json();
         });
@@ -210,6 +229,7 @@ var StartComponent = /** @class */ (function () {
     StartComponent.prototype.startNewGame = function () {
         this.gameIsRunning = false;
         this.newRoundIsStarted = false;
+        this.stayButtonDisabled = false;
     };
     StartComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

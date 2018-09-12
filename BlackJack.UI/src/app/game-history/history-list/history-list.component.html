@@ -11,14 +11,12 @@
 
 
 
-<kendo-grid [data]="gridView" [height]="410" [pageSize]="pageSize"
+<kendo-grid [data]="gridView" [height]="760" [pageSize]="pageSize"
             [skip]="skip"
             [pageable]="true"
             (pageChange)="pageChange($event)">
 
   <kendo-grid-column field="player.name" title="Name" [width]="300">
-  </kendo-grid-column>
-  <kendo-grid-column field="round" title="Round" [width]="300">
   </kendo-grid-column>
 
   <kendo-grid-column field="cards" title="Cards" width="120">
@@ -30,6 +28,9 @@
   </kendo-grid-column>
 
   <kendo-grid-column field="player.score" title="Total" [width]="300">
+  </kendo-grid-column>
+
+  <kendo-grid-column field="round" title="Round" [width]="300">
   </kendo-grid-column>
 
 </kendo-grid>
