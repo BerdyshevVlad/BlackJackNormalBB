@@ -113,7 +113,7 @@ module.exports = "h1{\r\n  text-align:center;\r\n}\r\n\r\n#startGame, #viewHisto
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>BLACK JACK</h1>\r\n\r\n\r\n<button id=\"startGame\" routerLink=\"/startGame\">START GAME</button>\r\n<button id=\"viewHistory\" routerLink=\"/history\">VIEW HISTORY</button>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n\r\n\r\n"
+module.exports = "<h1>BLACK JACK</h1>\r\n\r\n\r\n<button id=\"startGame\" routerLink=\"/startGame\"><i class=\"fas fa-trophy\"></i>&nbsp;START GAME</button>\r\n<button id=\"viewHistory\" routerLink=\"/history\"><i class=\"fas fa-history\"></i>&nbsp;VIEW HISTORY</button>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 

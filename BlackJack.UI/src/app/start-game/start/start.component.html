@@ -10,7 +10,7 @@
   <div *ngIf="gameIsRunning==false" class="gameIsRunning">
 
     <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" required />
-    <button class="setBotCountClassBtn" (click)="setBotCount()">Choose number of players!</button>
+    <button class="setBotCountClassBtn" (click)="setBotCount()"><i class="fas fa-robot"></i>&nbsp; Choose number of players!&nbsp;<i class="fas fa-robot"></i></button>
     <br />
 
   </div>
@@ -53,8 +53,8 @@
     </div>
     <br />
 
-    <button class="newRound" (click)="startNewRound()">NEW Round</button>
-    <button class="newGame" (click)="startNewGame()">NEW Game</button>
+    <button class="newRound" (click)="startNewRound()"><i class="fas fa-redo-alt"></i>&nbsp;NEW Round</button>
+    <button class="newGame" (click)="startNewGame()"><i class="fas fa-arrow-circle-right"></i>&nbsp;NEW Game</button>
 
   </div>
 
