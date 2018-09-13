@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
 using BlackJack.BLL.Services;
 using BlackJack.DAL;
-using BlackJack.DAL.Dapper.Interfaces;
-using BlackJack.DAL.Dapper.Repositories;
+using BlackJack.DAL.Dapper.Interfaces;   //
+using BlackJack.DAL.Dapper.Repositories;   //
 using BlackJack.EntitiesLayer.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

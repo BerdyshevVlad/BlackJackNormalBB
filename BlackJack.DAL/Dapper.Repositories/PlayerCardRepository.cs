@@ -1,12 +1,10 @@
 ﻿using BlackJack.DAL.Dapper.Interfaces;
 using BlackJack.EntitiesLayer.Entities;
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BlackJack.DAL.Dapper.Repositories

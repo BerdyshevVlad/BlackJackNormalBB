@@ -15,8 +15,6 @@ namespace BlackJack.DAL.Repositories
             
         }
 
-
-
         public bool IsExist()
         {
             var isExist = _dbContext.Cards.Any();

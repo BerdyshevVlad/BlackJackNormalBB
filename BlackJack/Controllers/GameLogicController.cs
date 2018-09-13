@@ -1,12 +1,8 @@
 ﻿using BlackJack.BLL.Services;
-using BlackJack.DAL.Repositories;
 using BlackJack.Mappers;
 using BlackJack.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BlackJack.Controllers
@@ -24,13 +20,11 @@ namespace BlackJack.Controllers
 
         public async Task<ActionResult> HandOverCards()
         {
-            //Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
-            //List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
+            List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
 
-            await _gameLogicService.GetHistory();
 
-            //return View(model);
-            return null;
+            return View(model);
         }
 
 

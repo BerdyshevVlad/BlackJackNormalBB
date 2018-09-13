@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackJackContext.cs" />
+    <Compile Include="Context.MVC\BlackJackContext.cs" />
     <Compile Include="Dapper.Interfaces\ICardRepository.cs" />
     <Compile Include="Dapper.Interfaces\IPlayerCardRepository.cs" />
     <Compile Include="Dapper.Interfaces\IPlayerRepository.cs" />
