@@ -21,8 +21,7 @@ namespace BlackJack.Controllers
         [ExceptionLogger]
         public async Task<ActionResult> HandOverCards()
         {
-            //Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = null;         //test logger
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
             List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
 
 
