@@ -55,9 +55,9 @@ var GameHistoryRoutingModule = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GameHistoryModule", function() { return GameHistoryModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
-/* harmony import */ var _game_history_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./game-history-routing.module */ "./src/app/game-history/game-history-routing.module.ts");
-/* harmony import */ var _history_list_history_list_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./history-list/history-list.component */ "./src/app/game-history/history-list/history-list.component.ts");
+/* harmony import */ var _game_history_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game-history-routing.module */ "./src/app/game-history/game-history-routing.module.ts");
+/* harmony import */ var _history_list_history_list_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./history-list/history-list.component */ "./src/app/game-history/history-list/history-list.component.ts");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,20 +68,16 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-//import { GridModule } from '@progress/kendo-angular-grid';
-//import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 var GameHistoryModule = /** @class */ (function () {
     function GameHistoryModule() {
     }
     GameHistoryModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
-                _game_history_routing_module__WEBPACK_IMPORTED_MODULE_2__["GameHistoryRoutingModule"],
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_1__["SharedModule"]
-                //GridModule,
-                //DropDownsModule
+                _game_history_routing_module__WEBPACK_IMPORTED_MODULE_1__["GameHistoryRoutingModule"],
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__["SharedModule"]
             ],
-            declarations: [_history_list_history_list_component__WEBPACK_IMPORTED_MODULE_3__["HistoryListComponent"]]
+            declarations: [_history_list_history_list_component__WEBPACK_IMPORTED_MODULE_2__["HistoryListComponent"]]
         })
     ], GameHistoryModule);
     return GameHistoryModule;

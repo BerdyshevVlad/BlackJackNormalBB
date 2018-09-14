@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
-
-import { SharedModule } from '../shared/shared.module';
-
 import { GameHistoryRoutingModule } from './game-history-routing.module';
 import { HistoryListComponent } from './history-list/history-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({

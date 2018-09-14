@@ -55,9 +55,9 @@ var StartGameRoutingModule = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StartGameModule", function() { return StartGameModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
-/* harmony import */ var _start_game_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./start-game-routing.module */ "./src/app/start-game/start-game-routing.module.ts");
-/* harmony import */ var _start_start_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./start/start.component */ "./src/app/start-game/start/start.component.ts");
+/* harmony import */ var _start_game_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./start-game-routing.module */ "./src/app/start-game/start-game-routing.module.ts");
+/* harmony import */ var _start_start_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./start/start.component */ "./src/app/start-game/start/start.component.ts");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -74,10 +74,10 @@ var StartGameModule = /** @class */ (function () {
     StartGameModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
-                _start_game_routing_module__WEBPACK_IMPORTED_MODULE_2__["StartGameRoutingModule"],
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_1__["SharedModule"]
+                _start_game_routing_module__WEBPACK_IMPORTED_MODULE_1__["StartGameRoutingModule"],
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__["SharedModule"]
             ],
-            declarations: [_start_start_component__WEBPACK_IMPORTED_MODULE_3__["StartComponent"]]
+            declarations: [_start_start_component__WEBPACK_IMPORTED_MODULE_2__["StartComponent"]]
         })
     ], StartGameModule);
     return StartGameModule;
