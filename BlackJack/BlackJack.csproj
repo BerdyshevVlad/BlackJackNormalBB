@@ -323,6 +323,10 @@
       <Project>{E0282D97-BB2C-4A5B-968D-FD839BE1E42B}</Project>
       <Name>BlackJack.Mappers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExceptionLoggers\ExceptionLoggers.csproj">
+      <Project>{519CC58D-9BFC-4565-9AF8-A4E2D33CAB15}</Project>
+      <Name>ExceptionLoggers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -12,40 +12,29 @@ input {
   box-sizing: border-box;
 }
 
-.gameIsRunning, .showCardsAndScors, .roundStartedMessage {
+.roundStartedMessage {
   text-align: center;
-}
-
-.setBotCountClassBtn {
-  width: 20%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.setBotCountClassBtn:hover {
-  background-color: #45a049;
-}
-
-
-.newGame, .newRound {
-  display: inline-block;
-  height: 50px;
-  line-height: 50px;
-  border: 1px solid white;
-  padding: 0 1rem;
-  margin-left: 29%;
-  background-color: #12e22d;
 }
 
 .newGame:hover, .newRound:hover {
   background-color: #4CAF50;
 }
 
-.moreBtn, .stayBtn{
-  margin:15px;
+.moreBtn, .stayBtn {
+  margin: 15px;
+}
+
+
+.col-centered {
+  float: none;
+  margin:auto;
+}
+
+.newRoundBtn, .newGameBtn {
+  margin: 10px;
+}
+
+.errorMessageSetBotCount {
+  text-align: center;
+  color: red;
 }

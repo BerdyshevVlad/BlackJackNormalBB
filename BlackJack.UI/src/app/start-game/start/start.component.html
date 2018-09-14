@@ -1,62 +1,68 @@
 <div>
 
   <br />
+
   <div class="roundStartedMessage" *ngIf="newRoundIsStarted==true">
     <h3>
       New Round Is Started
     </h3>
   </div>
 
-  <div *ngIf="gameIsRunning==false" class="gameIsRunning">
-
-    <input id="inputFieldBotCount" [(ngModel)]="botCount" type="number" max="5" min="1" required />
-    <button class="setBotCountClassBtn" (click)="setBotCount()"><i class="fas fa-robot"></i>&nbsp; Choose number of players!&nbsp;<i class="fas fa-robot"></i></button>
-    <br />
-
+  <div class="input-group mb-3 col-6 col-centered" *ngIf="gameIsRunning==false">
+    <input [(ngModel)]="botCount" type="number" max="5" min="1" class="form-control" id="inputFieldBotCount" placeholder="Enter number of bots from 1 to 5" aria-label="Enter number of bots" aria-describedby="basic-addon2">
+    <button class="btn btn-success" (click)="setBotCount()"><i class="fas fa-robot"></i>&nbsp;Choose number of players!&nbsp;<i class="fas fa-robot"></i></button>
   </div>
 
+  <div class="input-group mb-3 col-6 col-centered">
+    <p id="errorMessageSetBotCount" class="errorMessageSetBotCount"></p>
+  </div>
 
-  <div *ngIf="gameIsRunning==true">
+  <br />
 
-    <div class="showCardsAndScors">
+  <div *ngIf="gameIsRunning==true" class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-center">
+          <ul>
+            <li *ngFor="let result of playersCards">
+              {{result.player.name}}
+              <span *ngFor="let card of result.cards">{{card.value}},</span>
+            </li>
+          </ul>
+          <br />
+          <h2>TOTAL SCORE</h2>
+          <ul>
+            <li *ngFor="let result of playersCards">
+              {{result.player.name}}
+              <span>{{result.player.score}}</span>
+            </li>
+          </ul>
 
-      <ul>
-        <li *ngFor="let result of playersCards">
-          {{result.player.name}}
-          <span *ngFor="let card of result.cards">{{card.value}},</span>
-        </li>
-      </ul>
-
-      <br />
-
-      <h2>TOTAL SCORE</h2>
-
-      <ul>
-        <li *ngFor="let result of playersCards">
-          {{result.player.name}}
-          <span>{{result.player.score}}</span>
-        </li>
-      </ul>
-
-
-      <div id="winner" class="winner">
-        <ul>
-          <li *ngFor="let result of winner">
-            {{result.name}} win the game!
-          </li>
-        </ul>
+          <div id="winner" class="winner">
+            <ul>
+              <li *ngFor="let result of winner">
+                <span *ngIf="winner.name=='You'">Congratulations, </span>
+                <h3>{{result.name}}</h3> win the game!
+              </li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-success moreBtn" [disabled]="moreButtonDisabled" (click)="playAgain()">MORE</button>
+          <button type="button" class="btn btn-success stayBtn" [disabled]="stayButtonDisabled" (click)="playStay()">STAY</button>
+        </div>
       </div>
-
-      <button class="moreBtn" [disabled]="moreButtonDisabled" (click)="playAgain()">MORE</button>
-      <button class="stayBtn" [disabled]="stayButtonDisabled" (click)="playStay()">STAY</button>
-
     </div>
     <br />
 
-    <button class="newRound" (click)="startNewRound()"><i class="fas fa-redo-alt"></i>&nbsp;NEW Round</button>
-    <button class="newGame" (click)="startNewGame()"><i class="fas fa-arrow-circle-right"></i>&nbsp;NEW Game</button>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="text-center">
+            <button type="button" class="btn btn-primary btn-sm newRoundBtn" (click)="startNewRound()"><i class="fas fa-redo-alt"></i>&nbsp;NEW Round</button>
+            <button type="button" class="btn btn-primary btn-sm newGameBtn" (click)="startNewGame()"><i class="fas fa-arrow-circle-right"></i>&nbsp;NEW Game</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
 </div>
-

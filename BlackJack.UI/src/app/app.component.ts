@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { debug } from 'util';
 import { Observable } from 'rxjs';
-import { LogicService } from './logic.service';
 
 import { CardData } from './Interfaces/cardData';
 import { PlayerData } from './Interfaces/playerData';
@@ -28,7 +27,7 @@ export class AppComponent implements OnInit {
   buttonDisabled: boolean;
  
 
-  constructor(private _http: Http, private _logicService:LogicService ) {
+  constructor(private _http: Http ) {
     this.buttonDisabled = false;
   }
 

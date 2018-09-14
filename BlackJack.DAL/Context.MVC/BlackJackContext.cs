@@ -1,4 +1,5 @@
-﻿using BlackJack.EntitiesLayer.Entities;
+﻿using BlackJack.Entities.Entities;
+using BlackJack.EntitiesLayer.Entities;
 using System.Data.Entity;
 
 namespace BlackJack.DAL.Context.MVC
@@ -16,6 +17,7 @@ namespace BlackJack.DAL.Context.MVC
         public DbSet<Card> Cards { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerCard> PlayersCards { get; set; }
+        public DbSet<ExceptionDetail> ExceptionDetails { get; set; }
     }
 
     public class ContextInitializer : CreateDatabaseIfNotExists<BlackJackContext>

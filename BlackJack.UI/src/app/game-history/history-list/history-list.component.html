@@ -1,24 +1,9 @@
-<p>
-  history-list works! My text!
-</p>
-<!--<ul *ngFor="let game of gameList">
-  <li *ngFor="let round of game.roundModelList">
-    {{round.player.name}}
-    <span *ngFor="let card of round.cards">{{card.value}},</span>
-  </li>
-</ul>-->
-
-
-
-
 <kendo-grid [data]="gridView" [height]="760" [pageSize]="pageSize"
             [skip]="skip"
             [pageable]="true"
             (pageChange)="pageChange($event)">
-
   <kendo-grid-column field="player.name" title="Name" [width]="300">
   </kendo-grid-column>
-
   <kendo-grid-column field="cards" title="Cards" width="120">
     <ng-template kendoGridCellTemplate let-dataItem>
       <ul>
@@ -26,14 +11,9 @@
       </ul>
     </ng-template>
   </kendo-grid-column>
-
   <kendo-grid-column field="player.score" title="Total" [width]="300">
   </kendo-grid-column>
-
   <kendo-grid-column field="round" title="Round" [width]="300">
   </kendo-grid-column>
-
 </kendo-grid>
-
-
 

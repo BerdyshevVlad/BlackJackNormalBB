@@ -1,6 +1,5 @@
-﻿using BlackJack.DAL.Context.MVC;
-using BlackJack.DAL.Dapper.Interfaces;  //
-using BlackJack.DAL.Dapper.Repositories;  //
+﻿using BlackJack.DAL.Dapper.Interfaces; 
+using BlackJack.DAL.Dapper.Repositories;
 using Ninject.Modules;
 using System.Configuration;
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Http } from '@angular/http';
-import { LogicService } from '../../logic.service';
 import { Observable } from 'rxjs';
 
 import { CardData } from '../../Interfaces/cardData';
@@ -18,7 +17,7 @@ import { expandAggregates } from '@progress/kendo-data-query/dist/npm/transducer
 })
 export class StartComponent implements OnInit {
 
-  constructor(private _http: Http, private _logicService: LogicService) {
+  constructor(private _http: Http) {
     this.moreButtonDisabled = false;
     this.gameIsRunning = false;
     this.stayButtonDisabled = false;
@@ -42,6 +41,9 @@ export class StartComponent implements OnInit {
   ngOnInit() {
     this._http.get("/api/values").subscribe(result => {
       this.cards = result.json();
+
+      var header = document.getElementById("header");
+      header.innerHTML = "GAME IS STARTED";
     });
   }
 
@@ -53,10 +55,14 @@ export class StartComponent implements OnInit {
     if (this.botCount > 0 && this.botCount < 6) {
       var inputField = document.getElementById("inputFieldBotCount");
       inputField.style.background = "green";
+      var error = document.getElementById("errorMessageSetBotCount");
+      error.innerHTML = "";
     }
     else {
       var inputField = document.getElementById("inputFieldBotCount");
       inputField.style.borderColor = "red";
+      var error = document.getElementById("errorMessageSetBotCount");
+      error.innerHTML = "<i class='fas fa-times'></i>Please set bots from range from 1 to 5";
       inputField.style.background = "";
       return;
     }
@@ -100,6 +106,7 @@ export class StartComponent implements OnInit {
   playStay() {
     this.newRoundIsStarted = false;
     this.moreButtonDisabled = true;
+    this.stayButtonDisabled = true;
     this._http.get("/api/gamelogic/PlayAgain/false").subscribe(result => {
       this.playersCards = result.json();
       this.defineTheWinner();
@@ -118,6 +125,7 @@ export class StartComponent implements OnInit {
     this.newRoundIsStarted = true;
     this.moreButtonDisabled = false;
     this.stayButtonDisabled = false;
+    this.winner = [];
     this._http.get("/api/gameLogic/StartNewRound").subscribe(result => {
       this.playersCards = result.json();
     });
@@ -128,6 +136,7 @@ export class StartComponent implements OnInit {
     this.gameIsRunning = false;
     this.newRoundIsStarted = false;
     this.stayButtonDisabled = false;
+    this.winner = [];
   }
 
 

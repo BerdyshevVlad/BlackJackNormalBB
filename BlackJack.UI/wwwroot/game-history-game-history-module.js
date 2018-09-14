@@ -103,7 +103,7 @@ var GameHistoryModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n"
+module.exports = "h1 {\r\n  text-align: center;\r\n  margin-top:5%;\r\n}\r\n"
 
 /***/ }),
 
@@ -114,7 +114,7 @@ module.exports = "\r\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  history-list works! My text!\r\n</p>\r\n<!--<ul *ngFor=\"let game of gameList\">\r\n  <li *ngFor=\"let round of game.roundModelList\">\r\n    {{round.player.name}}\r\n    <span *ngFor=\"let card of round.cards\">{{card.value}},</span>\r\n  </li>\r\n</ul>-->\r\n\r\n\r\n\r\n\r\n<kendo-grid [data]=\"gridView\" [height]=\"760\" [pageSize]=\"pageSize\"\r\n            [skip]=\"skip\"\r\n            [pageable]=\"true\"\r\n            (pageChange)=\"pageChange($event)\">\r\n\r\n  <kendo-grid-column field=\"player.name\" title=\"Name\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n\r\n  <kendo-grid-column field=\"cards\" title=\"Cards\" width=\"120\">\r\n    <ng-template kendoGridCellTemplate let-dataItem>\r\n      <ul>\r\n        <li *ngFor=\"let card of dataItem.cards\">{{card.value}}</li>\r\n      </ul>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n\r\n  <kendo-grid-column field=\"player.score\" title=\"Total\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n\r\n  <kendo-grid-column field=\"round\" title=\"Round\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n\r\n</kendo-grid>\r\n\r\n\r\n\r\n"
+module.exports = "<kendo-grid [data]=\"gridView\" [height]=\"760\" [pageSize]=\"pageSize\"\r\n            [skip]=\"skip\"\r\n            [pageable]=\"true\"\r\n            (pageChange)=\"pageChange($event)\">\r\n  <kendo-grid-column field=\"player.name\" title=\"Name\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"cards\" title=\"Cards\" width=\"120\">\r\n    <ng-template kendoGridCellTemplate let-dataItem>\r\n      <ul>\r\n        <li *ngFor=\"let card of dataItem.cards\">{{card.value}}</li>\r\n      </ul>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"player.score\" title=\"Total\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"round\" title=\"Round\" [width]=\"300\">\r\n  </kendo-grid-column>\r\n</kendo-grid>\r\n\r\n"
 
 /***/ }),
 
@@ -129,8 +129,7 @@ module.exports = "<p>\r\n  history-list works! My text!\r\n</p>\r\n<!--<ul *ngFo
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HistoryListComponent", function() { return HistoryListComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _logic_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../logic.service */ "./src/app/logic.service.ts");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -142,11 +141,9 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-
 var HistoryListComponent = /** @class */ (function () {
-    function HistoryListComponent(_http, _logicService) {
+    function HistoryListComponent(_http) {
         this._http = _http;
-        this._logicService = _logicService;
         this.pageSize = 10;
         this.skip = 0;
         this.round = [];
@@ -156,6 +153,8 @@ var HistoryListComponent = /** @class */ (function () {
         this._http.get("/api/gameLogic/getHistory").subscribe(function (result) {
             _this.round = result.json();
             _this.loadItems();
+            var header = document.getElementById("header");
+            header.innerHTML = "GAME HISTORY";
         });
     };
     HistoryListComponent.prototype.pageChange = function (event) {
@@ -174,7 +173,7 @@ var HistoryListComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./history-list.component.html */ "./src/app/game-history/history-list/history-list.component.html"),
             styles: [__webpack_require__(/*! ./history-list.component.css */ "./src/app/game-history/history-list/history-list.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_2__["Http"], _logic_service__WEBPACK_IMPORTED_MODULE_1__["LogicService"]])
+        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"]])
     ], HistoryListComponent);
     return HistoryListComponent;
 }());

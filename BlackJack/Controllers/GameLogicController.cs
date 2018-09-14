@@ -1,6 +1,7 @@
 ﻿using BlackJack.BLL.Services;
 using BlackJack.Mappers;
 using BlackJack.ViewModels;
+using ExceptionLoggers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -17,10 +18,11 @@ namespace BlackJack.Controllers
         }
 
 
-
+        [ExceptionLogger]
         public async Task<ActionResult> HandOverCards()
         {
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
+            //Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
+            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = null;         //test logger
             List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
 
 
@@ -28,7 +30,7 @@ namespace BlackJack.Controllers
         }
 
 
-
+        [ExceptionLogger]
         public async Task<ActionResult> PlayAgain(bool takeCard)
         {
             Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.PlayAgain(takeCard);
@@ -38,6 +40,7 @@ namespace BlackJack.Controllers
         }
 
 
+        [ExceptionLogger]
         public async Task<ActionResult> StartNewRound()
         {
             Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.StartNewRound();

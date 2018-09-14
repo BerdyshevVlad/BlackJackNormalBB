@@ -27,7 +27,5 @@ namespace BlackJack.BLL.Interfaces
         void CountSum(ref Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary);
         Task<List<PlayerCardsViewModel>> GetHistory();
         Task<List<PlayerViewModel>> DefineTheWinner();
-        //Task<List<RoundViewModel>> GetHistory();
-        //Task<Dictionary<int, RoundViewModel>> GetHistory();
     }
 }

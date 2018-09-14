@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -7,11 +8,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -24,6 +20,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     GridModule,
     BrowserAnimationsModule,
+    CommonModule,
+  ],
+  exports: [
+    FormsModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

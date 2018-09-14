@@ -97,7 +97,7 @@ var StartGameModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "li {\r\n  list-style-type: none;\r\n}\r\n\r\ninput {\r\n  width: 20%;\r\n  padding: 12px 20px;\r\n  margin: 8px 0;\r\n  display: inline-block;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.gameIsRunning, .showCardsAndScors, .roundStartedMessage {\r\n  text-align: center;\r\n}\r\n\r\n.setBotCountClassBtn {\r\n  width: 20%;\r\n  background-color: #4CAF50;\r\n  color: white;\r\n  padding: 14px 20px;\r\n  margin: 8px 0;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n}\r\n\r\n.setBotCountClassBtn:hover {\r\n  background-color: #45a049;\r\n}\r\n\r\n.newGame, .newRound {\r\n  display: inline-block;\r\n  height: 50px;\r\n  line-height: 50px;\r\n  border: 1px solid white;\r\n  padding: 0 1rem;\r\n  margin-left: 29%;\r\n  background-color: #12e22d;\r\n}\r\n\r\n.newGame:hover, .newRound:hover {\r\n  background-color: #4CAF50;\r\n}\r\n\r\n.moreBtn, .stayBtn{\r\n  margin:15px;\r\n}\r\n"
+module.exports = "li {\r\n  list-style-type: none;\r\n}\r\n\r\ninput {\r\n  width: 20%;\r\n  padding: 12px 20px;\r\n  margin: 8px 0;\r\n  display: inline-block;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.roundStartedMessage {\r\n  text-align: center;\r\n}\r\n\r\n.newGame:hover, .newRound:hover {\r\n  background-color: #4CAF50;\r\n}\r\n\r\n.moreBtn, .stayBtn {\r\n  margin: 15px;\r\n}\r\n\r\n.col-centered {\r\n  float: none;\r\n  margin:auto;\r\n}\r\n\r\n.newRoundBtn, .newGameBtn {\r\n  margin: 10px;\r\n}\r\n\r\n.errorMessageSetBotCount {\r\n  text-align: center;\r\n  color: red;\r\n}\r\n"
 
 /***/ }),
 
@@ -108,7 +108,7 @@ module.exports = "li {\r\n  list-style-type: none;\r\n}\r\n\r\ninput {\r\n  widt
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n\r\n  <br />\r\n  <div class=\"roundStartedMessage\" *ngIf=\"newRoundIsStarted==true\">\r\n    <h3>\r\n      New Round Is Started\r\n    </h3>\r\n  </div>\r\n\r\n  <div *ngIf=\"gameIsRunning==false\" class=\"gameIsRunning\">\r\n\r\n    <input id=\"inputFieldBotCount\" [(ngModel)]=\"botCount\" type=\"number\" max=\"5\" min=\"1\" required />\r\n    <button class=\"setBotCountClassBtn\" (click)=\"setBotCount()\"><i class=\"fas fa-robot\"></i>&nbsp; Choose number of players!&nbsp;<i class=\"fas fa-robot\"></i></button>\r\n    <br />\r\n\r\n  </div>\r\n\r\n\r\n  <div *ngIf=\"gameIsRunning==true\">\r\n\r\n    <div class=\"showCardsAndScors\">\r\n\r\n      <ul>\r\n        <li *ngFor=\"let result of playersCards\">\r\n          {{result.player.name}}\r\n          <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n        </li>\r\n      </ul>\r\n\r\n      <br />\r\n\r\n      <h2>TOTAL SCORE</h2>\r\n\r\n      <ul>\r\n        <li *ngFor=\"let result of playersCards\">\r\n          {{result.player.name}}\r\n          <span>{{result.player.score}}</span>\r\n        </li>\r\n      </ul>\r\n\r\n\r\n      <div id=\"winner\" class=\"winner\">\r\n        <ul>\r\n          <li *ngFor=\"let result of winner\">\r\n            {{result.name}} win the game!\r\n          </li>\r\n        </ul>\r\n      </div>\r\n\r\n      <button class=\"moreBtn\" [disabled]=\"moreButtonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n      <button class=\"stayBtn\" [disabled]=\"stayButtonDisabled\" (click)=\"playStay()\">STAY</button>\r\n\r\n    </div>\r\n    <br />\r\n\r\n    <button class=\"newRound\" (click)=\"startNewRound()\"><i class=\"fas fa-redo-alt\"></i>&nbsp;NEW Round</button>\r\n    <button class=\"newGame\" (click)=\"startNewGame()\"><i class=\"fas fa-arrow-circle-right\"></i>&nbsp;NEW Game</button>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div>\r\n\r\n  <br />\r\n\r\n  <div class=\"roundStartedMessage\" *ngIf=\"newRoundIsStarted==true\">\r\n    <h3>\r\n      New Round Is Started\r\n    </h3>\r\n  </div>\r\n\r\n  <div class=\"input-group mb-3 col-6 col-centered\" *ngIf=\"gameIsRunning==false\">\r\n    <input [(ngModel)]=\"botCount\" type=\"number\" max=\"5\" min=\"1\" class=\"form-control\" id=\"inputFieldBotCount\" placeholder=\"Enter number of bots from 1 to 5\" aria-label=\"Enter number of bots\" aria-describedby=\"basic-addon2\">\r\n    <button class=\"btn btn-success\" (click)=\"setBotCount()\"><i class=\"fas fa-robot\"></i>&nbsp;Choose number of players!&nbsp;<i class=\"fas fa-robot\"></i></button>\r\n  </div>\r\n\r\n  <div class=\"input-group mb-3 col-6 col-centered\">\r\n    <p id=\"errorMessageSetBotCount\" class=\"errorMessageSetBotCount\"></p>\r\n  </div>\r\n\r\n  <br />\r\n\r\n  <div *ngIf=\"gameIsRunning==true\" class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"col-12\">\r\n        <div class=\"text-center\">\r\n          <ul>\r\n            <li *ngFor=\"let result of playersCards\">\r\n              {{result.player.name}}\r\n              <span *ngFor=\"let card of result.cards\">{{card.value}},</span>\r\n            </li>\r\n          </ul>\r\n          <br />\r\n          <h2>TOTAL SCORE</h2>\r\n          <ul>\r\n            <li *ngFor=\"let result of playersCards\">\r\n              {{result.player.name}}\r\n              <span>{{result.player.score}}</span>\r\n            </li>\r\n          </ul>\r\n\r\n          <div id=\"winner\" class=\"winner\">\r\n            <ul>\r\n              <li *ngFor=\"let result of winner\">\r\n                <span *ngIf=\"winner.name=='You'\">Congratulations, </span>\r\n                <h3>{{result.name}}</h3> win the game!\r\n              </li>\r\n            </ul>\r\n          </div>\r\n          <button type=\"button\" class=\"btn btn-success moreBtn\" [disabled]=\"moreButtonDisabled\" (click)=\"playAgain()\">MORE</button>\r\n          <button type=\"button\" class=\"btn btn-success stayBtn\" [disabled]=\"stayButtonDisabled\" (click)=\"playStay()\">STAY</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <br />\r\n\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"col-12\">\r\n          <div class=\"text-center\">\r\n            <button type=\"button\" class=\"btn btn-primary btn-sm newRoundBtn\" (click)=\"startNewRound()\"><i class=\"fas fa-redo-alt\"></i>&nbsp;NEW Round</button>\r\n            <button type=\"button\" class=\"btn btn-primary btn-sm newGameBtn\" (click)=\"startNewGame()\"><i class=\"fas fa-arrow-circle-right\"></i>&nbsp;NEW Game</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -124,7 +124,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StartComponent", function() { return StartComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var _logic_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../logic.service */ "./src/app/logic.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -136,11 +135,9 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-
 var StartComponent = /** @class */ (function () {
-    function StartComponent(_http, _logicService) {
+    function StartComponent(_http) {
         this._http = _http;
-        this._logicService = _logicService;
         this.cards = [];
         this.players = [];
         this.playersCards = [];
@@ -157,6 +154,8 @@ var StartComponent = /** @class */ (function () {
         var _this = this;
         this._http.get("/api/values").subscribe(function (result) {
             _this.cards = result.json();
+            var header = document.getElementById("header");
+            header.innerHTML = "GAME IS STARTED";
         });
     };
     StartComponent.prototype.setBotCount = function () {
@@ -166,10 +165,14 @@ var StartComponent = /** @class */ (function () {
         if (this.botCount > 0 && this.botCount < 6) {
             var inputField = document.getElementById("inputFieldBotCount");
             inputField.style.background = "green";
+            var error = document.getElementById("errorMessageSetBotCount");
+            error.innerHTML = "";
         }
         else {
             var inputField = document.getElementById("inputFieldBotCount");
             inputField.style.borderColor = "red";
+            var error = document.getElementById("errorMessageSetBotCount");
+            error.innerHTML = "<i class='fas fa-times'></i>Please set bots from range from 1 to 5";
             inputField.style.background = "";
             return;
         }
@@ -206,6 +209,7 @@ var StartComponent = /** @class */ (function () {
         var _this = this;
         this.newRoundIsStarted = false;
         this.moreButtonDisabled = true;
+        this.stayButtonDisabled = true;
         this._http.get("/api/gamelogic/PlayAgain/false").subscribe(function (result) {
             _this.playersCards = result.json();
             _this.defineTheWinner();
@@ -222,6 +226,7 @@ var StartComponent = /** @class */ (function () {
         this.newRoundIsStarted = true;
         this.moreButtonDisabled = false;
         this.stayButtonDisabled = false;
+        this.winner = [];
         this._http.get("/api/gameLogic/StartNewRound").subscribe(function (result) {
             _this.playersCards = result.json();
         });
@@ -230,6 +235,7 @@ var StartComponent = /** @class */ (function () {
         this.gameIsRunning = false;
         this.newRoundIsStarted = false;
         this.stayButtonDisabled = false;
+        this.winner = [];
     };
     StartComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -237,7 +243,7 @@ var StartComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./start.component.html */ "./src/app/start-game/start/start.component.html"),
             styles: [__webpack_require__(/*! ./start.component.css */ "./src/app/start-game/start/start.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"], _logic_service__WEBPACK_IMPORTED_MODULE_2__["LogicService"]])
+        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"]])
     ], StartComponent);
     return StartComponent;
 }());

@@ -2,13 +2,17 @@ h1{
   text-align:center;
 }
 
+.navbar{
+position:relative;
+}
+
 #startGame, #viewHistory {
   display: inline-block;
   height: 50px;
   line-height: 50px;
   border: 1px solid white;
   padding: 0 1rem;
-  margin-left:29%;
+  margin-left: 29%;
 }
 
 #startGame, #viewHistory {
@@ -22,3 +26,24 @@ h1{
 #viewHistory:hover {
   background-color: #6da3ff;
 }
+
+
+.main::before{
+display:block;
+}
+
+.main::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("https://images.thebetwaygroup.com/umbraco/umbracobetway/media/6345757/blackjackhistory_image3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.65;
+  z-index: -1;
+}
+

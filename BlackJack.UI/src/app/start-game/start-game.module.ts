@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { StartGameRoutingModule } from './start-game-routing.module';
 import { StartComponent } from './start/start.component';
+import { AppModule } from '../app.module';
 
 @NgModule({
   imports: [

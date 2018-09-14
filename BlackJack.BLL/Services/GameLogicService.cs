@@ -1,13 +1,11 @@
 ﻿using BlackJack.BLL.Interfaces;
-using BlackJack.DAL.Dapper.Interfaces;  //
+using BlackJack.DAL.Dapper.Interfaces;     //
 using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
 using BlackJack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlackJack.BLL.Services
@@ -156,7 +154,7 @@ namespace BlackJack.BLL.Services
                 playerModelList = await GiveCardToEachPlayer();
             }
 
-            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame=await DefinePlayersFromLastGame();             //??????
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame=await DefinePlayersFromLastGame();
             Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCardsLastGame);
             CountSum(ref playerCardsModelDictionary);
 
@@ -166,7 +164,7 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, int>> GetScoreCount()
         {
-            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();               //???????
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();
 
             var playerScore = new Dictionary<PlayerViewModel, int>();
             foreach (var player in playerCardsLastGame)
@@ -236,7 +234,7 @@ namespace BlackJack.BLL.Services
                 }
             }
 
-            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();                //????????????????
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();
             Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCardsLastGame);
             CountSum(ref playerCardsModelDictionary);
 
@@ -287,7 +285,7 @@ namespace BlackJack.BLL.Services
             __drawnedCardId.Clear();
             await HandOverCards();
 
-            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();                //????????????
+            IEnumerable<KeyValuePair<Player, List<Card>>> playerCardsLastGame = await DefinePlayersFromLastGame();
             Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCardsLastGame);
             CountSum(ref playerCardsModelDictionary);
 
@@ -319,41 +317,11 @@ namespace BlackJack.BLL.Services
         }
 
 
-        //public async Task<List<RoundViewModel>> GetHistory()
-        //{
-        //    List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
-        //    int maxRound = gamePlayersList.Max(r => r.CurrentRound);
-
-        //    var gameHistory = new GameHistory();
-        //    for (int i = 1; i <= maxRound; i++)
-        //    {
-        //        var roundModel = new RoundViewModel();
-        //        List<PlayerCard> playersList = await _playerRepository.GetPlayersByRound(i);
-        //        foreach (var item in playersList)
-        //        {
-        //            IEnumerable<Card> cardList = await _playerRepository.GetAllCardsFromPlayer(item.PlayerId, i);
-        //            Player player = await _playerRepository.GetById(item.PlayerId);
-
-        //            PlayerViewModel playerModel = Mapp.MappPlayer(player);
-        //            List<CardViewModel> cardModelList = Mapp.MappCard(cardList.ToList());
-        //            roundModel.roundModelList.Add(new PlayerCardsViewModel { Player = playerModel, Cards = cardModelList });
-        //        }
-        //        gameHistory.Games.Add(roundModel);
-        //        //gameInfo.MyPropertyTest.Add(i, roundModel);
-        //    }
-
-
-        //    return gameHistory.Games;
-        //}
-
-
         public async Task<List<PlayerCardsViewModel>> GetHistory(){
             List<PlayerCard> gamePlayersList = _playerCardRepository.GetAll();
             int maxRound = gamePlayersList.Max(r => r.CurrentRound);
 
-
             var roundModel = new RoundViewModel();
-            var gameHistory = new GameHistory();
             for (int i = 1; i <= maxRound; i++)
             {
                 
@@ -368,10 +336,7 @@ namespace BlackJack.BLL.Services
                     playerModel.Score = cardModelList.Sum(x=>x.Value);
                     roundModel.roundModelList.Add(new PlayerCardsViewModel { Player = playerModel, Cards = cardModelList,Round=i});
                 }
-                //gameHistory.Games.Add(roundModel);
-                //gameInfo.MyPropertyTest.Add(i, roundModel);
             }
-
 
             return roundModel.roundModelList;
         }

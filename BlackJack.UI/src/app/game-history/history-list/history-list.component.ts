@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LogicService } from '../../logic.service';
 import { Http } from '@angular/http';
 
 import { PlayersCards } from '../../Interfaces/playersCards';
@@ -16,7 +15,7 @@ import { PageChangeEvent, GridDataResult } from '@progress/kendo-angular-grid';
 })
 export class HistoryListComponent implements OnInit {
 
-  constructor(private _http: Http, private _logicService: LogicService) {
+  constructor(private _http: Http) {
   }
 
   public gridView: GridDataResult;
@@ -31,6 +30,9 @@ export class HistoryListComponent implements OnInit {
       this._http.get("/api/gameLogic/getHistory").subscribe(result => {
         this.round = result.json();
         this.loadItems();
+
+        var header = document.getElementById("header");
+        header.innerHTML = "GAME HISTORY";
       });
 
   }

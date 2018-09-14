@@ -1,5 +1,6 @@
 ﻿using BlackJack.BLL.Services;
 using BlackJack.ViewModels;
+using ExceptionLoggers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -17,6 +18,7 @@ namespace BlackJack.Controllers
         }
 
 
+        [ExceptionLogger]
         [HttpGet]
         public async Task<ActionResult> GetDeck()
         {
@@ -28,6 +30,7 @@ namespace BlackJack.Controllers
         }
 
 
+        [ExceptionLogger]
         public async Task<ActionResult> SetBotCount()
         {
             //try
