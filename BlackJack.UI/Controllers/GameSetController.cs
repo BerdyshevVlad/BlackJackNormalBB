@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
-using BlackJack.BLL.Services;
-using BlackJack.Mappers;
 using BlackJack.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +8,11 @@ namespace BlackJack.UI.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class ValuesController : ControllerBase
+  public class GameSetController : ControllerBase
   {
     private readonly IGameSet _gameSetService;
 
-    public ValuesController(IGameSet gameSetService)
+    public GameSetController(IGameSet gameSetService)
     {
       _gameSetService = gameSetService;
     }

@@ -152,7 +152,7 @@ var StartComponent = /** @class */ (function () {
     }
     StartComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._http.get("/api/values").subscribe(function (result) {
+        this._http.get("/api/GameSet").subscribe(function (result) {
             _this.cards = result.json();
             var header = document.getElementById("header");
             header.innerHTML = "GAME IS STARTED";
@@ -176,7 +176,7 @@ var StartComponent = /** @class */ (function () {
             inputField.style.background = "";
             return;
         }
-        var url = "/api/values/" + this.botCount;
+        var url = "/api/GameSet/" + this.botCount;
         this._http.get(url).subscribe(function (result) {
             _this.players = result.json();
             _this.gameIsRunning = true;

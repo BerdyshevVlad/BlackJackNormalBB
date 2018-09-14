@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\ValuesController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="src\app\cardData.ts" />
     <None Remove="src\app\Interfaces\gameHistory.ts" />
     <None Remove="src\app\Interfaces\playerData.ts" />

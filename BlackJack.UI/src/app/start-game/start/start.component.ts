@@ -39,7 +39,7 @@ export class StartComponent implements OnInit {
   newRoundIsStarted: boolean;
 
   ngOnInit() {
-    this._http.get("/api/values").subscribe(result => {
+    this._http.get("/api/GameSet").subscribe(result => {
       this.cards = result.json();
 
       var header = document.getElementById("header");
@@ -67,7 +67,7 @@ export class StartComponent implements OnInit {
       return;
     }
 
-    const url = `/api/values/${this.botCount}`;
+    const url = `/api/GameSet/${this.botCount}`;
     this._http.get(url).subscribe(result => {
       this.players = result.json();
       this.gameIsRunning = true;

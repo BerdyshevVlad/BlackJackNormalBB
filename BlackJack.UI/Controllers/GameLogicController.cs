@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
-using BlackJack.EntitiesLayer.Entities;
 using BlackJack.Mappers;
 using BlackJack.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlackJack.UI.Controllers
