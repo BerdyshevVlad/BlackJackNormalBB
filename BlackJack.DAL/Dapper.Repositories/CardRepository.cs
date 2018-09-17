@@ -40,25 +40,20 @@ namespace BlackJack.DAL.Dapper.Repositories
 
         public IEnumerable<Card> Find(Func<Card, bool> predicate)
         {
-
-            IEnumerable<Card> card = null;
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                card = db.Query<Card>("SELECT * FROM Cards").Where(predicate).ToList();
+                var card = db.Query<Card>("SELECT * FROM Cards").Where(predicate).ToList();
+                return card;
             }
-            return card;
-
         }
 
         public async Task<Card> GetById(int id)
         {
-
-            Card card = null;
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                card = db.Query<Card>("SELECT * FROM Cards WHERE Id = @id", new { id }).FirstOrDefault();
+               var card = db.Query<Card>("SELECT * FROM Cards WHERE Id = @id", new { id }).SingleOrDefault();
+                return card;
             }
-            return card;
         }
 
 
@@ -71,9 +66,9 @@ namespace BlackJack.DAL.Dapper.Repositories
             }
         }
 
+
         public bool IsExist()
         {
-
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 var result = db.Query<Card>("SELECT * FROM Cards WHERE Id = 1").DefaultIfEmpty();
@@ -87,13 +82,11 @@ namespace BlackJack.DAL.Dapper.Repositories
 
         public async Task Update(Card card)
         {
-
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 var sqlQuery = "UPDATE Cards SET Rank=@Rank, Suit=@Suit,Value=@Value WHERE Id = @Id";
                 db.Execute(sqlQuery, card);
             }
-
         }
     }
 }

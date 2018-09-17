@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace BlackJack.DAL.Dapper.Repositories
 {
-    public class PlayerCardRepository: IPlayerCardRepository
+    public class PlayerCardRepository : IPlayerCardRepository
     {
-        string _connectionString = null;
+        private readonly string _connectionString = null;
 
         public PlayerCardRepository(string connectionString)
         {
@@ -20,13 +20,10 @@ namespace BlackJack.DAL.Dapper.Repositories
 
         public async Task AddCard(Player player, Card card, int currentRound)
         {
-            Player tmpPlayer;
-            Card tmpCard;
-
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                tmpPlayer = db.Query<Player>("SELECT * FROM Players WHERE Id = @id", new { player.Id }).FirstOrDefault();
-                tmpCard = db.Query<Card>("SELECT * FROM Cards WHERE Id = @id", new { card.Id }).FirstOrDefault();
+                Player tmpPlayer = db.Query<Player>("SELECT * FROM Players WHERE Id = @id", new { player.Id }).SingleOrDefault();
+                Card tmpCard = db.Query<Card>("SELECT * FROM Cards WHERE Id = @id", new { card.Id }).SingleOrDefault();
 
                 var tmpPlayerCard = new PlayerCard();
                 tmpPlayerCard.CardId = tmpCard.Id;

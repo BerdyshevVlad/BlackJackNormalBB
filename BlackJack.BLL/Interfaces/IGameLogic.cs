@@ -15,7 +15,7 @@ namespace BlackJack.BLL.Interfaces
         int GenerateRandomValue();
         Task<PlayerViewModel> GiveCardToPlayer(Player player, Card Card);
         int DefineCurrentRound();
-        Task<IEnumerable<KeyValuePair<Player, List<Card>>>> DefinePlayersFromLastGame();
+        Task<Dictionary<Player, List<Card>>> DefinePlayersFromLastGame();
         Task<List<PlayerViewModel>> GiveCardToEachPlayer();
         Task<Dictionary<PlayerViewModel, List<CardViewModel>>> HandOverCards();
         Task<Dictionary<PlayerViewModel, int>> GetScoreCount();

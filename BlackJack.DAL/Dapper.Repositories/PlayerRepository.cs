@@ -14,7 +14,7 @@ namespace BlackJack.DAL.Dapper.Repositories
     public class PlayerRepository : IPlayerRepository
     {
 
-        private readonly string _connectionString = null;
+        private readonly string _connectionString;
 
         public PlayerRepository(string connectionString)
         {
@@ -23,12 +23,10 @@ namespace BlackJack.DAL.Dapper.Repositories
 
         public async Task AddCard(Player player, Card card, int currentRound)
         {
-
-            Player tmpPlayer = await GetById(player.Id);
-            Card tmpCard = null;
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                tmpCard = db.Query<Card>("SELECT * FROM Cards WHERE Id = @id", new { card.Id }).FirstOrDefault();
+                Player tmpPlayer = await GetById(player.Id);
+                Card tmpCard = db.Query<Card>("SELECT * FROM Cards WHERE Id = @id", new { card.Id }).SingleOrDefault();
 
                 var tmpPlayersCards = new PlayerCard();
                 tmpPlayersCards.Card = tmpCard;
@@ -36,7 +34,7 @@ namespace BlackJack.DAL.Dapper.Repositories
                 tmpPlayersCards.CurrentRound = currentRound;
 
                 var sqlQuery = "INSERT INTO PlayersCards (CardId, Card,PlayerId,Player,CurrentRound) VALUES(@CardId, @Card,@PlayerId,@Player,@CurrentRound)";
-                db.Execute(sqlQuery, player);
+                db.Execute(sqlQuery, tmpPlayersCards);
             }
         }
 
@@ -54,27 +52,29 @@ namespace BlackJack.DAL.Dapper.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                List<PlayerCard> playerList = db.Query<PlayerCard>("SELECT * FROM PlayersCards WHERE CurrentRound=@round", new { round }).ToList();
-                var playerList1 = playerList.GroupBy(x => x.PlayerId).Select(gr => gr.FirstOrDefault()).ToList();
-                return playerList1;
+                List<PlayerCard> playerListTmp = db.Query<PlayerCard>("SELECT * FROM PlayersCards WHERE CurrentRound=@round", new { round }).ToList();
+                var playerList = playerListTmp.GroupBy(x => x.PlayerId).Select(gr => gr.FirstOrDefault()).ToList();
+                return playerList;
             }
         }
 
 
         public async Task<IEnumerable<Card>> GetAllCardsFromPlayer(int id, int round)
         {
-            List<PlayerCard> playerList = await GetPlayerByIdAndByRound(id, round);
-            List<Card> cardsList = new List<Card>();
-            foreach (var playerCard in playerList)
+
+            using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                using (IDbConnection db = new SqlConnection(_connectionString))
+                List<PlayerCard> playerList = await GetPlayerByIdAndByRound(id, round);
+                var cardsList = new List<Card>();
+
+                foreach (var playerCard in playerList)
                 {
-                    Card card = db.Query<Card>("SELECT * FROM Cards  WHERE Id=@CardId", new { playerCard.CardId }).FirstOrDefault();
+                    Card card = db.Query<Card>("SELECT * FROM Cards  WHERE Id=@CardId", new { playerCard.CardId }).SingleOrDefault();
                     cardsList.Add(card);
                 }
-            }
 
-            return cardsList;
+                return cardsList;
+            }
         }
 
 
@@ -82,7 +82,7 @@ namespace BlackJack.DAL.Dapper.Repositories
         {
             IEnumerable<Player> playerList = await GetAll();
 
-            Dictionary<Player, List<Card>> playerCardsDictionary = new Dictionary<Player, List<Card>>();
+            var playerCardsDictionary = new Dictionary<Player, List<Card>>();
 
             foreach (var player in playerList.ToList())
             {
@@ -103,6 +103,7 @@ namespace BlackJack.DAL.Dapper.Repositories
             }
         }
 
+
         public async Task Delete(int id)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
@@ -112,25 +113,25 @@ namespace BlackJack.DAL.Dapper.Repositories
             }
         }
 
+
         public IEnumerable<Player> Find(Func<Player, bool> predicate)
         {
-            IEnumerable<Player> players = null;
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                players = db.Query<Player>("SELECT * FROM Players").Where(predicate).ToList();
+                IEnumerable<Player> players = db.Query<Player>("SELECT * FROM Players").Where(predicate).ToList();
+                return players;
             }
-            return players;
         }
+
 
         public async Task<Player> GetById(int id)
         {
 
-            Player palyer = null;
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                palyer = db.Query<Player>("SELECT * FROM Players WHERE Id = @id", new { id }).FirstOrDefault();
+                var palyer = db.Query<Player>("SELECT * FROM Players WHERE Id = @id", new { id }).SingleOrDefault();
+                return palyer;
             }
-            return palyer;
         }
 
 

@@ -14,22 +14,6 @@ namespace BlackJack.DAL.Repositories
 
         }
 
-
-        public async Task AddCard(Player player, Card card, int currentRound)
-        {
-            Player tmpPlayer = await GetById(player.Id);
-            Card tmpCard = await _dbContext.Cards.FindAsync(card.Id);
-
-            var tmpPlayersCards = new PlayerCard();
-            tmpPlayersCards.Card = tmpCard;
-            tmpPlayersCards.Player = tmpPlayer;
-            tmpPlayersCards.CurrentRound = currentRound;
-
-            _dbContext.PlayersCards.Add(tmpPlayersCards);
-            await _dbContext.SaveChangesAsync();
-        }
-
-
         public async Task<List<PlayerCard>> GetPlayerByIdAndByRound(int id, int round)
         {
             List<PlayerCard> playerList = _dbContext.PlayersCards.Where(x => x.PlayerId == id && x.CurrentRound == round).ToList();
@@ -41,7 +25,7 @@ namespace BlackJack.DAL.Repositories
         public async Task<List<PlayerCard>> GetPlayersByRound(int round)
         {
             List<PlayerCard> playerList = _dbContext.PlayersCards.Where(x => x.CurrentRound == round).ToList();
-            var playerList1 = playerList.GroupBy(x => x.PlayerId).Select(gr => gr.FirstOrDefault()).ToList();
+            var playerList1 = playerList.GroupBy(x => x.PlayerId).Select(gr => gr.SingleOrDefault()).ToList();
             return playerList1;
         }
 

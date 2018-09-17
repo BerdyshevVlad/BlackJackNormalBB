@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace BlackJack.BLL.Services
 {
-    public class GameSetService:IGameSet
+    public class GameSetService : IGameSet
     {
         private readonly ICardRepository _cardRepository;
         private readonly IPlayerRepository _playerRepository;
 
         private readonly string _dealerPlayerType;
         private readonly string _personPlayerType;
-        private int _gameNumber;
+
 
 
         public GameSetService(ICardRepository cardRepository, IPlayerRepository playerRepository)
@@ -34,11 +34,11 @@ namespace BlackJack.BLL.Services
             int _currentRound = 0;
             try
             {
-                var gamePlayersList =await _playerRepository.GetAll();
+                var gamePlayersList = await _playerRepository.GetAll();
                 int maxGame = gamePlayersList.Max(x => x.GameNumber);
                 if (maxGame > 0)
                 {
-                    _currentRound = maxGame+1;
+                    _currentRound = maxGame + 1;
                 }
             }
             catch
@@ -53,13 +53,13 @@ namespace BlackJack.BLL.Services
 
         public async Task SetBotCount(int botsCount)
         {
-            _gameNumber = await DefineCurrentGame();
-            await InitializePlayers(_gameNumber);
+            int gameNumber = await DefineCurrentGame();
+            await InitializePlayers(gameNumber);
             try
             {
                 for (int i = 0; i < botsCount; i++)
                 {
-                    await _playerRepository.Insert(new Player { Name = $"Bot{i}", PlayerType = "Bot" ,GameNumber= _gameNumber });
+                    await _playerRepository.Insert(new Player { Name = $"Bot{i}", PlayerType = "Bot", GameNumber = gameNumber });
                 }
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace BlackJack.BLL.Services
 
             try
             {
-                IEnumerable<Player> playersList =await _playerRepository.GetAll();
+                IEnumerable<Player> playersList = await _playerRepository.GetAll();
                 gamePlayerViewModelList = Mapp.MappPlayer(playersList.ToList());
             }
             catch (Exception ex)
@@ -88,9 +88,9 @@ namespace BlackJack.BLL.Services
         }
 
 
-        public async Task<List<CardViewModel>> GetDeck()   
+        public async Task<List<CardViewModel>> GetDeck()
         {
-            var cardsViewModel=new List<CardViewModel>();
+            var cardsViewModel = new List<CardViewModel>();
             try
             {
                 IEnumerable<Card> cardsListCollection = await _cardRepository.GetAll();
@@ -118,8 +118,8 @@ namespace BlackJack.BLL.Services
 
             try
             {
-                    await _playerRepository.Insert(dealer);
-                    await _playerRepository.Insert(playerPerson);
+                await _playerRepository.Insert(dealer);
+                await _playerRepository.Insert(playerPerson);
             }
             catch (Exception ex)
             {
@@ -141,7 +141,7 @@ namespace BlackJack.BLL.Services
             int enumJackValue = 11;
             int enumKingValue = 13;
             int JackQueenKingValues = 10;
-            int AceValue=11;
+            int AceValue = 11;
             int enumAceVlue = 14;
 
             try
@@ -167,13 +167,15 @@ namespace BlackJack.BLL.Services
                     }
                 }
 
-                var t = _cardRepository.IsExist();
-                if (t == false)
+                var isCardsAlreadyExist = _cardRepository.IsExist();
+                if (isCardsAlreadyExist == false)
+                {
                     foreach (var cardItem in cardsList)
                     {
 
                         await _cardRepository.Insert(cardItem);
                     }
+                }
             }
 
             catch (Exception ex)
