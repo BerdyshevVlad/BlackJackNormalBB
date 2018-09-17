@@ -19,7 +19,6 @@ namespace BlackJack.BLL.Services
 
         private int _round;
         private string _personPlayerType = "Person";
-        private List<int> __drawnedCardId;
 
 
         public GameLogicService(ICardRepository cardRepository, IPlayerRepository playerRepository, IPlayerCardRepository playerCardRepository)
@@ -28,7 +27,6 @@ namespace BlackJack.BLL.Services
             _playerRepository = playerRepository;
             _playerCardRepository = playerCardRepository;
             _round = DefineCurrentRound();
-            __drawnedCardId = new List<int>();
         }
 
         public async Task<CardViewModel> DrawCard()
@@ -80,8 +78,6 @@ namespace BlackJack.BLL.Services
         {
             Player playerTmp = await _playerRepository.GetById(player.Id);
             Card cardTmp = await _cardRepository.GetById(Card.Id);
-
-
             await _playerCardRepository.AddCard(playerTmp, cardTmp, _round);
 
             PlayerViewModel playerModel = Mapp.MappPlayer(playerTmp);
@@ -128,9 +124,9 @@ namespace BlackJack.BLL.Services
             var playerModelList = new List<PlayerViewModel>();
 
             int max = playersList.Max(x => x.GameNumber);
-            var tmp = playersList.ToList().Where(x => x.GameNumber == max);
+            IEnumerable<Player> playerList = playersList.ToList().Where(x => x.GameNumber == max);
 
-            foreach (var player in tmp)
+            foreach (var player in playerList)
             {
                 CardViewModel drawnedCard = await DrawCard();
                 Card card = Mapp.MappCardModel(drawnedCard);
@@ -144,7 +140,6 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> HandOverCards()
         {
-            __drawnedCardId.Clear();
             int handOverCount = 2;
             _round++;
 
@@ -184,6 +179,7 @@ namespace BlackJack.BLL.Services
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> TakeCardIfNotEnough(bool takeCard)
         {
             Dictionary<PlayerViewModel, int> playerScore = await GetScoreCount();
+
             foreach (var ps in playerScore)
             {
                 if (ps.Value < 17 && ps.Key.PlayerType != _personPlayerType)
@@ -193,7 +189,7 @@ namespace BlackJack.BLL.Services
                     Card card = Mapp.MappCardModel(cardModel);
                     await GiveCardToPlayer(player, card);
                 }
-                if (ps.Key.PlayerType == _personPlayerType && takeCard == true)
+                if (ps.Key.PlayerType == _personPlayerType && takeCard)
                 {
                     Player player = await _playerRepository.GetById(ps.Key.Id);
                     CardViewModel cardModel = await DrawCard();
@@ -211,25 +207,24 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> PlayAgain(bool takeCard = false)
         {
-            bool isGameEnded = false;
+            bool isGameEnded = await IsGameEnded(takeCard);
 
-            isGameEnded = await IsGameEnded(takeCard);
+
             for (; isGameEnded == false;)
             {
-                if (takeCard == true && await IsUserBusted() == false)
+                var isUserBusted = await IsUserBusted();
+                if (takeCard && !isUserBusted)   //no async,
                 {
                     await TakeCardIfNotEnough(takeCard);
                     isGameEnded = await IsGameEnded(takeCard);
-                    if (await IsUserBusted() == false)
+                    isUserBusted = await IsUserBusted();
+                    if (!isUserBusted)
                     {
                         break;
                     }
-                    if (await IsUserBusted() == true)
-                    {
-                        takeCard = false;
-                    }
+                    takeCard = false;
                 }
-                if (takeCard == false)
+                if (!takeCard)
                 {
                     await TakeCardIfNotEnough(takeCard);
                     isGameEnded = await IsGameEnded(takeCard);
@@ -238,7 +233,6 @@ namespace BlackJack.BLL.Services
 
             Dictionary<Player, List<Card>> playerCardsLastGame = await DefinePlayersFromLastGame();
             Dictionary<PlayerViewModel, List<CardViewModel>> playerCardsModelDictionary = Mapp.MappPlayerModelDictionary(playerCardsLastGame);
-
             CountSum(ref playerCardsModelDictionary);
 
             return playerCardsModelDictionary;
@@ -285,7 +279,6 @@ namespace BlackJack.BLL.Services
 
         public async Task<Dictionary<PlayerViewModel, List<CardViewModel>>> StartNewRound()
         {
-            __drawnedCardId.Clear();
             await HandOverCards();
 
             Dictionary<Player, List<Card>> playerCardsLastGame = await DefinePlayersFromLastGame();
