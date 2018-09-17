@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}</ProjectGuid>
+    <ProjectGuid>{9F70C746-6966-4999-B6A8-8E0C00D3227C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlackJack.Entities</RootNamespace>
@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Card.cs" />
-    <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\ExceptionDetail.cs" />
-    <Compile Include="Entities\Player.cs" />
-    <Compile Include="Entities\PlayerCard.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Card.cs" />
+    <Compile Include="ExceptionDetail.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

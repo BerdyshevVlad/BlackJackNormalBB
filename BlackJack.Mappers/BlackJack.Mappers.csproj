@@ -52,10 +52,6 @@
       <Project>{4EFCE354-636F-4B89-A534-109C3A450A34}</Project>
       <Name>BlackJack.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BlackJack.Entities\BlackJack.EntitiesLayer.csproj">
-      <Project>{F5B6ABBF-B9D1-4BB0-94DF-8C8A89A1C8A5}</Project>
-      <Name>BlackJack.EntitiesLayer</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

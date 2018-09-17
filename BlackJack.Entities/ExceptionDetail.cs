@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BlackJack.Entities.Entities
+namespace BlackJack.Entities
 {
-    public class ExceptionDetail
+    public class ExceptionDetail : BaseEntity
     {
-        public int Id { get; set; }
         public string ExceptionMessage { get; set; }
         public string ControllerName { get; set; }
         public string ActionName { get; set; }

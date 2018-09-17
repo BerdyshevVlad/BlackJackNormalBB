@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using  Dapper.Contrib.Extensions;
 
 namespace BlackJack.DAL.Dapper.Repositories
 {
@@ -63,6 +64,7 @@ namespace BlackJack.DAL.Dapper.Repositories
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 return db.Query<Card>("SELECT * FROM Cards").ToList();
+                
             }
         }
 
