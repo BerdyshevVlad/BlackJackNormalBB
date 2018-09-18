@@ -1,5 +1,4 @@
-﻿using BlackJack.BLL.Infrastructure;
-using BlackJack.Util;
+﻿using BlackJack.Util;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
@@ -20,10 +19,12 @@ namespace BlackJack
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            NinjectModule serviceModule = new ServiceModule();
-            NinjectModule gameModule = new GameModule();
-            var kernel = new StandardKernel(serviceModule, gameModule);
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            AutofacConfig.ConfigureContainer();
+
+            //NinjectModule serviceModule = new ServiceModule();
+            //NinjectModule gameModule = new GameModule();
+            //var kernel = new StandardKernel(serviceModule, gameModule);
+            //DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }
 }

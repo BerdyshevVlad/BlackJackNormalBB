@@ -28,11 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlackJack.BLL\BlackJack.BLL.csproj" />
-    <ProjectReference Include="..\BlackJack.DTO\BlackJack.DTO.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TypeScriptCompile Include="src\app\Interfaces\cardData.ts" />
     <TypeScriptCompile Include="src\app\Interfaces\gameHistory.ts" />
     <TypeScriptCompile Include="src\app\Interfaces\playerData.ts" />

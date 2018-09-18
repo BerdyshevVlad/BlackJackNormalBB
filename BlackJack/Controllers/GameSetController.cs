@@ -1,18 +1,18 @@
-﻿using BlackJack.ViewModels;
+﻿using BlackJack.BusinessLogic.Services;
 using ExceptionLoggers;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using BlackJack.BusinessLogic.Services;
+using BlackJack.DataAccess.Interfaces;
+using BlackJack.ViewModels;
 
 
 namespace BlackJack.Controllers
 {
     public class GameSetController : Controller
     {
-        private GameSetService _gameSetService;
+        private GameService _gameSetService;
 
-        public GameSetController(GameSetService gameSetService)
+        public GameSetController(GameService gameSetService)
         {
             _gameSetService = gameSetService;
         }
@@ -24,9 +24,9 @@ namespace BlackJack.Controllers
         {
 
             bool isWork = await _gameSetService.SetDeck();
-            List<CardViewModel> cardModelList = await _gameSetService.GetDeck();
+            GetDeckGameView cardModelList = await _gameSetService.GetDeck();
 
-            return View(cardModelList);
+            return View(cardModelList.Cards);
         }
 
 

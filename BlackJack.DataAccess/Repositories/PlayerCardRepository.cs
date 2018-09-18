@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using BlackJack.DataAccess.Context.Core;
+using BlackJack.DataAccess.Context.MVC;
 using BlackJack.DataAccess.Interfaces;
 using BlackJack.Entities;
 
@@ -28,12 +29,12 @@ namespace BlackJack.DataAccess.Repositories
             tmpPlayersCards.Player = tmpPlayer;
             tmpPlayersCards.CurrentRound = currentRound;
 
-            await _db.PlayersCards.AddAsync(tmpPlayersCards);
+            _db.PlayersCards.Add(tmpPlayersCards);
             await _db.SaveChangesAsync();
         }
 
 
-        public List<PlayerCard> GetAll()
+        public IEnumerable<PlayerCard> GetAll()
         {
             List<PlayerCard> playerCardsList = _db.PlayersCards.ToList();
             return playerCardsList;

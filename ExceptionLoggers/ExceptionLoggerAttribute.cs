@@ -1,5 +1,5 @@
-﻿using BlackJack.DAL.Context.MVC;
-using BlackJack.Entities.Entities;
+﻿using BlackJack.DataAccess.Context.MVC;
+using BlackJack.Entities;
 using System;
 using System.Web.Mvc;
 

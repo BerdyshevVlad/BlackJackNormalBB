@@ -76,5 +76,15 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlackJack.DataAccess\BlackJack.DataAccess.csproj">
+      <Project>{FD2E4BEF-B946-4D3E-B44F-1CB98D7B14F8}</Project>
+      <Name>BlackJack.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlackJack.Entities\BlackJack.Entities.csproj">
+      <Project>{9F70C746-6966-4999-B6A8-8E0C00D3227C}</Project>
+      <Name>BlackJack.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -34,12 +34,20 @@ namespace BlackJack.DataAccess.Dapper.Repositories
             }
         }
 
-        public List<PlayerCard> GetAll()
+        public IEnumerable<PlayerCard> GetAll()
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                List<PlayerCard> playerCardsList =db.GetAll<PlayerCard>().ToList();
-                return playerCardsList;
+                try
+                {
+                    IEnumerable<PlayerCard> playerCardsList =db.GetAll<PlayerCard>();
+                    return playerCardsList;
+                }
+                catch (Exception ex)
+                {
+                    var msg = ex.Message;
+                    return null;
+                }
             }
         }
     }

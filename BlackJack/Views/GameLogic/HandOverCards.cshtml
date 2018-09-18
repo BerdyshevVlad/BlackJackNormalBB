@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BlackJack.ViewModels.PlayerCardsViewModel>
+﻿@model List<BlackJack.ViewModels.PlayerGameViewItem>
 @{
     ViewBag.Title = "HandOverCards";
 }
@@ -13,7 +13,7 @@
             {
                 <tr>
                     <td>
-                        @item.Player.Name
+                        @item.Name
                     <td>
                         @foreach (var t in item.Cards)
                         {
@@ -34,9 +34,9 @@
             {
                 <tr>
                     <td>
-                        @item.Player.Name:
+                        @item.Name:
                     <td>
-                        @item.Player.Score
+                        @item.Score
                     </td>
                     </td>
                 </tr>
@@ -65,7 +65,7 @@
         var count = 0;
         alert("REFRESH");
         $("#startNewRound").click(function () {
-            $("#newRoundHeader").text("New round is started" +" "count);
+            $("#newRoundHeader").text("New round is started");
             count++;
         }
         );

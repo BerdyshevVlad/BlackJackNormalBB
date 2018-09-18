@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BlackJack.DataAccess.Context.Core;
+using BlackJack.DataAccess.Context.MVC;
 using BlackJack.DataAccess.Interfaces;
 using BlackJack.Entities;
 

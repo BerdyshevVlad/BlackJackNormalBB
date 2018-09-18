@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BlackJack.DataAccess.Context.Core;
+using BlackJack.DataAccess.Context.MVC;
 using BlackJack.DataAccess.Interfaces;
 using BlackJack.Entities;
 
@@ -19,11 +19,11 @@ namespace BlackJack.DataAccess.Repositories
         public async Task DeleteAsync(int id)
         {
 
-            T item = await _dbContext.FindAsync<T>(id);
+            T item = await _dbContext.Set<T>().FindAsync(id);
 
             if (item != null)
             {
-                _dbContext.Remove<T>(item);
+                _dbContext.Set<T>().Remove(item);
                 await _dbContext.SaveChangesAsync();
             }
         }

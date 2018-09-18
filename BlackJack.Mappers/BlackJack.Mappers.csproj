@@ -43,11 +43,5 @@
     <Compile Include="Mapp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BlackJack.DTO\BlackJack.DTO.csproj">
-      <Project>{4EFCE354-636F-4B89-A534-109C3A450A34}</Project>
-      <Name>BlackJack.DTO</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,4 @@
-﻿using BlackJack.Mappers;
-using BlackJack.ViewModels;
+﻿using BlackJack.ViewModels;
 using ExceptionLoggers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,9 +9,9 @@ namespace BlackJack.Controllers
 {
     public class GameLogicController : Controller
     {
-        private GameLogicService _gameLogicService;
+        private GameService _gameLogicService;
 
-        public GameLogicController(GameLogicService gameLogicService)
+        public GameLogicController(GameService gameLogicService)
         {
             _gameLogicService = gameLogicService;
         }
@@ -21,29 +20,25 @@ namespace BlackJack.Controllers
         [ExceptionLogger]
         public async Task<ActionResult> HandOverCards()
         {
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.HandOverCards();
-            List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
+            StartGameView model = await _gameLogicService.Start();
 
-
-            return View(model);
+            return View(model.Players);
         }
 
 
         [ExceptionLogger]
         public async Task<ActionResult> PlayAgain(bool takeCard)
         {
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.PlayAgain(takeCard);
-            List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
+            MoreOrEnoughGameView model = await _gameLogicService.MoreOrEnough(takeCard);
 
-            return PartialView("PlayAgain", model);
+            return PartialView("PlayAgain", model.Players);
         }
 
 
         [ExceptionLogger]
         public async Task<ActionResult> StartNewRound()
         {
-            Dictionary<PlayerViewModel, List<CardViewModel>> playerModelDictionary = await _gameLogicService.StartNewRound();
-            List<PlayerCardsViewModel> model = Mapp.MappPlayerCards(playerModelDictionary);
+            StartGameView model = await _gameLogicService.Start();
 
             return PartialView("StartNewRound", model);
         }
