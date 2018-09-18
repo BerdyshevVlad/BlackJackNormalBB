@@ -1,12 +1,12 @@
-﻿using BlackJack.BLL.Interfaces;
-using BlackJack.DAL.Dapper.Interfaces;     //
-using BlackJack.EntitiesLayer.Entities;
-using BlackJack.Mappers;
-using BlackJack.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlackJack.BLL.Interfaces;
+using BlackJack.DAL.Dapper.Interfaces;
+using BlackJack.Mappers;
+using BlackJack.ViewModels;
+//
 
 namespace BlackJack.BLL.Services
 {
@@ -43,6 +43,13 @@ namespace BlackJack.BLL.Services
 
             Card card = await _cardRepository.GetById(randomValue);
             CardViewModel cardModel = Mapp.MappCard(card);
+            var viewModelCard = new CardViewModel
+            {
+                Id = card.Id,
+                Value = card.Value,
+                Suit = card.Suit,
+                Rank = card.Rank
+            };
 
             return cardModel;
         }

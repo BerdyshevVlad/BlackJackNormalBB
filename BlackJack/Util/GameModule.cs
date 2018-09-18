@@ -1,10 +1,10 @@
 ﻿using BlackJack.BLL.Interfaces;
-using BlackJack.BLL.Services;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BlackJack.BusinessLogic.Services;
 
 namespace BlackJack.Util
 {

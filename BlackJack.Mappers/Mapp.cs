@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack.Mappers
 {
-    public static class Mapp
+    public class Mapp
     {
         public static CardViewModel MappCard(Card card)
         {
@@ -106,7 +106,7 @@ namespace BlackJack.Mappers
             List<Player> playersList = new List<Player>();
             foreach (var playerModel in playersModelList)
             {
-                Player player = MappPlayerModel(playerModel);
+                Player player =  ;
                 playersList.Add(player);
             }
 

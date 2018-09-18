@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlackJack.BLL\BlackJack.BLL.csproj" />
-    <ProjectReference Include="..\BlackJack.DTO\BlackJack.ViewModels.csproj" />
+    <ProjectReference Include="..\BlackJack.DTO\BlackJack.DTO.csproj" />
   </ItemGroup>
 
   <ItemGroup>

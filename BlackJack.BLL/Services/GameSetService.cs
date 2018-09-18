@@ -1,13 +1,13 @@
-﻿using BlackJack.BLL.Interfaces;
-using BlackJack.DAL.Dapper.Interfaces;   //
-using BlackJack.DAL.Enums;
-using BlackJack.EntitiesLayer.Entities;
-using BlackJack.Mappers;
-using BlackJack.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlackJack.BLL.Interfaces;
+using BlackJack.DAL.Dapper.Interfaces;
+using BlackJack.DAL.Enums;
+using BlackJack.Mappers;
+using BlackJack.ViewModels;
+//
 
 namespace BlackJack.BLL.Services
 {

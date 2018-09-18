@@ -7,8 +7,8 @@
     <ProjectGuid>{BD363108-9460-47F2-8DEC-26E1551E7D26}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlackJack.BLL</RootNamespace>
-    <AssemblyName>BlackJack.BLL</AssemblyName>
+    <RootNamespace>BlackJack.BusinessLogic</RootNamespace>
+    <AssemblyName>BlackJack.BusinessLogic</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -62,13 +62,9 @@
     <Compile Include="Services\GameSetService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlackJack.DAL\BlackJack.DAL.csproj">
-      <Project>{69DF4439-AB0B-4FDB-B73A-27DA3E4503F9}</Project>
-      <Name>BlackJack.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BlackJack.DTO\BlackJack.ViewModels.csproj">
+    <ProjectReference Include="..\BlackJack.DTO\BlackJack.DTO.csproj">
       <Project>{4EFCE354-636F-4B89-A534-109C3A450A34}</Project>
-      <Name>BlackJack.ViewModels</Name>
+      <Name>BlackJack.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\BlackJack.Mappers\BlackJack.Mappers.csproj">
       <Project>{E0282D97-BB2C-4A5B-968D-FD839BE1E42B}</Project>

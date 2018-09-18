@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
-using BlackJack.BLL.Services;
+using BlackJack.BusinessLogic.Services;
 using BlackJack.DAL;
 using BlackJack.DAL.Dapper.Interfaces;   //
 using BlackJack.DAL.Dapper.Repositories;   //

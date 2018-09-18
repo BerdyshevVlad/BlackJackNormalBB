@@ -1,4 +1,4 @@
-﻿namespace BlackJack.ViewModels
+﻿namespace BlackJack.DTO
 {
     public class PlayerViewModel
     {
